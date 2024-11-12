@@ -21,7 +21,6 @@ import Profile from './UserProfile/Profile';
 import UpdateUser from './UserProfile/UpdateUser';
 
 import UserDashboard from './services/UserDashboard';
-import AdminDashboard from './services/AdminDashboard';
 
 import Home from './services/Home';
 import Notification from './services/Notification';
@@ -88,12 +87,6 @@ function App() {
                 path="/user/dashboard"
                 element={<ProtectedRoute component={UserDashboard} roles={['User']} />}
               />
-
-              <Route
-                path="/admin-dashboard"
-                element={<ProtectedRoute component={AdminDashboard} roles={['Admin']} />}
-              />
-
 
 
 
