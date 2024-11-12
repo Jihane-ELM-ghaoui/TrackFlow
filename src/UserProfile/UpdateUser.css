@@ -1,0 +1,156 @@
+
+/* Scoped container for the update user card */
+.update-user-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center vertically */
+  height: auto;
+  margin: 20px;
+}
+  
+  /* Scoped card styling */
+  .update-user-card {
+    width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  /* Scoped profile image styling */
+  .update-user-card .profile-img {
+    width: 55%;
+    border-radius: 50%;
+    margin: 0 80px 15px;
+  }
+  
+  /* Scoped card body */
+  .update-user-card .card-body {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .update-user-card .card-body h5 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+  
+  /* Scoped list group */
+  .update-user-card .list-group {
+    padding: 0;
+    list-style: none;
+    margin: 0 0 20px 0;
+  }
+  
+  .update-user-card .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1rem; 
+  }
+  
+  .update-user-card .input-field {
+    width: 60%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1rem; 
+    outline: none; 
+  }
+
+  
+  /* Scoped button styling */
+  .update-user-card .save-btn{
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #330066, #9970cc);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .update-user-card .logout-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #330066, #9970cc);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  
+  /* Scoped success message styling */
+  .update-user-card .success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 3px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .update-user-card .success-message strong {
+    color: #155724;
+  }
+  
+  .error-message {
+    background-color: #edd4d4;
+    color: #571515;
+    padding: 10px;
+    border-radius: 3px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .error-message strong {
+    color: #571515;
+  }
+
+
+
+
+
+/* Customizing the phone input container */
+.react-tel-input .form-control {
+  border: transparent;
+  padding: 8px;
+  padding-right: 0;
+  width: 74%;
+  font-size: 15px;
+  margin-left: 40px ;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: #f7f7f7;
+  border-radius: 5px 0 0 5px;
+  height: 80%;
+  margin: 5px 0;
+}
+
+.react-tel-input .selected-flag {
+  padding-left: 10px;
+}
+
+.react-tel-input .flag-dropdown:hover {
+  background-color: #e0e0e0;
+}
+
+/* Adjust dropdown menu */
+.react-tel-input .country-list {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
