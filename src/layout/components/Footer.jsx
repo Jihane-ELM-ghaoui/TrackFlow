@@ -3,8 +3,8 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="social-icons">
+    <footer className="footerSB">
+      <div className="social-iconsSB">
         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
           <i className="bx bxl-facebook"></i>
         </a>
@@ -18,7 +18,7 @@ const Footer = () => {
           <i className="bx bxl-linkedin"></i>
         </a>
       </div>
-      <p>© 2024 CyberLearn. Tous droits réservés.</p>
+      <p>©2024 TrackFlow. All rights reserved.</p>
     </footer>
   );
 };

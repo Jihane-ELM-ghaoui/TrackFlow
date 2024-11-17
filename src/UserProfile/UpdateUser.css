@@ -1,15 +1,14 @@
 
-/* Scoped container for the update user card */
-.update-user-container {
+.update-user-containerSB {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Center vertically */
+  flex-direction: column; 
+  align-items: center;
   height: auto;
   margin: 20px;
 }
   
-  /* Scoped card styling */
-  .update-user-card {
+ 
+  .update-user-cardSB {
     width: 400px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -18,32 +17,31 @@
     background-color: #fff;
   }
   
-  /* Scoped profile image styling */
-  .update-user-card .profile-img {
+  
+  .update-user-cardSB .profile-imgSB {
     width: 55%;
     border-radius: 50%;
     margin: 0 80px 15px;
   }
-  
-  /* Scoped card body */
-  .update-user-card .card-body {
+
+  .update-user-cardSB .card-bodySB {
     text-align: center;
     margin-bottom: 15px;
   }
   
-  .update-user-card .card-body h5 {
+  .update-user-cardSB .card-bodySB h5 {
     font-size: 1.25rem;
     margin: 0;
   }
   
-  /* Scoped list group */
-  .update-user-card .list-group {
+
+  .update-user-cardSB .list-groupSB {
     padding: 0;
     list-style: none;
     margin: 0 0 20px 0;
   }
   
-  .update-user-card .list-group-item {
+  .update-user-cardSB .list-group-itemSB {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
@@ -51,7 +49,7 @@
     font-size: 1.1rem; 
   }
   
-  .update-user-card .input-field {
+  .update-user-cardSB .input-fieldSB {
     width: 60%;
     padding: 5px;
     border: 1px solid #ccc;
@@ -61,8 +59,8 @@
   }
 
   
-  /* Scoped button styling */
-  .update-user-card .save-btn{
+ 
+  .update-user-cardSB .save-btnSB{
     display: inline-block;
     width: 100%;
     padding: 10px;
@@ -75,7 +73,7 @@
     margin-bottom: 10px;
   }
   
-  .update-user-card .logout-btn {
+  .update-user-cardSB .logout-btnSB {
     display: inline-block;
     width: 100%;
     padding: 10px;
@@ -89,8 +87,8 @@
   }
   
   
-  /* Scoped success message styling */
-  .update-user-card .success-message {
+
+  .update-user-cardSB .success-messageSB {
     background-color: #d4edda;
     color: #155724;
     padding: 10px;
@@ -100,11 +98,11 @@
     font-size: 0.9rem;
   }
   
-  .update-user-card .success-message strong {
+  .update-user-cardSB .success-messageSB strong {
     color: #155724;
   }
   
-  .error-message {
+  .error-messageSB {
     background-color: #edd4d4;
     color: #571515;
     padding: 10px;
@@ -114,15 +112,13 @@
     font-size: 0.9rem;
   }
 
-  .error-message strong {
+  .error-messageSB strong {
     color: #571515;
   }
 
 
 
 
-
-/* Customizing the phone input container */
 .react-tel-input .form-control {
   border: transparent;
   padding: 8px;
@@ -147,7 +143,7 @@
   background-color: #e0e0e0;
 }
 
-/* Adjust dropdown menu */
+
 .react-tel-input .country-list {
   max-height: 200px;
   overflow-y: auto;

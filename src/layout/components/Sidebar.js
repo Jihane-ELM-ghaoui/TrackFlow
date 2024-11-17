@@ -45,46 +45,46 @@ const Sidebar = ({ isOpen }) => {
 {isAuthenticated ? (
           <>
 
-<section id="sidebar" className={isOpen ? '' : 'hide'}>
-      <NavLink to="/" className="brand" onClick={() => handleItemClick('')}>
+<section id="sidebarSB" className={isOpen ? '' : 'hide'}>
+      <NavLink to="/" className="brandSB" onClick={() => handleItemClick('')}>
         <i className='bx bxs-check-shield'></i>
-        <span className="text">CyberLearn</span>
+        <span className="textSB">TrackFlow</span>
       </NavLink>
-      <ul className="side-menu top">
+      <ul className="side-menuSB top">
         <li className={activeItem === 'Home' ? 'active' : ''}>
           <NavLink to="/home" onClick={() => handleItemClick('Home')}>
             <i className='bx bxs-home'></i>
-            <span className="text">Home</span>
+            <span className="textSB">Home</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Services' ? 'active' : ''}>
           <NavLink to="/user/cours" onClick={() => handleItemClick('Services')}>
             <i className='bx bxs-dashboard'></i>
-            <span className="text">Services</span>
+            <span className="textSB">Services</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Library' ? 'active' : ''}>
           <NavLink to="/user/library" onClick={() => handleItemClick('Library')}>
             <i className='bx bxs-book'></i>
-            <span className="text">Library</span>
+            <span className="textSB">Library</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Todo List' ? 'active' : ''}>
           <NavLink to="/user/todo" onClick={() => handleItemClick('Todo List')}>
             <i className='bx bx-list-check'></i>
-            <span className="text">Todo List</span>
+            <span className="textSB">Todo List</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Community' ? 'active' : ''}>
           <NavLink to="/user/community/articles" onClick={() => handleItemClick('Community')}>
             <i className='bx bxs-message-dots'></i>
-            <span className="text">Community</span>
+            <span className="textSB">Community</span>
           </NavLink>
         </li>
         <li className={activeItem === 'UserDashboard' ? 'active' : ''}>
           <NavLink to="/user/dashboard" onClick={() => handleItemClick('UserDashboard')}>
             <i className='bx bxs-group'></i>
-            <span className="text">UserDashboard</span>
+            <span className="textSB">UserDashboard</span>
           </NavLink>
         </li>
       </ul>

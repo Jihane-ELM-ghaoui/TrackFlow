@@ -1,18 +1,16 @@
 import React from 'react';
+import './loading.css';
 
 const Loading = () => {
 
-
-
-
-return   
-    
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-    <h1>Loading, please wait...</h1>
-    <p>This page is loading. We appreciate your patience!</p>
-    <img src="loading-spinner.gif" alt="Loading..." />
-  </div>
-      
-    };
+    return (
+      <div className="loading-containerSB">
+        <div className="loading-textSB">
+          Loading
+          <div className="loaderSB"></div>
+        </div>
+      </div>
+    );
+  }
 
 export default Loading;

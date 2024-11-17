@@ -21,7 +21,7 @@ nav {
   width: 100%;
 }
 
-.navbar-shifted {
+.navbar-shiftedSB {
   margin-left: 250px;
   width: calc(100% - 250px);
 }
@@ -40,7 +40,7 @@ nav form {
   margin-right: auto;
 }
 
-nav form .form-input {
+nav form .form-inputSB {
   display: flex;
   align-items: center;
   height: 36px;
@@ -50,7 +50,7 @@ nav form .form-input {
   margin-left: 30px; /* Adjust this to control the space from the left */
 }
 
-nav form .form-input input {
+nav form .form-inputSB input {
   flex-grow: 1;
   padding: 0 16px;
   height: 100%;
@@ -61,7 +61,7 @@ nav form .form-input input {
   border-radius: 18px 0 0 18px;
 }
 
-nav form .form-input button {
+nav form .form-inputSB button {
   width: 50px;
   height: 100%;
   display: flex;
@@ -75,14 +75,14 @@ nav form .form-input button {
   cursor: pointer;
 }
 
-nav .right-items {
+nav .right-itemsSB {
   display: flex;
   align-items: center;
   gap: 24px; /* Use gap for spacing between elements */
   margin-left: auto; /* Pushes right-items to the right */
 }
 
-nav .notification-icon {
+nav .notification-iconSB {
   font-size: 24px;
   cursor: pointer;
   color: var(--dark);
@@ -93,7 +93,7 @@ nav .notification-icon {
 
 
 
-.sidebar-toggle {
+.sidebar-toggleSB {
   border: transparent;
   background: var(--light);
   margin-left: 50px;
@@ -110,11 +110,11 @@ nav .notification-icon {
 
 
 
-.logout-button-container {
+.logout-button-containerSB {
   text-align: center;
 }
 
-.logout-button {
+.logout-buttonSB {
   background: linear-gradient(to right, #9970cc, #330066);
   color: white !important; /* Set text color to white */
   padding: 12px 20px;
@@ -141,7 +141,7 @@ ul {
 
 
 /* Navbar.css */
-.notification-icon {
+.notification-iconSB {
   position: relative;
   display: inline-block;
 }
@@ -149,7 +149,7 @@ ul {
 
 
 
-.notification-count {
+.notification-countSB {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -163,7 +163,7 @@ ul {
 
 
 
-.notification-icon .notification-bubble {
+.notification-iconSB .notification-bubbleSB {
   position: absolute;
   top: 0;
   right: -5px; /* Adjust the position as needed */
@@ -187,11 +187,11 @@ ul {
 
 
 
-.login-button-container {
+.login-button-containerSB {
   text-align: center;
 }
 
-.login-button {
+.login-buttonSB {
   background: linear-gradient(to right, #9970cc, #330066);
   color: white !important; /* Set text color to white */
   padding: 12px 20px;
@@ -217,7 +217,7 @@ ul {
 
 
 
-.navbarX {
+.navbarXSB {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -229,25 +229,25 @@ ul {
 
 
 /* Navbar items */
-.navbar-nav {
+.navbar-navSB {
   display: flex;
   gap: 30px; /* Space between items */
   color: #570987;
 }
 
-.nav-item {
+.nav-itemSB {
   list-style: none; 
   font-size: large;
   
 }
 
-.nav-link {
+.nav-linkSB {
   text-decoration: none;
   padding: 8px 12px;
   transition: background-color 0.5s;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-linkSB:hover, .nav-linkSB.active {
   font-size: 1.1em;
   color: #330066;
 }
@@ -255,7 +255,7 @@ ul {
 
 
 
-.brand {
+.brandSB {
   font-size: 24px;
   font-weight: 700;
   height: 55px;
@@ -272,13 +272,28 @@ ul {
   padding: 0;
 }
 
-.brand .bx {
+.brandSB .bx {
   min-width: 60px;
   display: flex;
   justify-content: center;
 }
 
 
-.brand:active {
+.brandSB:active {
   color:#570987;
+}
+
+.notification-countSB {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  padding: 3px 7px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

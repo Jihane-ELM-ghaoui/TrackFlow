@@ -63,25 +63,25 @@ const Profile = () => {
 
   return (
 
-    <div class="box">
+    <div class="boxSB">
 
-      <div class="card">
+      <div class="cardSB">
 
-        <div class="profile">
-          <img className="card-img" src={user.picture} alt="Profile" />
+        <div class="profileSB">
+          <img className="card-imgSB" src={user.picture} alt="Profile" />
           <h2>{userMetadata?.Full_Name || "Not provided" }</h2>
 
-          <a href="/update" aria-label="Edit">
+          <a href="/profileUpdate" aria-label="Edit">
             <i className="bx bxs-edit"></i>
           </a>
 
 
         </div>
 
-        <div class="info">
+        <div class="infoSB">
           
           <h3>Information</h3>
-            <div class="card2">
+            <div class="card2SB">
               <div>
                 <p><strong>Email:</strong></p>
                 <p> {user.email}</p>
@@ -92,8 +92,8 @@ const Profile = () => {
               </div>
             </div>
 
-          <h3 class="title">Career</h3>
-            <div class="card2">
+          <h3 class="titleSB">Career</h3>
+            <div class="card2SB">
               <div>
                   <p><strong>Organisation:</strong></p>
                   <p>{userMetadata?.Organisation || "Not provided" }</p>

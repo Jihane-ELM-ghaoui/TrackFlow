@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 const Notification = () => {
-  const { isAuthenticated, getIdTokenClaims } = useAuth0();
+  const {isAuthenticated, getIdTokenClaims } = useAuth0();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,7 +21,7 @@ const Notification = () => {
             },
           });
 
-          console.log('Response Data:', response.data); // Debugging line
+          console.log('Response Data:', response.data);
           setData(response.data);
           setErrorMessage('');
         } catch (error) {
@@ -41,6 +41,7 @@ const Notification = () => {
 
     fetchData();
   }, [getIdTokenClaims, isAuthenticated]);
+
 
   return (
     <div>

@@ -116,53 +116,53 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="update-user-container">
-      <div className="update-user-card">
-        <img className="profile-img" src={user.picture} alt="Profile" />
-        <div className="card-body"></div>
+    <div className="update-user-containerSB">
+      <div className="update-user-cardSB">
+        <img className="profile-imgSB" src={user.picture} alt="Profile" />
+        <div className="card-bodySB"></div>
         <form onSubmit={handleSave}>
-          <ul className="list-group">
+          <ul className="list-groupSB">
             
-            <li className="list-group-item">
+            <li className="list-group-itemSB">
               <p><strong>Full Name :</strong></p>
               <input
                 type="text"
                 name="Full_Name"
                 value={editedMetadata.Full_Name || "Not provided"}
                 onChange={handleInputChange}
-                className="input-field"
+                className="input-fieldSB"
               />
             </li>
 
-            <li className="list-group-item">
+            <li className="list-group-itemSB">
               <p><strong>Phone :</strong></p>
               <PhoneInput
                 country={'us'}
                 value={editedMetadata.Phone_Number || ''}
                 onChange={handlePhoneChange}
                 enableSearch
-                className="input-field"
+                className="input-fieldSB"
               />
             </li>
 
-            <li className="list-group-item">
+            <li className="list-group-itemSB">
               <p><strong>Organisation :</strong></p>
               <input
                 type="text"
                 name="Organisation"
                 value={editedMetadata.Organisation || "Not provided"}
                 onChange={handleInputChange}
-                className="input-field"
+                className="input-fieldSB"
               />
             </li>
 
-            <li className="list-group-item">
+            <li className="list-group-itemSB">
               <p><strong>Job:</strong></p>
               <select
                 name="job"
                 value={editedMetadata.job || "Not provided"}
                 onChange={handleInputChange}
-                className="input-field"
+                className="input-fieldSB"
               >
                 <option value="Software Developer">Software Developer</option>
                 <option value="UI/UX Designer">UI/UX Designer</option>
@@ -173,21 +173,21 @@ const UpdateUser = () => {
               </select>
             </li>
           </ul>
-          <button className="save-btn" type="button" onClick={handlePasswordReset}>Reset Password</button>
-          <button className="save-btn" type="submit">Save Changes</button>
-          <button className="save-btn" type="button" onClick={handleCancel}>Cancel</button>
+          <button className="save-btnSB" type="button" onClick={handlePasswordReset}>Reset Password</button>
+          <button className="save-btnSB" type="submit">Save Changes</button>
+          <button className="save-btnSB" type="button" onClick={handleCancel}>Cancel</button>
         </form>
 
         {validationError && (
-          <div className="error-message">
+          <div className="error-messageSB">
             Please make sure all information is complete before saving.
           </div>
         )}
 
         {success && (
-          <div className="success-message">
+          <div className="success-messageSB">
             Metadata updated successfully! Please <strong>log out</strong> and log in again to see the changes.
-            <button className="logout-btn" onClick={() => logout({ returnTo: window.location.origin })}>
+            <button className="logout-btnSB" onClick={() => logout({ returnTo: window.location.origin })}>
               Log out
             </button>
           </div>

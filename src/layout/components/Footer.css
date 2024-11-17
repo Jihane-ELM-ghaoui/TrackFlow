@@ -1,6 +1,6 @@
 
 
-.footer {
+.footerSB {
   background-color: #f9f9f9;
   color: #210303;
   padding: 1px 0;
@@ -12,14 +12,14 @@
 }
 
 
-.social-icons {
+.social-iconsSB {
   display: flex;
   justify-content: center; /* Center the social icons */
   margin-bottom: 5px; /* Space below social icons */
   margin-top: 5px;
 }
 
-.social-icons a {
+.social-iconsSB a {
   color: #210303; /* Social icons color */
   text-decoration: none; /* Remove underline from links */
   margin: 0 5px; /* Space between icons */
@@ -27,11 +27,11 @@
   transition: color 0.3s ease; /* Smooth color transition */
 }
 
-.social-icons a:hover {
+.social-iconsSB a:hover {
   color:#570987;
 }
 
-footer p {
+.footerSB p {
   margin-top: 0px; /* Space above the copyright text */
   font-size: 14px; /* Font size for the copyright text */
   color: #210303; /* Text color */

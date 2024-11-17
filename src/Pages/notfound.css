@@ -1,10 +1,10 @@
-.not-found {
-    background-image: url('./notFound.png'); /* Set your image path */
-    background-size: cover; /* Cover the entire page */
-    background-position: center; /* Center the image */
-    height: 80vh; /* Full height of the viewport */
-    width: 100w; /* Full width of the viewport */
-    display: flex; /* Use flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
+.not-foundSB {
+    background-image: url('./notFound.png'); 
+    background-size: cover; 
+    background-position: center; 
+    height: 80vh; 
+    width: 100w;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
 }

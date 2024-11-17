@@ -44,8 +44,6 @@ const Home = () => {
     fetchData();
   }, [getIdTokenClaims, isAuthenticated]);
 
-  
-
 
 
   return (

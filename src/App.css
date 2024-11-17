@@ -19,13 +19,13 @@ body {
 }
 
 
-.App {
+.AppSB {
   display: flex;
   flex-direction: column; /* Stack components vertically */
   /* height: 100vh; sticky footer */
 }
 
-.main-content {
+.main-contentSB {
   flex: 1; /* Take up the remaining space beside the navbar */
   overflow: hidden;
 }

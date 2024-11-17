@@ -1,4 +1,4 @@
-  .box {
+  .boxSB {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     margin: -30px;
   }
   
-  .card {
+  .cardSB {
     display: flex;
     background-color: white;
     overflow: hidden;
@@ -15,10 +15,10 @@
     height: 70%;
 
     margin: 0;
-    padding-right: 0; /* Ensure no padding on right */
+    padding-right: 0;
   }
   
-  .profile {
+  .profileSB {
     background: linear-gradient(135deg, #330066, #9970cc);
     color: white;
     text-align: center;
@@ -29,39 +29,39 @@
     align-items: center;
   }
   
-  .profile img {
+  .profileSB img {
     border-radius: 50%;
     width: 40%;
     margin-bottom: 30px;
     margin-top: 50px;
   }
   
-  .profile h2 {
+  .profileSB h2 {
     margin-bottom: 30px;
     font-size: 1.7rem; 
   }
 
 
-  .profile a {
+  .profileSB a {
     color: #ffffff;
-    text-decoration: none; /* Remove underline from links */
-    font-size: 25px; /* Icon size */
-    transition: color 0.3s ease; /* Smooth color transition */
+    text-decoration: none; 
+    font-size: 25px;
+    transition: color 0.3s ease; 
   }
   
-  .profile a:hover {
+  .profileSB a:hover {
     color:#570987;
   }
   
 
-  .info {
-    padding: 40px 50px; /* Remove right padding */
-    margin: 0; /* Ensure there's no external margin */
-    width: 100%; /* Take up full width to remove right spacing */
-    box-sizing: border-box; /* Include padding within width */
+  .infoSB {
+    padding: 40px 50px;
+    margin: 0; 
+    width: 100%; 
+    box-sizing: border-box;
   }
   
-  .info h3 {
+  .infoSB h3 {
     font-size: 1.65rem; 
     font-weight: bold;
     color: #333;
@@ -70,27 +70,27 @@
     margin-bottom: 20px;
   }
   
-  .title{
+  .titleSB{
     margin-top: 40px;
   }
 
-  .info p {
+  .infoSB p {
     margin: 10px 0;
     font-size: 1.15rem; 
   }
 
-  .card2{
+  .card2SB{
     display: flex;
   }
   
-  .card2 > div {
+  .card2SB > div {
     margin-right: 90px;
   }
 
-  .card2 > div:first-child {
+  .card2SB > div:first-child {
     width: 40%;
   }
   
-  .card2 > div:last-child {
+  .card2SB > div:last-child {
     margin-right: 0; 
   }

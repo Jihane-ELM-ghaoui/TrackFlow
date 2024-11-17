@@ -37,29 +37,19 @@ function App() {
 
 
 
-  const { isLoading, error } = useAuth0();
-
-  if (isLoading) return <Loading />;
-  if (error) return <div>Oops... {error.message}</div>;
-
   
   return (
-    <div className="App">
+    <div className="AppSB">
 
       <Sidebar isOpen={isOpen} />
-
-
-
       <Navbar handleSidebarToggle={toggleSidebar} isOpen={isOpen} />
 
 
-
-        <div className="main-content">
+        <div className="main-contentSB">
 
           <Routes>
 
               <Route exact path="/" element={<Main />} />
-
 
 
               <Route
@@ -68,20 +58,24 @@ function App() {
               />
 
               <Route
+                path="/profileUpdate"
+                element={<ProtectedRoute component={UpdateUser}/>}
+              />
+
+              <Route
                 path="/notifications"
                 element={<ProtectedRoute component={Notification}/>}
               />
 
-              <Route
-                path="/update"
-                element={<ProtectedRoute component={UpdateUser}/>}
-              />
+
 
 
               <Route
                 path="/home"
                 element={<ProtectedRoute component={Home}/>}
               />
+
+
 
 
               <Route
@@ -93,8 +87,6 @@ function App() {
                 path="/admin-dashboard"
                 element={<ProtectedRoute component={AdminDashboard} roles={['Admin']} />}
               />
-
-
 
 
               <Route path="*" element={<NotFound />} />
