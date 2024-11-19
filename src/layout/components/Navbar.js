@@ -17,6 +17,10 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
   };
 
   const [unseenCount, setUnseenCount] = useState(0);
+  const [isPanelOpen, setIsPanelOpen] = useState(false); // State for showing/hiding panel
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     async function fetchUnseenCount() {
@@ -74,6 +78,45 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
     }
   };
 
+  const togglePanel = async () => {
+    await markAllAsRead(); 
+    setIsPanelOpen(!isPanelOpen);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isAuthenticated) {
+        try {
+          const idTokenClaims = await getIdTokenClaims();
+          const idToken = idTokenClaims.__raw;
+
+          const response = await axios.get('http://localhost:8000/notification', {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          });
+
+          console.log('Response Data:', response.data);
+          setData(response.data);
+          setErrorMessage('');
+        } catch (error) {
+          if (error.response && error.response.status === 403) {
+            setErrorMessage("You don't have permission.");
+          } else {
+            console.error('Error fetching data:', error);
+            setErrorMessage('An error occurred while fetching data.');
+          }
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [getIdTokenClaims, isAuthenticated]);
+
   return (
     <>
       {isAuthenticated ? (
@@ -93,14 +136,20 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
             </form>
 
             <div className="right-itemsSB">
-              <Link to="/notifications" className="notification-iconSB" onClick={markAllAsRead}>
-                <i className="bx bx-bell"></i>
-                {unseenCount > 0 && (
-                  <span className="notification-countSB">
-                    {unseenCount}
-                  </span>
-                )}
-              </Link>
+              <div className="notification-icon-wrapper">
+                <button
+                  className="notification-iconSB"
+                  onClick={togglePanel}
+                  aria-label="Toggle notifications"
+                >
+                  <i className="bx bx-bell"></i>
+                  {unseenCount > 0 && (
+                    <span className="notification-countSB">
+                      {unseenCount}
+                    </span>
+                  )}
+                </button>
+              </div>
 
               <Link to="/profile">
                 <img
@@ -119,12 +168,50 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
               </button>
             </div>
           </nav>
+
+          {/* Notification Panel */}
+          {isPanelOpen && (
+            <div className="notification-panelSB">
+              <div className="notification-headerSB">
+                <h2>Notifications</h2>
+                <button
+                  className="close-panelSB"
+                  onClick={togglePanel}
+                  aria-label="Close notifications"
+                >
+                  X
+                </button>
+              </div>
+              <div className="notification-bodySB">
+                {loading ? (
+                  <p>Loading...</p>
+                ) : errorMessage ? (
+                  <p>{errorMessage}</p>
+                ) : (
+                  <div>
+                    {data.length > 0 ? (
+                      data.map((notification) => (
+                        <div key={notification.id} className="notification-itemSB">
+                          <p className="notification-messageSB">{notification.message}</p>
+                          <p className="notification-timestampSB">
+                            {new Date(notification.timestamp).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No new notifications.</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </>
       ) : (
         <div className="navbarXSB">
           <Link to="/" className="brandSB">
             <i className="bx bxs-check-shield"></i>
-            <span className="textSB">CyberLearn</span>
+            <span className="textSB">TrackFlow</span>
           </Link>
 
           <div className="navbar-navSB">

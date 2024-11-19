@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-
 
 import './App.css';
 
@@ -12,7 +10,6 @@ import Main from './layout/components/Main';
 import Footer from './layout/components/Footer';
 
 
-import Loading from './Pages/Loading';
 import NotFound from './Pages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -24,7 +21,6 @@ import UserDashboard from './services/UserDashboard';
 import AdminDashboard from './services/AdminDashboard';
 
 import Home from './services/Home';
-import Notification from './services/Notification';
 
 
 function App() {
@@ -61,13 +57,6 @@ function App() {
                 path="/profileUpdate"
                 element={<ProtectedRoute component={UpdateUser}/>}
               />
-
-              <Route
-                path="/notifications"
-                element={<ProtectedRoute component={Notification}/>}
-              />
-
-
 
 
               <Route
