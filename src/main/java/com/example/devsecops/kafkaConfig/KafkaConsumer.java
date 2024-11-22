@@ -27,4 +27,17 @@ public class KafkaConsumer {
 
         eventPublisher.publishEvent(new NotificationEvent(this, notification));
     }
+
+    @KafkaListener(topics = "BucketCreate-topic")
+    public void handleBucketCreateMessage(String userId) {
+        String message = "bucket create";
+        System.out.println("Received Kafka message : bucket create");
+
+        Notification notification = new Notification();
+        notification.setMessage(message);
+        notification.setUserId(userId);
+        notification.setTimestamp(LocalDateTime.now());
+
+        eventPublisher.publishEvent(new NotificationEvent(this, notification));
+    }
 }
