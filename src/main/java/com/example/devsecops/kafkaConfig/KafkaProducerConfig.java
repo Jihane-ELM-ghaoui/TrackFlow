@@ -18,8 +18,13 @@ import java.util.Map;
 public class KafkaProducerConfig {
  
     @Bean
-    public NewTopic createTopic(){
+    public NewTopic createEmailTopic(){
         return new NewTopic("EmailVerification-topic", 3, (short) 1);
+    }
+
+    @Bean
+    public NewTopic createBucketTopic(){
+        return new NewTopic("BucketCreate-topic", 3, (short) 1);
     }
 
 

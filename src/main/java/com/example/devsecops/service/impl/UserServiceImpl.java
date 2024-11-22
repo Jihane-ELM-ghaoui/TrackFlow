@@ -60,6 +60,8 @@ public class UserServiceImpl implements UserService {
             userRepo.save(newUser);
             System.out.println("New user saved to the database.");
 
+            emailVerification();
+
             // Create an S3 bucket with the userId
             createS3Bucket(userId);
             kafkaProducer.sendBucketCreateMessage(userId);
