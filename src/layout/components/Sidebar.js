@@ -10,17 +10,17 @@ const Sidebar = ({ isOpen }) => {
   const {isAuthenticated} = useAuth0();
 
 
-  const [activeItem, setActiveItem] = useState('Home');
+  const [activeItem, setActiveItem] = useState('Dashboard');
   const location = useLocation();
 
   useEffect(() => {
     // Set active item based on current pathname
-    if (location.pathname === '/home') {
-      setActiveItem('Home');
+    if (location.pathname === '/dashboard') {
+      setActiveItem('Dashboard');
     } else if (location.pathname.includes('/user/cours') || location.pathname.includes('/user/cours/modules/:year/:semester') || location.pathname.includes('/user/cours/modules/list/:year/:semester/:module') ) {
       setActiveItem('Services');
-    } else if (location.pathname.includes('/user/library')) {
-      setActiveItem('Library');
+    } else if (location.pathname.includes('/storage')) {
+      setActiveItem('Storage');
     } else if (location.pathname.includes('/user/todo')) {
       setActiveItem('Todo List');
     } else if (location.pathname.includes('/user/community/articles')) {
@@ -51,22 +51,22 @@ const Sidebar = ({ isOpen }) => {
         <span className="textSB">TrackFlow</span>
       </NavLink>
       <ul className="side-menuSB top">
-        <li className={activeItem === 'Home' ? 'active' : ''}>
-          <NavLink to="/home" onClick={() => handleItemClick('Home')}>
+        <li className={activeItem === 'Dashboard' ? 'active' : ''}>
+          <NavLink to="/dashboard" onClick={() => handleItemClick('Dashboard')}>
             <i className='bx bxs-home'></i>
-            <span className="textSB">Home</span>
+            <span className="textSB">Dashboard</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Services' ? 'active' : ''}>
-          <NavLink to="/user/cours" onClick={() => handleItemClick('Services')}>
+          <NavLink to="/projects" onClick={() => handleItemClick('Services')}>
             <i className='bx bxs-dashboard'></i>
             <span className="textSB">Services</span>
           </NavLink>
         </li>
-        <li className={activeItem === 'Library' ? 'active' : ''}>
-          <NavLink to="/user/library" onClick={() => handleItemClick('Library')}>
-            <i className='bx bxs-book'></i>
-            <span className="textSB">Library</span>
+        <li className={activeItem === 'Storage' ? 'active' : ''}>
+          <NavLink to="/storage" onClick={() => handleItemClick('Storage')}>
+            <i className='bx bxs-data'></i>
+            <span className="textSB">Storage</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Todo List' ? 'active' : ''}>
@@ -79,12 +79,6 @@ const Sidebar = ({ isOpen }) => {
           <NavLink to="/user/community/articles" onClick={() => handleItemClick('Community')}>
             <i className='bx bxs-message-dots'></i>
             <span className="textSB">Community</span>
-          </NavLink>
-        </li>
-        <li className={activeItem === 'UserDashboard' ? 'active' : ''}>
-          <NavLink to="/user/dashboard" onClick={() => handleItemClick('UserDashboard')}>
-            <i className='bx bxs-group'></i>
-            <span className="textSB">UserDashboard</span>
           </NavLink>
         </li>
       </ul>

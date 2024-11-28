@@ -39,25 +39,33 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
     fetchUnseenCount();
 
     const stompClient = Stomp.over(() => new SockJS('http://localhost:8000/ws'));
-
+  
     stompClient.connect({}, () => {
       stompClient.subscribe('/topic/notifications', (message) => {
         if (message.body) {
           const notification = JSON.parse(message.body);
+  
+          // Update unseen count
           setUnseenCount((prevCount) => prevCount + 1);
+  
+          // Dynamically add the new notification to the panel
+          setData((prevData) => [notification, ...prevData]); // Add to the top of the list
+          
+  
           console.log("Received notification:", notification);
         }
       });
     }, (error) => {
       console.error("WebSocket connection error:", error);
     });
-
+  
+    // Cleanup on component unmount
     return () => {
       if (stompClient && stompClient.connected) {
         stompClient.disconnect();
       }
     };
-  }, []);
+  }, []);  
 
   const markAllAsRead = async () => {
     if (isAuthenticated) {
@@ -79,7 +87,7 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
   };
 
   const togglePanel = async () => {
-    await markAllAsRead(); 
+    markAllAsRead(); 
     setIsPanelOpen(!isPanelOpen);
   };
 
@@ -116,6 +124,27 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
 
     fetchData();
   }, [getIdTokenClaims, isAuthenticated]);
+
+
+
+  // Helper function for relative time formatting
+  const timeAgo = (timestamp) => {
+    const now = Date.now();
+    const diff = now - new Date(timestamp).getTime();
+
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (seconds < 60) return `${seconds} sec ago`;
+    if (minutes < 60) return `${minutes} min ago`;
+    if (hours < 24) return `${hours} h ago`;
+    if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+  };
+
 
   return (
     <>
@@ -169,6 +198,7 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
             </div>
           </nav>
 
+
           {/* Notification Panel */}
           {isPanelOpen && (
             <div className="notification-panelSB">
@@ -179,7 +209,7 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
                   onClick={togglePanel}
                   aria-label="Close notifications"
                 >
-                  X
+                <i className="bx bx-x"></i>
                 </button>
               </div>
               <div className="notification-bodySB">
@@ -190,12 +220,14 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
                 ) : (
                   <div>
                     {data.length > 0 ? (
-                      data.map((notification) => (
-                        <div key={notification.id} className="notification-itemSB">
-                          <p className="notification-messageSB">{notification.message}</p>
-                          <p className="notification-timestampSB">
-                            {new Date(notification.timestamp).toLocaleDateString()}
-                          </p>
+                            [...data]
+                              .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sort newest to oldest
+                              .map((notification) => (
+                                <div key={notification.id} className="notification-itemSB">
+                                  <p className="notification-messageSB">{notification.message}</p>
+                                  <p className="notification-timestampSB">
+                                    {timeAgo(notification.timestamp)}
+                                  </p>
                         </div>
                       ))
                     ) : (

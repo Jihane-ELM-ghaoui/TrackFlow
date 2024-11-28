@@ -14,14 +14,16 @@ import NotFound from './Pages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 
 
-import Profile from './UserProfile/Profile';
-import UpdateUser from './UserProfile/UpdateUser';
+import Profile from './services/UserProfile/Profile';
+import UpdateUser from './services/UserProfile/UpdateUser';
 
-import UserDashboard from './services/UserDashboard';
 import AdminDashboard from './services/AdminDashboard';
 
-import Home from './services/Home';
+import Dashboard from './services/Dashboard/Dashboard';
+import Storage from './services/Storage/Storage'
 
+
+import AddProject from './services/Project/AddProject'
 
 function App() {
 
@@ -60,17 +62,22 @@ function App() {
 
 
               <Route
-                path="/home"
-                element={<ProtectedRoute component={Home}/>}
+                path="/dashboard"
+                element={<ProtectedRoute component={Dashboard}/>}
               />
-
-
-
 
               <Route
-                path="/user/dashboard"
-                element={<ProtectedRoute component={UserDashboard} roles={['User']} />}
+                path="/storage"
+                element={<ProtectedRoute component={Storage}/>}
               />
+
+              
+              <Route
+                path="/projects"
+                element={<ProtectedRoute component={AddProject}/>}
+              />
+
+
 
               <Route
                 path="/admin-dashboard"

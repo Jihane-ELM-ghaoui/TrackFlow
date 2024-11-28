@@ -1,0 +1,13 @@
+.drag-drop-kh {
+    border: 2px dashed #7f8c8d;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .drag-drop-kh:hover {
+    background-color: #ecf0f1;
+  }
+  

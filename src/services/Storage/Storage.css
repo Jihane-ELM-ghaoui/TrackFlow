@@ -1,0 +1,30 @@
+.storage-kh {
+    flex: 1;
+    background: white;
+    padding: 20px; /* Adjust padding of the centered container */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 40px auto; /* Adjust margins of the centered container */
+    max-width: 90%; /* Adjust the width of the centered container */
+    margin-right: 35px;
+  }
+  
+  .view-toggle-kh {
+    margin: 20px 0;
+  }
+  
+  .view-toggle-kh button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .view-toggle-kh button:hover {
+    background-color: #2980b9;
+  }
+  

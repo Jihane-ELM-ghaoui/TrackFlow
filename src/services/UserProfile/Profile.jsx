@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useNavigate } from 'react-router-dom';
 
 import './Profile.css'; // Import your custom CSS file
 
@@ -9,9 +8,7 @@ const Profile = () => {
   const [userMetadata, setUserMetadata] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [token, setToken] = useState(null);  // State to store token
-
-  const navigate = useNavigate();
+  const [token, setToken] = useState(null);  
 
 
   useEffect(() => {

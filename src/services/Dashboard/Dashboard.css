@@ -1,0 +1,197 @@
+/* Global Styling for Dashboard */
+.dashboard-container-kh {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  max-width: 90%;
+  font-family: Arial, sans-serif; 
+  margin-right: 35px;
+}
+
+/* Header Styling */
+.dashboard-header-kh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header-kh h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+/* Button Section */
+.header-buttons-kh {
+  display: flex;
+}
+
+.create-new-project-btn-kh,
+.add-date-btn-kh {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #6a0dad;
+  color: white;
+  margin-left: 10px;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.create-new-project-btn-kh:hover,
+.add-date-btn-kh:hover {
+  background-color: #5b0a94; /* Darker shade on hover */
+}
+
+/* Main Content Styling */
+.main-content-kh {
+  display: flex;
+  gap: 20px;
+}
+
+/* Calendar and Task Section */
+.calendar-container-kh {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-section-kh {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/* Create Task Button */
+.create-task-btn-kh {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.create-task-btn-kh:hover {
+  background-color: #0056b3;
+}
+
+/* Chart Section */
+.charts-section-kh {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+/* Chart Item */
+.chart-item-kh {
+  flex: 1;
+  max-width: 300px;
+  margin: 0 10px;
+  text-align: center;
+}
+
+/* Task Status Chart */
+.task-status-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: 300px;
+  height: 300px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Circular Progress */
+.circular-progress-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+}
+
+.circular-progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container-kh {
+      max-width: 100%;
+      padding: 15px;
+  }
+
+  .main-content-kh {
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  /* Adjusts the charts section to display them horizontally with equal spacing */
+.charts-section-kh {
+  display: flex;
+  justify-content: space-evenly; /* Distribute the charts evenly */
+  gap: 20px; /* Add some space between the charts */
+  margin-top: 30px;
+}
+
+/* Makes each chart item have equal size */
+.chart-item-kh {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1; /* Ensure all charts take equal space */
+  max-width: 200px; /* Set a max-width to keep charts from getting too large */
+  height: 200px; /* Set the height of each chart */
+  margin: 0 10px;
+  text-align: center;
+  color: white;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: You can style the chart label to be centered and have consistent styling */
+.chart-label-kh {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px; /* Space between label and chart */
+  text-align: center;
+}
+ 
+/* Specific styles for TaskStatusChart to ensure it matches size */
+.task-status-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important; /* Force width to 100% */
+  height: 100% !important; /* Force height to 100% */
+  max-width: 200px; /* Ensure the max width is consistent */
+  max-height: 200px; /* Ensure the max height is consistent */
+  margin: 0 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+}

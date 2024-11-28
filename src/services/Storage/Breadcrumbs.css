@@ -1,0 +1,14 @@
+.breadcrumbs-kh {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .breadcrumbs-kh span {
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  .breadcrumbs-kh span:hover {
+    text-decoration: underline;
+  }
+  
