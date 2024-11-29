@@ -1,6 +1,5 @@
 package com.example.userKPI.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskid;
 
-
+    private String projectid;
     private String assignedUser;
     private String taskname;
     private Date startDate;

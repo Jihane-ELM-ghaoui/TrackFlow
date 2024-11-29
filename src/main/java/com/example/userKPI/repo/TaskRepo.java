@@ -3,6 +3,7 @@ package com.example.userKPI.repo;
 import com.example.userKPI.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,21 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
 
     @Query("SELECT t.status, COUNT(t) FROM Task t WHERE t.assignedUser = :userId GROUP BY t.status")
     List<Object[]> countTasksByStatus(String userId);
+
+    //project
+
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectid = :projectId")
+    long countTasksByProjectId(@Param("projectId") Long projectId);
+
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectid = :projectId AND t.completionDate <= t.estimatedFinishDate AND t.status = 'COMPLETED'")
+    long countOnTimeTasksByProjectId(@Param("projectId") Long projectId);
+
+    @Query("SELECT DATEDIFF(t.completionDate, t.startDate) FROM Task t WHERE t.projectid = :projectId AND t.status = 'COMPLETED'")
+    List<Long> findCycleTimesForCompletedTasksByProjectId(@Param("projectId") Long projectId);
+
+
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectid = :projectId AND t.status = 'COMPLETED'")
+    long countCompletedTasksByProjectId(@Param("projectId") Long projectId);
+
 }
+
