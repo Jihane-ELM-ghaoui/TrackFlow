@@ -10,7 +10,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
     try {
       const accessToken = await getAccessTokenSilently();
       const response = await axios.get(
-        `http://localhost:8090/api/files/download/${file.name}`, // Change from POST to GET
+        `http://localhost:8090/api/files/download/${file.name}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -36,7 +36,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
     try {
       const accessToken = await getAccessTokenSilently();
       const response = await axios.get(
-        `http://localhost:8090/api/files/open/${file.name}`, // Change endpoint to 'open'
+        `http://localhost:8090/api/files/open/${file.name}`, 
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
