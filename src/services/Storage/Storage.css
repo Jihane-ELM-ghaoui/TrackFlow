@@ -6,7 +6,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 40px auto; /* Adjust margins of the centered container */
     max-width: 90%; /* Adjust the width of the centered container */
-    margin-right: 35px;
   }
   
   .view-toggle-kh {
