@@ -44,8 +44,11 @@ public class NotificationServiceImpl implements NotificationService {
     @EventListener
     public void handleNotificationEvent(NotificationEvent event) {
         Notification notification = event.getNotification();
+
         notificationRepo.save(notification);
 
         messagingTemplate.convertAndSend("/topic/notifications", notification);
+
     }
+
 }

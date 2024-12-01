@@ -40,4 +40,35 @@ public class KafkaConsumer {
 
         eventPublisher.publishEvent(new NotificationEvent(this, notification));
     }
+
+
+
+    @KafkaListener(topics = "Chat-topic")
+    public void handleChatMessage(String message) {
+        try {
+            // Split the message using the delimiter
+            String[] parts = message.split("-");
+            if (parts.length == 2) {
+                String sendername = parts[0];
+                String receiver = parts[1];
+
+                System.out.println("Received Kafka message with sender: " + sendername + ", receiver: " + receiver);
+
+                String notificationMessage = "You have a new message from " + sendername;
+
+                Notification notification = new Notification();
+                notification.setMessage(notificationMessage);
+                notification.setUserId(receiver);
+                notification.setTimestamp(LocalDateTime.now());
+
+                eventPublisher.publishEvent(new NotificationEvent(this, notification));
+            } else {
+                System.out.println("Invalid message format: " + message);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error processing message: " + ex.getMessage());
+        }
+    }
+
+
 }
