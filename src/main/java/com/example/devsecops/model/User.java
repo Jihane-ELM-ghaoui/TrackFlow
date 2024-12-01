@@ -20,5 +20,6 @@ public class User {
 
     private String userId;
     private String email;
+    private String Full_Name;
 
 }
