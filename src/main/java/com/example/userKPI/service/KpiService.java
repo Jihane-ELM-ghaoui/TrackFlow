@@ -49,4 +49,5 @@ public class KpiService {
 
         return new KpiResponse(taskCompletionRate, incompleteTaskRate, statusCount);
     }
+
 }

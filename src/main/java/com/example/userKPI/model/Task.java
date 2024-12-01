@@ -12,7 +12,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskid;
 
-    private String projectid;
+    private Long projectid;
     private String assignedUser;
     private String taskname;
     private Date startDate;
