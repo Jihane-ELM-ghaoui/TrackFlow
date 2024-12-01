@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
@@ -24,23 +25,17 @@ public class FileService {
 
     public ResponseEntity<String> uploadFile(MultipartFile file) {
         try {
-            // Retrieve the current authentication object
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            // Extract the userId from the authentication object
             String userId = auth.getName();
-            System.out.println("Authenticated User: " + userId);
 
             String bucketName = userId.split("\\|")[1];
             String fileName = file.getOriginalFilename();
 
-            // Upload file to S3
-            s3Client.putObject(
-                    PutObjectRequest.builder()
+            // Use the Consumer variant to create the request
+            s3Client.putObject(builder -> builder
                             .bucket(bucketName)
-                            .key(fileName)
-                            .build(),
-                    software.amazon.awssdk.core.sync.RequestBody.fromBytes(file.getBytes())
-            );
+                            .key(fileName),
+                    RequestBody.fromBytes(file.getBytes()));
 
             return ResponseEntity.ok("File uploaded successfully to bucket: " + bucketName);
 
@@ -52,6 +47,7 @@ public class FileService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error: " + e.getMessage());
         }
     }
+
 
     public List<FileMetadata> listFiles(String userId) {
         String bucketName = userId.split("\\|")[1];
