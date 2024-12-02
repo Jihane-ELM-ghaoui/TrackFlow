@@ -13,14 +13,17 @@ public class TaskService {
     private TaskRepo taskRepo;
 
     @Autowired
-    private KpiProjectService kpiService;
+    private KpiProjectService kpiProjectService;
+    @Autowired
+    private KpiService kpiService;
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
     public Task addTask(Task task) {
         Task savedTask = taskRepo.save(task);
-        kpiService.recalculateKpiAndNotify(savedTask.getProjectid()); // Trigger KPI update
+        kpiProjectService.recalculateKpiAndNotify(savedTask.getProjectid());// Trigger KPI update
+        kpiService.recalculateKpiForUserAndNotify();
         messagingTemplate.convertAndSend("/topic/taskUpdates", savedTask); // Notify clients of new task
         return savedTask;
     }
@@ -40,7 +43,8 @@ public class TaskService {
 
         Task savedTask = taskRepo.save(existingTask);
 
-        kpiService.recalculateKpiAndNotify(savedTask.getProjectid()); // Trigger KPI update
+        kpiProjectService.recalculateKpiAndNotify(savedTask.getProjectid()); // Trigger KPI update
+        kpiService.recalculateKpiForUserAndNotify();
         messagingTemplate.convertAndSend("/topic/taskUpdates", savedTask); // Notify clients of task update
 
         return savedTask;
@@ -55,7 +59,8 @@ public class TaskService {
         taskRepo.deleteById(taskId);
 
         // Recalculate and broadcast updated KPIs
-        kpiService.recalculateKpiAndNotify(projectId);
+        kpiProjectService.recalculateKpiAndNotify(projectId);
+        kpiService.recalculateKpiForUserAndNotify();
 
         // Notify clients about the task deletion
         messagingTemplate.convertAndSend("/topic/taskUpdates", taskId); // Send only the task ID to indicate deletion

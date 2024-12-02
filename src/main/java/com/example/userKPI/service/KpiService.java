@@ -2,6 +2,7 @@ package com.example.userKPI.service;
 
 import com.example.userKPI.DTO.KpiResponse;
 import com.example.userKPI.repo.TaskRepo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,12 @@ import java.util.Map;
 public class KpiService {
 
     private final TaskRepo taskRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public KpiService(TaskRepo taskRepository) {
+
+    public KpiService(TaskRepo taskRepository, SimpMessagingTemplate messagingTemplate) {
         this.taskRepository = taskRepository;
+        this.messagingTemplate=messagingTemplate;
     }
 
     public KpiResponse calculateKpisForUser() {
@@ -48,6 +52,10 @@ public class KpiService {
         double incompleteTaskRate = totalTasks == 0 ? 0 : (incompleteTasks * 100.0) / totalTasks;
 
         return new KpiResponse(taskCompletionRate, incompleteTaskRate, statusCount);
+    }
+    public void recalculateKpiForUserAndNotify() {
+        KpiResponse kpiResponse = calculateKpisForUser();
+        messagingTemplate.convertAndSend("/topic/kpiUpdates", kpiResponse);
     }
 
 }

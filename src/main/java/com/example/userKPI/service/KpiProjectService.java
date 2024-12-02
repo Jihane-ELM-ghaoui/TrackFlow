@@ -33,19 +33,17 @@ public class KpiProjectService {
         return (double) onTimeTasks / totalCompletedTasks * 100;
     }
 
-
-
     public List<KpiProjectResponse.TaskCycleTime> findCycleTimesForCompletedTasks(Long projectId) {
         List<Object[]> results = taskRepo.findTaskIdAndCycleTimeByProjectId(projectId);
 
         return results.stream()
                 .map(row -> new KpiProjectResponse.TaskCycleTime(
-                        ((Number) row[0]).longValue(),
-                        ((Number) row[1]).longValue()
+                        row[0] != null ? ((Number) row[0]).longValue() : null,
+                        row[1] != null ? ((Number) row[1]).longValue() : null
                 ))
                 .collect(Collectors.toList());
-
     }
+
     public double calculateProgress(Long projectId) {
         long totalTasks = taskRepo.countTasksByProjectId(projectId);
         if (totalTasks == 0) return 0;
