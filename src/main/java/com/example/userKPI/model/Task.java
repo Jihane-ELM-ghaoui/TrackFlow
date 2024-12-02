@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long taskid;
+    private Long taskId;
 
     private String taskName;
     private String taskDescription;
