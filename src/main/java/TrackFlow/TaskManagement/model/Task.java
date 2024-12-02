@@ -3,6 +3,7 @@ package TrackFlow.TaskManagement.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -14,24 +15,21 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
 
-    private Long projectId;
-    private String leaderId;
+
     private String taskName;
     private String taskDescription;
+    private int taskPriority;
+    private Long projectId;
+    private Date taskStartDate;
+    private Date taskEstimatedEndDate;
+    private Date taskEndDate;
+    private LocalDateTime createdAt;
+    private String createdBy;
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus taskStatus;
-    public enum TaskStatus {
-        IN_PROGRESS, DONE, PAUSED
+    private Status status;
+
+    public enum Status {
+        NOT_STARTED, IN_PROGRESS, COMPLETED
     }
-
-    private Date taskStartDate;
-    private Date taskEndDate;
-    private int taskPriority;
-    private String taskVisibility;
-    private Long createdBy;
-
-    @ManyToOne
-    @JoinColumn(name = "projectId", referencedColumnName = "id", insertable = false, updatable = false)
-    private Project project;
 }
