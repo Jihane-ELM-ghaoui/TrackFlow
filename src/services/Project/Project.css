@@ -1,0 +1,149 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f4f4f9;  /* Set a light background for the page */
+    color: #333;
+}
+
+
+/* Container for the project page */
+.project-page {
+    display: flex;
+    background-color: #F8F8FB;       /* Move the background color here */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 80px; /* Space from the navbar */
+    margin-bottom: 70px; /* Space from the footer */
+}
+
+/* Title Styles */
+.project-page h1 {
+    font-size: 3rem;
+    color: #330066;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.project-page p {
+    font-size: 1rem;
+    color: #555;
+    text-align: justify; /* Justify the text */
+    max-width: 1000px;    /* Set a max-width for the description */
+    line-height: 1.6;    /* Improve readability */
+    margin-bottom: 20px;
+}
+
+/* Button Row */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Button Styles */
+.button-row button {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    color: white;
+    background: linear-gradient(to right, #9970cc, #330066);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-row button:hover {
+    background: linear-gradient(to right, #bb88d9, #4c0066);
+}
+
+.button-row button:active {
+    background: linear-gradient(to right, #9970cc, #330066);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    color: #330066;
+    margin-bottom: 20px;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-content label {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.modal-content input,
+.modal-content textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    padding: 12px;
+    background-color: #330066;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #9970cc;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2rem;
+    color: #330066;
+    cursor: pointer;
+}
