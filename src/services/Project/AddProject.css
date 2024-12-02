@@ -1,44 +1,350 @@
-/* CSS (ProjectForm.css) */
-.project-form-container {
+/* Apply Lato font globally */
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container for the project list and modal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Style for the project list container */
+.project-list-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    text-align: center;
+}
+
+/* List header styling */
+.list-header {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Create new project button */
+.create-new-btn {
+    padding: 12px 25px;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.create-new-btn:hover {
+    background-color: #8e44ad;
+}
+
+/* Buttons row (Invite Member, Create Role, Create Task) */
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+/* Individual buttons for Invite Member, Create Role, Create Task */
+.project-action-btn {
+    padding: 12px 25px;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 30%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.project-action-btn:hover {
+    background-color: #8e44ad;
+}
+
+/* Grid for project items */
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+/* Individual project item styling */
+.project-item {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    transition: background-color 0.3s, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    max-width: 280px;
+    text-align: left;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.project-item:hover {
+    background-color: #f3f3f3;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.project-item .created-at {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa; /* Light background color */
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
 }
 
-.project-form {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 300px;
+/* Modal content box */
+.modal-content {
+    background-color: white;
+    padding: 40px;
+    max-width: 800px;
+    width: 80%;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh; /* Allow scrolling if content overflows */
+    position: relative;
 }
+
+/* Modal header styles */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.7em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-close-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.modal-close-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Modal Body */
+.modal-body {
+    margin-top: 20px;
+}
+
+.add-member, .create-role {
+    margin-top: 30px;
+}
+
+/* Labels for form fields */
+.modal-body label {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+/* Form inputs */
+input[type="email"], input[type="text"], input[type="date"], input[type="number"], textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1em;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="email"]:focus, input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus, textarea:focus {
+    border-color: #9b59b6;
+    outline: none;
+}
+
+/* Styled buttons in modal */
+button {
+    padding: 12px 18px;
+    background: linear-gradient(to right, #9970cc, #330066);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #8e44ad;
+}
+
+button:disabled {
+    background-color: #bbb;
+    cursor: not-allowed;
+}
+
+/* Styled Close Button for modal */
+
+.close-btn:hover {
+    background-color: #9b59b6;
+}
+
+/* Hover effect on buttons */
+button:hover, .close-btn:hover {
+    background-color: #8e44ad;
+    transition: background-color 0.3s ease;
+}
+
+/* Create New Project Header */
+.modal-content h3 {
+    color: #330066;
+    font-size: 2em; /* Bigger text */
+    text-align: center; /* Center the text */
+    margin-bottom: 30px; /* More space between title and form */
+}
+
+/* Fade-in effect for the modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Style for the form */
+.project-form label {
+    display: block;
+    margin: 8px 0 4px;
+    font-weight: bold;
+}
+
 
 .project-form input,
-.project-form textarea,
-.project-form button {
-    font-size: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #ced4da;
+.project-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.project-form textarea {
-    resize: none;
-    height: 80px;
-}
-
+/* Button Styles */
 .project-form button {
-    background-color: #007bff;
-    color: white;
+    width: 45%; /* Make buttons the same width */
+    padding: 12px 20px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 1rem;
+    margin: 0 10px; /* Add space between buttons */
 }
 
-.project-form button:hover {
-    background-color: #0056b3;
+.project-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* Specific button colors */
+.project-form .create-btn {
+    background-color: #330066;
+    color: white;
+}
+
+.project-form .close-btn {
+    background-color: #330066;
+    color: white;
+}
+
+/* Center the buttons horizontally and add space between them */
+.project-form .button-container {
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+    gap: 20px; /* Add space between the buttons */
+    width: 100%; /* Take up full width of the parent */
+    margin-top: auto; /* Pushes the button container to the bottom */
+}
+
+/* Individual button styles */
+.project-form .button-container button {
+    width: 45%; /* Buttons will be sized based on their content */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Specific button colors */
+.project-form .create-btn {
+    background-color: #330066;
+    color: white;
+}
+
+.project-form .close-btn {
+    background-color: #330066;
+    color: white;
+}
+
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+/* Modal close button */
+.close-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
 }
