@@ -31,11 +31,13 @@ public class FileService {
             String bucketName = userId.split("\\|")[1];
             String fileName = file.getOriginalFilename();
 
-            // Use the Consumer variant to create the request
-            s3Client.putObject(builder -> builder
-                            .bucket(bucketName)
-                            .key(fileName),
-                    RequestBody.fromBytes(file.getBytes()));
+            // Explicitly create PutObjectRequest
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build();
+
+            s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
 
             return ResponseEntity.ok("File uploaded successfully to bucket: " + bucketName);
 
@@ -47,7 +49,7 @@ public class FileService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error: " + e.getMessage());
         }
     }
-
+    
 
     public List<FileMetadata> listFiles(String userId) {
         String bucketName = userId.split("\\|")[1];

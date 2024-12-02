@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -29,6 +32,12 @@ class FileServiceTest {
     @Mock
     private MultipartFile mockFile;
 
+    @Mock
+    private Authentication authentication;
+
+    @Mock
+    private SecurityContext securityContext;
+
     @Captor
     private ArgumentCaptor<PutObjectRequest> putObjectRequestCaptor;
 
@@ -41,16 +50,20 @@ class FileServiceTest {
     @Captor
     private ArgumentCaptor<DeleteObjectRequest> deleteObjectRequestCaptor;
 
+    private final String userId = "auth0|670a49f45fb7f3ba271f916a";
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(authentication.getName()).thenReturn(userId);
     }
 
     @Test
     void testUploadFile() throws Exception {
         // Arrange
-        String userId = "user|test-bucket";
-        String bucketName = "test-bucket";
+        String bucketName = "670a49f45fb7f3ba271f916a";
         String fileName = "test.txt";
 
         when(mockFile.getOriginalFilename()).thenReturn(fileName);
@@ -72,8 +85,7 @@ class FileServiceTest {
     @Test
     void testListFiles() {
         // Arrange
-        String userId = "user|test-bucket";
-        String bucketName = "test-bucket";
+        String bucketName = "670a49f45fb7f3ba271f916a";
 
         ListObjectsV2Response mockResponse = ListObjectsV2Response.builder()
                 .contents(Collections.singletonList(S3Object.builder().key("file.txt").size(123L).build()))
@@ -97,8 +109,7 @@ class FileServiceTest {
     @Test
     void testDownloadFile() {
         // Arrange
-        String userId = "user|test-bucket";
-        String bucketName = "test-bucket";
+        String bucketName = "670a49f45fb7f3ba271f916a";
         String fileName = "file.txt";
         byte[] fileContent = "test content".getBytes();
 
@@ -121,8 +132,7 @@ class FileServiceTest {
     @Test
     void testDeleteFile() {
         // Arrange
-        String userId = "user|test-bucket";
-        String bucketName = "test-bucket";
+        String bucketName = "670a49f45fb7f3ba271f916a";
         String fileName = "file.txt";
 
         // Act
