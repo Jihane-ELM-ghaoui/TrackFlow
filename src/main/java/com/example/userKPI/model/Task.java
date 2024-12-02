@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -12,12 +13,15 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskid;
 
-    private Long projectid;
+    private String taskName;
+    private String taskDescription;
+    private int taskPriority;
+    private Long projectId;
     private String assignedUser;
-    private String taskname;
-    private Date startDate;
-    private Date completionDate;
-    private Date estimatedFinishDate;
+    private Date taskStartDate;
+    private Date taskEstimatedEndDate;
+    private Date taskEndDate;
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private Status status;

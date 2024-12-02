@@ -26,20 +26,20 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
     //project
 
     // Query to find task IDs and cycle times for completed tasks in a project
-    @Query("SELECT t.taskid, DATEDIFF(t.completionDate, t.startDate) " +
-            "FROM Task t WHERE t.projectid = :projectId AND t.status = 'COMPLETED'")
+    @Query("SELECT t.taskid, DATEDIFF(t.taskEndDate, t.taskStartDate) " +
+            "FROM Task t WHERE t.projectId = :projectId AND t.status = 'COMPLETED'")
     List<Object[]> findTaskIdAndCycleTimeByProjectId(@Param("projectId") Long projectId);
 
     // Count the total number of tasks in a project
-    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectid = :projectId")
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectId = :projectId")
     long countTasksByProjectId(@Param("projectId") Long projectId);
 
     // Count the number of completed tasks that were completed on time
-    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectid = :projectId AND t.completionDate <= t.estimatedFinishDate AND t.status = 'COMPLETED'")
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectId = :projectId AND t.taskEndDate <= t.taskEstimatedEndDate AND t.status = 'COMPLETED'")
     long countOnTimeTasksByProjectId(@Param("projectId") Long projectId);
 
     // Count the total number of completed tasks in a project
-    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectid = :projectId AND t.status = 'COMPLETED'")
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.projectId = :projectId AND t.status = 'COMPLETED'")
     long countCompletedTasksByProjectId(@Param("projectId") Long projectId);
 }
 

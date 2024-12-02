@@ -22,7 +22,7 @@ public class TaskService {
 
     public Task addTask(Task task) {
         Task savedTask = taskRepo.save(task);
-        kpiProjectService.recalculateKpiAndNotify(savedTask.getProjectid());// Trigger KPI update
+        kpiProjectService.recalculateKpiAndNotify(savedTask.getProjectId());// Trigger KPI update
         kpiService.recalculateKpiForUserAndNotify();
         messagingTemplate.convertAndSend("/topic/taskUpdates", savedTask); // Notify clients of new task
         return savedTask;
@@ -33,17 +33,17 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException("Task not found with ID: " + taskId));
 
         // Update task fields
-        existingTask.setTaskname(updatedTaskData.getTaskname());
+        existingTask.setTaskName(updatedTaskData.getTaskName());
         existingTask.setStatus(updatedTaskData.getStatus());
-        existingTask.setProjectid(updatedTaskData.getProjectid());
+        existingTask.setProjectId(updatedTaskData.getProjectId());
         existingTask.setAssignedUser(updatedTaskData.getAssignedUser());
-        existingTask.setStartDate(updatedTaskData.getStartDate());
-        existingTask.setEstimatedFinishDate(updatedTaskData.getEstimatedFinishDate());
-        existingTask.setCompletionDate(updatedTaskData.getCompletionDate());
+        existingTask.setTaskStartDate(updatedTaskData.getTaskStartDate());
+        existingTask.setTaskEstimatedEndDate(updatedTaskData.getTaskEstimatedEndDate());
+        existingTask.setTaskEndDate(updatedTaskData.getTaskEndDate());
 
         Task savedTask = taskRepo.save(existingTask);
 
-        kpiProjectService.recalculateKpiAndNotify(savedTask.getProjectid()); // Trigger KPI update
+        kpiProjectService.recalculateKpiAndNotify(savedTask.getProjectId()); // Trigger KPI update
         kpiService.recalculateKpiForUserAndNotify();
         messagingTemplate.convertAndSend("/topic/taskUpdates", savedTask); // Notify clients of task update
 
@@ -53,7 +53,7 @@ public class TaskService {
         Task taskToDelete = taskRepo.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found with ID: " + taskId));
 
-        Long projectId = taskToDelete.getProjectid();
+        Long projectId = taskToDelete.getProjectId();
 
         // Delete the task from the repository
         taskRepo.deleteById(taskId);
