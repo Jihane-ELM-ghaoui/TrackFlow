@@ -1,66 +1,121 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
 
 import Calendar from './Calendar';
 import TaskCard from './TaskCard';
 import CircularProgressBar from './CircularProgressBar';
 import TaskStatusChart from './TaskStatusChart';
 
-import './Dashboard.css'; 
-
+import './Dashboard.css';
 
 const Dashboard = () => {
   const { isAuthenticated, getIdTokenClaims, getAccessTokenSilently } = useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
-  const [token, setToken] = useState(null); 
+  const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
- 
+
   const [data, setData] = useState('');
-  const [idToken, setIdToken] = useState(''); 
+  const [idToken, setIdToken] = useState('');
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [kpiData, setKpiData] = useState({
+    taskCompletionRate: 0,
+    incompleteTaskRate: 0,
+    taskStatusCount: { completed: 0, inProgress: 0, notStarted: 0 },
+  });
 
+  const [socketConnected, setSocketConnected] = useState(false);
+
+  useEffect(() => {
+    let client; 
+
+    const setupWebSocket = async () => {
+      if (isAuthenticated) {
+        try {
+          const idTokenClaims = await getIdTokenClaims();
+          const idToken = idTokenClaims.__raw;
+          setIdToken(idToken);
+
+          // Create WebSocket connection using SockJS
+          const createWebSocket = () => new SockJS('http://localhost:8010/ws');
+          client = new Client({
+            webSocketFactory: createWebSocket,
+            connectHeaders: {
+              Authorization: `Bearer ${idToken}`, // Pass the ID token for authentication
+            },
+            debug: (str) => console.log(str),
+            onConnect: () => {
+              console.log('WebSocket connected');
+              setSocketConnected(true); // Set connection status
+              client.subscribe('/topic/kpiUpdates', (message) => {
+                const updatedKpiData = JSON.parse(message.body);
+                console.log('Received updated KPI data:', updatedKpiData);
+                setKpiData(updatedKpiData); // Update KPI data with the new information
+              });
+            },
+            onDisconnect: () => {
+              console.log('WebSocket disconnected');
+              setSocketConnected(false);
+            },
+          });
+
+          client.activate();
+        } catch (error) {
+          console.error('Error setting up WebSocket:', error);
+        }
+      }
+    };
+
+    if (isAuthenticated) {
+      setupWebSocket();
+    }
+
+    return () => {
+      // Cleanup: Close WebSocket when the component unmounts or user is not authenticated
+      if (client) {
+        client.deactivate(); // Deactivate the client to close the connection
+      }
+    };
+  }, [isAuthenticated, getIdTokenClaims]);
+
+  // Fetch data for user metadata, token, and KPI data
   useEffect(() => {
     const fetchData = async () => {
       if (isAuthenticated) {
         try {
-          const idTokenClaims = await getIdTokenClaims(); 
-          const idToken = idTokenClaims.__raw; 
-          setIdToken(idToken); 
+          const idTokenClaims = await getIdTokenClaims();
+          const idToken = idTokenClaims.__raw;
+          setIdToken(idToken);
 
           const response = await axios.get('http://localhost:8080/api/protected', {
             headers: {
-              Authorization: `Bearer ${idToken}`, 
+              Authorization: `Bearer ${idToken}`,
             },
           });
 
           setData(response.data);
           setErrorMessage('');
-        
         } catch (error) {
           if (error.response && error.response.status === 403) {
             setErrorMessage("You don't have permission.");
           } else {
             console.error('Error fetching data:', error);
-            setErrorMessage('An error occurred while fetching data.'); 
+            setErrorMessage('An error occurred while fetching data.');
           }
         } finally {
-          setLoading(false); 
+          setLoading(false);
         }
       } else {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [getIdTokenClaims, isAuthenticated]);
-
-
-
-
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -69,7 +124,6 @@ const Dashboard = () => {
 
     const getUserMetadataAndToken = async () => {
       try {
-        // Fetch the ID token claims
         const idTokenClaims = await getIdTokenClaims();
         console.log('ID token claims:', idTokenClaims);
 
@@ -81,11 +135,9 @@ const Dashboard = () => {
           console.error('No ID token claims available');
         }
 
-        // Fetch the access token silently
         const accessToken = await getAccessTokenSilently();
         console.log('Access Token:', accessToken);
-        setToken(accessToken);  // Set token in state
-
+        setToken(accessToken);
       } catch (error) {
         console.error('Error getting token or metadata:', error);
         setError('Error fetching user metadata or token');
@@ -97,28 +149,21 @@ const Dashboard = () => {
     getUserMetadataAndToken();
   }, [getIdTokenClaims, getAccessTokenSilently, isAuthenticated]);
 
-
-
-  const [kpiData, setKpiData] = useState({
-    taskCompletionRate: 0,
-    incompleteTaskRate: 0,
-    taskStatusCount: { completed: 0, inProgress: 0, notStarted: 0 },
-  });
-
+  // Fetch KPI data
   useEffect(() => {
     const fetchKpi = async () => {
       if (isAuthenticated) {
         try {
           const idTokenClaims = await getIdTokenClaims();
-          const idToken = idTokenClaims.__raw; 
+          const idToken = idTokenClaims.__raw;
           setIdToken(idToken);
-  
+
           const response = await axios.get('http://localhost:8010/api/kpi/user', {
             headers: {
               Authorization: `Bearer ${idToken}`,
             },
           });
-  
+
           setKpiData({
             taskCompletionRate: response.data.taskCompletionRate,
             incompleteTaskRate: response.data.incompleteTaskRate,
@@ -129,10 +174,9 @@ const Dashboard = () => {
         }
       }
     };
-  
+
     fetchKpi();
   }, [getIdTokenClaims, isAuthenticated]);
-
 
   return (
     <div className="dashboard-container-kh">
@@ -155,8 +199,8 @@ const Dashboard = () => {
 
         {/* Task Section */}
         <div className="task-section-kh">
-            <TaskCard title="Management App" />
-            <TaskCard title="Core Task Management and User Access" />
+          <TaskCard title="Management App" />
+          <TaskCard title="Core Task Management and User Access" />
         </div>
       </div>
 
@@ -165,7 +209,7 @@ const Dashboard = () => {
         <div className="chart-item-kh">
           <div className="chart-label-kh">Task Completion Rate</div>
           <CircularProgressBar
-            progress={kpiData.taskCompletionRate}
+            progress={kpiData.taskCompletionRate.toFixed(2)}
             label="Task Completion Rate"
             color="#4CAF50"
           />
@@ -173,10 +217,11 @@ const Dashboard = () => {
         <div className="chart-item-kh">
           <div className="chart-label-kh">Incomplete Task Rate</div>
           <CircularProgressBar
-            progress={kpiData.incompleteTaskRate}
+            progress={kpiData.incompleteTaskRate.toFixed(2)}
             label="Incomplete Task Rate"
             color="#F44336"
           />
+      
         </div>
         <div className="chart-item-kh">
           <div className="chart-label-kh">Task Status</div>
@@ -190,9 +235,9 @@ const Dashboard = () => {
             />
           </div>
         </div>
-      </div> 
-    </div> 
+      </div>
+    </div>
   );
-}
+};
 
 export default Dashboard;
