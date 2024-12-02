@@ -26,7 +26,7 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
     //project
 
     // Query to find task IDs and cycle times for completed tasks in a project
-    @Query("SELECT t.taskid, DATEDIFF(t.taskEndDate, t.taskStartDate) " +
+    @Query("SELECT t.taskId, DATEDIFF(t.taskEndDate, t.taskStartDate) " +
             "FROM Task t WHERE t.projectId = :projectId AND t.status = 'COMPLETED'")
     List<Object[]> findTaskIdAndCycleTimeByProjectId(@Param("projectId") Long projectId);
 
