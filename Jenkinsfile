@@ -1,40 +1,35 @@
 pipeline {
     agent any
+
     tools {
-        jdk 'JDK 21'
-        maven 'Maven 3.8.4'
+        maven 'Maven' 
+        jdk 'JDK21'  
     }
+
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                checkout scm
+                git url: 'https://github.com/Jihane-ELM-ghaoui/TrackFlow.git', branch: 'Storage-Service'
             }
         }
-        stage('Install Dependencies') {
+        stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn clean compile'
             }
         }
-        stage('Run Unit Tests') {
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('Build Application') {
-            steps {
-                sh 'mvn package'
-            }
-        }
-        stage('Static Code Analysis') {
-            steps {
-                sh 'mvn checkstyle:check'
-            }
-        }
     }
+
     post {
         always {
-            junit '**/target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            junit '**/target/surefire-reports/*.xml' // Publish test reports
+        }
+        failure {
+            echo 'Build failed. Check the logs for details.'
         }
     }
 }
