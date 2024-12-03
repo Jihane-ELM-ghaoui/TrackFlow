@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import './Project.css';
-import dotsImage from '../layout/img/dots.png'; 
+import dotsImage from './dots.png'; 
 
 const Project = () => {
     const { id } = useParams(); // Get project ID from URL
