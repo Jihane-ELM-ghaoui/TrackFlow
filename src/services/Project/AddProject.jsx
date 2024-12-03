@@ -3,6 +3,7 @@ import axios from 'axios'; // Importing Axios for making HTTP requests
 import { useAuth0 } from '@auth0/auth0-react'; // Importing Auth0 for user authentication
 import { useNavigate } from 'react-router-dom';
 import './AddProject.css'; // Importing the CSS file for styling
+import dotsImage from '../layout/img/dots.png'; 
 
 
 // Main component for adding and managing projects
@@ -16,7 +17,7 @@ const AddProject = () => {
     const { isAuthenticated, getIdTokenClaims } = useAuth0(); // Authentication data from Auth0
     const [errorMessage, setErrorMessage] = useState(''); // State for error messages
     const [loading, setLoading] = useState(false); // State for loading indicator
-
+    const [visibleMenu, setVisibleMenu] = useState(null);
 
     const navigate = useNavigate();
 
@@ -100,28 +101,52 @@ const AddProject = () => {
         navigate(`/project/${project.id}`); // Navigate to Project.js with project ID
     };
 
+    // Function to handle menu visibility toggle for each project
+    const handleMenuClick = (projectId) => {
+        setVisibleMenu(visibleMenu === projectId ? null : projectId); // Toggle visibility
+    };
+
 
     return (
         <div className="container">
-            <div className="project-list-container">
-                <h3 className="list-header">List of Projects</h3>
+        <div className="project-list-container">
+            <h3 className="list-header">List of Projects</h3>
 
-                <button className="create-new-btn" onClick={() => setShowForm(true)}>
-                    Create New Project
-                </button>
+            <button className="create-new-btn" onClick={() => setShowForm(true)}>
+                Create New Project
+            </button>
 
-                <div className="projects">
-                    {projects.map((project) => (
-                        <div
-                            key={project.id}
-                            className="project-item"
-                            onClick={() => handleProjectClick(project)}
-                        >
+            <div className="projects">
+                {projects.map((project) => (
+                    <div
+                        key={project.id}
+                        className="project-item"
+                        onClick={() => handleProjectClick(project)}
+                    >
+                        {/* Gradient Header with Project Name and Dots Menu */}
+                        <div className="project-header">
                             <h4>{project.name}</h4>
-                            <p>{project.description}</p>
-                            <div className="created-at">
-                                Created at: {new Date(project.createdAt).toLocaleDateString()}
-                            </div>
+                            <img
+                                src={dotsImage} 
+                                alt="Menu"
+                                className="dots-menu"
+                                onClick={() => handleMenuClick(project.id)} // Add functionality for menu click
+                            />
+                        </div>
+
+                        <p className="project-description">{project.description}</p>                        <div className="created-at">
+                            Created at: {new Date(project.createdAt).toLocaleDateString()}
+                        </div>
+
+                        {/* Menu Dropdown (Initially hidden) */}
+                        {project.menuVisible && (
+                            <div className="menu-dropdown">
+                                <ul>
+                                    <li>Edit Project</li>
+                                    <li>Delete Project</li>
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
@@ -159,3 +184,4 @@ const AddProject = () => {
 };
 
 export default AddProject;
+
