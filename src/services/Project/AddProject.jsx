@@ -3,7 +3,7 @@ import axios from 'axios'; // Importing Axios for making HTTP requests
 import { useAuth0 } from '@auth0/auth0-react'; // Importing Auth0 for user authentication
 import { useNavigate } from 'react-router-dom';
 import './AddProject.css'; // Importing the CSS file for styling
-import dotsImage from '../layout/img/dots.png'; 
+import dotsImage from './dots.png'; 
 
 
 // Main component for adding and managing projects
