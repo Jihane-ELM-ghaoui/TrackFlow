@@ -147,3 +147,156 @@ body {
     color: #330066;
     cursor: pointer;
 }
+/* Style for the task list container */
+.task-list-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: center;
+}
+
+/* List header styling */
+.list-header {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+} 
+
+/* Grid for task items */
+.tasks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Ensure 2 items per row */
+    gap: 10px;
+    justify-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+/* Task item styling */
+.task-item {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    transition: background-color 0.3s, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    flex-direction: column;
+    justify-content: space-between; /* Adjust layout */
+}
+
+
+.task-item:hover {
+    background-color: #f3f3f3;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.task-header h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+
+.task-item .created-at {
+    font-size: 0.5em;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* Gradient header style */
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: left; /* Center header content */
+    background: linear-gradient(to right, #9970cc, #330066);
+    padding: 10px 20px;
+    margin-left: 30 px;
+    border-radius: 8px;
+    color: #fff;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Optional: Update the task description font size */
+.task-description {
+    text-align: justify;
+    margin: 15px 0;
+    line-height: 1.4;
+    padding: 0 20px;
+    font-size: 0.9rem;
+}
+
+.task-status {
+    font-style: italic; /* Make the status italic */
+    margin-left: 10px; /* Add some space between the name and status */
+    color: #fff; /* White color for status */
+}
+
+/* Ensure task dates are formatted properly */
+.task-dates p {
+    margin: 15px 0;
+    line-height: 1.4;
+    padding: 0 20px;
+    font-size: 0.9rem;
+}
+
+
+/* Task priority styling - center it */
+.task-priority {
+    text-align: center; /* Center text inside */
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    color: #333; /* Dark text for better contrast */
+    width: 30%; /* Adjust the width for better appearance */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(227, 224, 224, 0.7);
+}
+
+
+.dots-menu {
+    width: 30px; /* Adjust size of the dots image */
+    height: 20px;
+    cursor: pointer;
+    margin-left: 10px; /* Adds space between task name/status and dots */
+}
+
+.menu-dropdown {
+    position: absolute;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 5px;
+    width: 150px;
+    z-index: 10;
+}
+
+.menu-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-dropdown li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-dropdown li:hover {
+    background-color: #f0f0f0;
+}
