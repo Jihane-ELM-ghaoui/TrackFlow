@@ -1,6 +1,7 @@
 package ma.ensa.StorageManager.service;
 
 import ma.ensa.StorageManager.entity.FileMetadata;
+import ma.ensa.StorageManager.kafkaConfig.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class FileService {
     @Autowired
     private S3Client s3Client;
 
+    @Autowired
+    public KafkaProducer kafkaProducer;
+
     public ResponseEntity<String> uploadFile(MultipartFile file) {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -39,6 +43,8 @@ public class FileService {
 
             s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
 
+            kafkaProducer.sendFileUploadMessage(userId);
+
             return ResponseEntity.ok("File uploaded successfully to bucket: " + bucketName);
 
         } catch (JwtValidationException e) {
@@ -49,7 +55,7 @@ public class FileService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error: " + e.getMessage());
         }
     }
-    
+
 
     public List<FileMetadata> listFiles(String userId) {
         String bucketName = userId.split("\\|")[1];
@@ -84,6 +90,9 @@ public class FileService {
                     .build();
 
             ResponseBytes<GetObjectResponse> objectBytes = s3Client.getObjectAsBytes(getObjectRequest);
+
+            kafkaProducer.sendFileDownloadMessage(userId);
+
             return objectBytes.asByteArray();
 
         } catch (S3Exception e) {
@@ -99,6 +108,8 @@ public class FileService {
                     .bucket(bucketName)
                     .key(fileName)
                     .build());
+
+            kafkaProducer.sendFileDeleteMessage(userId);
         } catch (S3Exception e) {
             throw new RuntimeException("Failed to delete file from S3 bucket", e);
         }

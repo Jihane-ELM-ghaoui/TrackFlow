@@ -1,6 +1,7 @@
 package ma.ensa.StorageManager.service;
 
 import ma.ensa.StorageManager.entity.FileMetadata;
+import ma.ensa.StorageManager.kafkaConfig.KafkaProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -34,6 +35,9 @@ class FileServiceTest {
 
     @Mock
     private Authentication authentication;
+
+    @Mock
+    private KafkaProducer kafkaProducer;
 
     @Mock
     private SecurityContext securityContext;
@@ -80,6 +84,9 @@ class FileServiceTest {
         PutObjectRequest capturedRequest = putObjectRequestCaptor.getValue();
         assertEquals(bucketName, capturedRequest.bucket());
         assertEquals(fileName, capturedRequest.key());
+
+        // Verify Kafka message
+        verify(kafkaProducer).sendFileUploadMessage(userId);
     }
 
     @Test
@@ -127,6 +134,9 @@ class FileServiceTest {
         GetObjectRequest capturedRequest = getObjectRequestCaptor.getValue();
         assertEquals(bucketName, capturedRequest.bucket());
         assertEquals(fileName, capturedRequest.key());
+
+        // Verify Kafka message
+        verify(kafkaProducer).sendFileDownloadMessage(userId);
     }
 
     @Test
@@ -143,5 +153,8 @@ class FileServiceTest {
         DeleteObjectRequest capturedRequest = deleteObjectRequestCaptor.getValue();
         assertEquals(bucketName, capturedRequest.bucket());
         assertEquals(fileName, capturedRequest.key());
+
+        // Verify Kafka message
+        verify(kafkaProducer).sendFileDeleteMessage(userId);
     }
 }
