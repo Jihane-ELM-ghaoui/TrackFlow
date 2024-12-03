@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import './Project.css';
+import dotsImage from '../layout/img/dots.png'; 
 
 const Project = () => {
     const { id } = useParams(); // Get project ID from URL
@@ -10,13 +11,13 @@ const Project = () => {
     const { isAuthenticated, getIdTokenClaims } = useAuth0();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [showForm, setShowForm] = useState(false); // State to toggle the project creation form visibility
     const [selectedProject, setSelectedProject] = useState(null); // State for storing the selected project
     const [email, setEmail] = useState(''); // State for email input when inviting members
     const [role, setRole] = useState(''); // State for role creation input
     const [showTaskForm, setShowTaskForm] = useState(false); // State to toggle the task creation form visibility
     const [showRoleForm, setShowRoleForm] = useState(false); // State to toggle the role creation form visibility
     const [showMemberInput, setShowMemberInput] = useState(false); // State to toggle the member invitation input visibility
+    const [tasks, setTasks] = useState([]);
 
     // State for task details object
     const [taskDetails, setTaskDetails] = useState({
@@ -28,31 +29,67 @@ const Project = () => {
         taskEstimatedEndDate: ''
     });
 
+    // Function to fetch project details
+    const fetchProject = async (idToken) => {
+        try {
+            console.log('Fetching project with ID:', id);
+
+            const response = await axios.get(`http://localhost:8091/api/projects/${id}`, {
+                headers: { Authorization: `Bearer ${idToken}` },
+            });
+
+            setProject(response.data);
+            setSelectedProject(response.data); 
+            return response.data; // Return the project data to be used by fetchTasks
+        } catch (error) {
+            console.error('Error fetching project:', error);
+            setErrorMessage('An error occurred while fetching project details.');
+            throw error; // Re-throw to allow the caller to handle it if needed
+        }
+    };
+
+    // Function to fetch tasks for a project
+    const fetchTasks = async (projectId, idToken) => {
+        try {
+            const tasksResponse = await axios.get(`http://localhost:8095/api/tasks/project/${projectId}`, {
+                headers: { Authorization: `Bearer ${idToken}` },
+            });
+
+            setTasks(tasksResponse.data); // Set the fetched tasks for this project
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            setErrorMessage('An error occurred while fetching tasks.');
+        }
+    };
+
     // Fetch project details
     useEffect(() => {
-        const fetchProject = async () => {
             if (isAuthenticated) {
+                const fetchData = async () => {
                 try {
                     setLoading(true);
                     const idTokenClaims = await getIdTokenClaims();
                     const idToken = idTokenClaims.__raw;
 
-                    // API call to fetch the project using the correct URL
-                    const response = await axios.get(`http://localhost:8091/api/projects/${id}`, {
-                        headers: { Authorization: `Bearer ${idToken}` },
-                    });
+                   // Fetch the project first
+                   const projectData = await fetchProject(idToken);
+                   console.log('Fetching project with ID:', id);
 
-                    setProject(response.data);
-                    setSelectedProject(response.data); 
+                    // Once the project is fetched, fetch the tasks for that project
+                    if (projectData) {
+                        await fetchTasks(projectData.id, idToken);
+                        console.log('Fetching tasks for project with ID:', projectData.id, idToken);
+
+                    }
                 } catch (error) {
-                    console.error('Error fetching project:', error);
-                    setErrorMessage('An error occurred while fetching project details.');
+                    console.error('Error during data fetching:', error);
                 } finally {
                     setLoading(false);
                 }
-            }
-        };
-        fetchProject();
+            };
+
+            fetchData();
+        }
     }, [id, isAuthenticated, getIdTokenClaims]);
 
     // Handle adding a project member
@@ -82,6 +119,8 @@ const Project = () => {
     };
 
     // Handle creating a role
+
+    //Handle task creation
     const handleCreateTask = async () => {
         const { taskName, taskDescription, taskPriority, taskStartDate, taskEndDate, taskEstimatedEndDate, status } = taskDetails;
 
@@ -185,8 +224,33 @@ const Project = () => {
         }
     };
 
+    const [taskMenuVisible, setTaskMenuVisible] = useState({});
+
+    const toggleMenu = (taskId) => {
+        setTaskMenuVisible((prev) => ({
+            ...prev,
+            [taskId]: !prev[taskId]
+        }));
+    };
+
+    const formatStatus = (status) => {
+        switch (status) {
+            case 'IN_PROGRESS':
+                return 'In Progress';
+            case 'NOT_STARTED':
+                return 'Not Started';
+            case 'DONE':
+                return 'Done';
+            default:
+                return status; // Return as is if no match
+        }
+    };
+
     if (loading) return <div>Loading...</div>;
     if (errorMessage) return <div>{errorMessage}</div>;
+
+
+
 
     return project ? (
         <div className="project-page">
@@ -272,16 +336,61 @@ const Project = () => {
                                 </select>
                             </label>
                             <button type="submit" disabled={loading}>Create Task</button>
-                        </form>
+</form>
                     </div>
                 </div>
             )}
             
-            {/* Similar modals for inviting members and creating roles */}
-        </div>
-    ) : (
-        <div>No project found</div>
-    );
-};
+            {/* Tasks Grid */}
+            <div className="task-list-container">
+                <div className="tasks">
+                {tasks.length > 0 ? (
+    tasks.map((task) => (
+        <div className="task-item" key={task.id}>
+            {/* Gradient header with task name and menu */}
+            <div className="task-header">
+        <h3>{task.taskName} <span className="task-status">| {formatStatus(task.status)}</span></h3>
+        <img 
+            src={dotsImage} 
+            alt="Menu" 
+            className="dots-menu" 
+            onClick={() => toggleMenu(task.id)} 
+        />
+    </div>
+            {/* Task description */}
+            <p className="task-description">{task.taskDescription}</p>
+            
+            {/* Dates section */}
+            <div className="task-dates">
+                <p><strong>Start Date:</strong> {new Date(task.startDate).toLocaleDateString()}</p>
+                <p><strong>Due Date:</strong> {new Date(task.dueDate).toLocaleDateString()}</p>
+                <p><strong>Estimated Date Time:</strong> {new Date(task.estimatedDate).toLocaleDateString()}</p>
+            </div>
+            
+            {/* Priority section */}
+            <div className={`task-priority priority-${task.taskPriority}`}>
+                Priority: {task.taskPriority}
+            </div>
 
-export default Project;
+            
+        </div>
+    ))
+
+
+
+) : (
+    <p>No tasks available</p>
+)}
+            </div>
+        </div>
+        
+        {/* Similar modals for inviting members and creating roles */}
+    </div>
+) :
+
+
+(
+    <div>No project found</div>
+);
+}
+    export default Project;
