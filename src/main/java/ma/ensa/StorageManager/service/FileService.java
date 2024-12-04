@@ -1,7 +1,9 @@
 package ma.ensa.StorageManager.service;
 
 import ma.ensa.StorageManager.entity.FileMetadata;
+import ma.ensa.StorageManager.entity.SharedFileMetadata;
 import ma.ensa.StorageManager.kafkaConfig.KafkaProducer;
+import ma.ensa.StorageManager.repository.SharedFileMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,11 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class FileService {
@@ -113,5 +118,44 @@ public class FileService {
         } catch (S3Exception e) {
             throw new RuntimeException("Failed to delete file from S3 bucket", e);
         }
+    }
+
+////////////////////////////////////////////////////////////////////
+
+    @Autowired
+    private SharedFileMetadataRepository sharedFileMetadataRepository;
+
+    public String shareFile(String userId, String fileName) {
+        String linkId = UUID.randomUUID().toString();
+
+        SharedFileMetadata metadata = new SharedFileMetadata(
+                userId,
+                fileName,
+                Instant.now().plusSeconds(24 * 60 * 60), // 24 hours expiry
+                linkId
+        );
+
+        sharedFileMetadataRepository.save(metadata);
+
+        return "http://localhost:8090/api/files/shared/" + linkId;
+    }
+
+    public byte[] getSharedFile(String linkId) {
+        SharedFileMetadata metadata = sharedFileMetadataRepository.findByLinkId(linkId)
+                .orElseThrow(() -> new RuntimeException("Invalid or expired link"));
+
+        if (Instant.now().isAfter(metadata.getExpiryTime())) {
+            sharedFileMetadataRepository.deleteByLinkId(linkId); // Cleanup expired links
+            throw new RuntimeException("Link has expired");
+        }
+
+        return downloadFile(metadata.getUserId(), metadata.getFileName());
+    }
+
+    public String getFileNameFromLink(String linkId) {
+        SharedFileMetadata metadata = sharedFileMetadataRepository.findByLinkId(linkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid link ID"));
+
+        return metadata.getFileName();
     }
 }

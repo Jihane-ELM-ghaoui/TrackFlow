@@ -91,5 +91,53 @@ public class StorageController {
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////////
+
+    @PostMapping("/share/{fileName}")
+    public ResponseEntity<String> shareFile(@PathVariable("fileName") String fileName) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = auth.getName();
+
+        try {
+            String shareableLink = fileService.shareFile(userId, fileName);
+            return ResponseEntity.ok("Shareable link: " + shareableLink);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to share file: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/shared/{linkId}")
+    public ResponseEntity<byte[]> accessSharedFile(@PathVariable("linkId") String linkId) {
+        try {
+            byte[] fileData = fileService.getSharedFile(linkId);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileService.getFileNameFromLink(linkId) + "\"")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(fileData);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+    }
+
+    @GetMapping("/shared/download/{linkId}")
+    public ResponseEntity<byte[]> downloadSharedFile(@PathVariable("linkId") String linkId) {
+        // Use the FileService method to retrieve the file name
+        String fileName = fileService.getFileNameFromLink(linkId);
+
+        // Get the currently authenticated user (optional)
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = auth.getName();
+
+        // Download the file
+        byte[] fileData = fileService.downloadFile(userId, fileName);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(fileData);
+    }
+
+
 
 }

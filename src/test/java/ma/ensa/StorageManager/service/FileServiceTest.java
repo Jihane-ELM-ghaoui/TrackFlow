@@ -1,7 +1,9 @@
 package ma.ensa.StorageManager.service;
 
 import ma.ensa.StorageManager.entity.FileMetadata;
+import ma.ensa.StorageManager.entity.SharedFileMetadata;
 import ma.ensa.StorageManager.kafkaConfig.KafkaProducer;
+import ma.ensa.StorageManager.repository.SharedFileMetadataRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -16,8 +18,11 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -42,6 +47,12 @@ class FileServiceTest {
     @Mock
     private SecurityContext securityContext;
 
+    @Mock
+    private SharedFileMetadataRepository sharedFileMetadataRepository;
+
+    @Captor
+    private ArgumentCaptor<SharedFileMetadata> metadataCaptor;
+
     @Captor
     private ArgumentCaptor<PutObjectRequest> putObjectRequestCaptor;
 
@@ -62,6 +73,7 @@ class FileServiceTest {
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
         when(authentication.getName()).thenReturn(userId);
+        fileService = spy(fileService);
     }
 
     @Test
@@ -157,4 +169,127 @@ class FileServiceTest {
         // Verify Kafka message
         verify(kafkaProducer).sendFileDeleteMessage(userId);
     }
+
+    /////////////////////////////////////////////////
+
+
+    @Test
+    void testShareFile() {
+        // Arrange
+        String userId = "auth0|670a49f45fb7f3ba271f916a";
+        String fileName = "test.txt";
+        String expectedBaseUrl = "http://localhost:8090/api/files/shared/";
+
+        // Act
+        String shareLink = fileService.shareFile(userId, fileName);
+
+        // Assert
+        assertNotNull(shareLink);
+        assertTrue(shareLink.startsWith(expectedBaseUrl));
+
+        verify(sharedFileMetadataRepository).save(metadataCaptor.capture());
+        SharedFileMetadata capturedMetadata = metadataCaptor.getValue();
+
+        assertEquals(userId, capturedMetadata.getUserId());
+        assertEquals(fileName, capturedMetadata.getFileName());
+        assertNotNull(capturedMetadata.getLinkId());
+        assertTrue(capturedMetadata.getExpiryTime().isAfter(Instant.now()));
+    }
+
+    @Test
+    void testGetSharedFile_ValidLink() {
+        // Arrange
+        String linkId = UUID.randomUUID().toString();
+        String userId = "auth0|670a49f45fb7f3ba271f916a";
+        String fileName = "test.txt";
+
+        SharedFileMetadata mockMetadata = new SharedFileMetadata(
+                userId,
+                fileName,
+                Instant.now().plusSeconds(24 * 60 * 60), // Valid expiry
+                linkId
+        );
+        when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.of(mockMetadata));
+
+        byte[] mockFileContent = "file content".getBytes();
+        doReturn(mockFileContent).when(fileService).downloadFile(userId, fileName); // Spy allows mocking this call
+
+        // Act
+        byte[] result = fileService.getSharedFile(linkId);
+
+        // Assert
+        assertNotNull(result);
+        assertArrayEquals(mockFileContent, result);
+
+        verify(sharedFileMetadataRepository, never()).deleteByLinkId(any());
+    }
+
+    @Test
+    void testGetSharedFile_ExpiredLink() {
+        // Arrange
+        String linkId = UUID.randomUUID().toString();
+        String userId = "auth0|670a49f45fb7f3ba271f916a";
+        String fileName = "test.txt";
+
+        SharedFileMetadata expiredMetadata = new SharedFileMetadata(
+                userId,
+                fileName,
+                Instant.now().minusSeconds(60), // Already expired
+                linkId
+        );
+        when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.of(expiredMetadata));
+
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> fileService.getSharedFile(linkId));
+        assertEquals("Link has expired", exception.getMessage());
+
+        verify(sharedFileMetadataRepository).deleteByLinkId(linkId);
+    }
+
+    @Test
+    void testGetSharedFile_InvalidLink() {
+        // Arrange
+        String linkId = UUID.randomUUID().toString();
+        when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> fileService.getSharedFile(linkId));
+        assertEquals("Invalid or expired link", exception.getMessage());
+
+        verify(sharedFileMetadataRepository, never()).deleteByLinkId(any());
+    }
+
+    @Test
+    void testGetFileNameFromLink_ValidLink() {
+        // Arrange
+        String linkId = UUID.randomUUID().toString();
+        String fileName = "test.txt";
+
+        SharedFileMetadata mockMetadata = new SharedFileMetadata(
+                "auth0|670a49f45fb7f3ba271f916a",
+                fileName,
+                Instant.now().plusSeconds(24 * 60 * 60),
+                linkId
+        );
+        when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.of(mockMetadata));
+
+        // Act
+        String result = fileService.getFileNameFromLink(linkId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(fileName, result);
+    }
+
+    @Test
+    void testGetFileNameFromLink_InvalidLink() {
+        // Arrange
+        String linkId = UUID.randomUUID().toString();
+        when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> fileService.getFileNameFromLink(linkId));
+        assertEquals("Invalid link ID", exception.getMessage());
+    }
+
 }
