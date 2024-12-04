@@ -1,7 +1,43 @@
 import React from 'react';
 import axios from 'axios';
-import { useAuth0 } from "@auth0/auth0-react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import emptyfolder from './assets/empty-folder.png';
+import download from './assets/download.png';
+import deleteicon from './assets/delete.png';
+import shareicon from './assets/share.png';
+import openicon from './assets/open-icon.png';
 import './FileView.css';
+
+const notifyError = (message) => toast.error(message);
+const notifySuccess = (message) => toast.success(message);
+const notifySuccessWithCopy = (message, url) => {
+  toast.success(
+    <div style={{ fontFamily: 'Arial, sans-serif', color: '#333' }}>
+      <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{message}</span>
+      <br />
+      <span 
+        style={{ 
+          cursor: 'pointer', 
+          color: '#007BFF', 
+          textDecoration: 'underline', 
+          marginTop: '0.5rem', 
+          display: 'inline-block', 
+          transition: 'color 0.2s ease' 
+        }}
+        onClick={() => navigator.clipboard.writeText(url)}
+        onMouseOver={(e) => e.target.style.color = '#0056b3'} // Darker blue on hover
+        onMouseOut={(e) => e.target.style.color = '#007BFF'}  // Reset to original color
+      >
+        Copy Link
+      </span>
+    </div>,
+    { 
+      autoClose: false, 
+      closeOnClick: true 
+    }
+  );
+};
 
 const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
 
@@ -25,9 +61,10 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      notifySuccess('File downloaded successfully');
     } catch (error) {
       console.error("Error downloading file:", error);
-      alert("Failed to download file");
+      notifyError('Failed to download file');
     }
   };  
 
@@ -48,7 +85,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
       window.open(url, "_blank"); // Opens the file in a new tab
     } catch (error) {
       console.error("Error opening file:", error);
-      alert("Failed to open file");
+      notifyError('Failed to open file');
     }
   };
   
@@ -61,32 +98,70 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      alert('File deleted successfully');
       fetchFiles(); // Refresh the file list after deletion
+      notifySuccess('File removed successfully');
     } catch (error) {
       console.error("Error deleting file:", error);
-      alert("Failed to delete file");
+      notifyError('Failed to delete file');
     }
   };
+
+  //Share file
+  const handleShare = async (file) => {
+    try {
+      const accessToken = await getAccessTokenSilently();
+
+      const response = await axios.post(
+        `http://localhost:8090/api/files/share/${file.name}`,
+        null, // No request body
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const shareableLink = response.data.split("Shareable link: ")[1];
+      navigator.clipboard.writeText(shareableLink); // Copy link to clipboard
+      notifySuccessWithCopy("Shareable link copied to clipboard: " + shareableLink);
+    } catch (error) {
+      console.error("Error sharing file:", error);
+      notifyError("Failed to share file");
+    }
+  };
+
   
   if (!files || files.length === 0) {
     return (
       <div className="file-view-empty-kh">
         <div className="empty-message-kh">
+        <img src={emptyfolder} alt="Empty folder" />
           <p>No files uploaded yet.</p>
         </div>
       </div>
     );
   }
 
+
+
   return (
     <div className={`file-view-kh ${view}`}>
+      <ToastContainer />
       {files.map((file) => (
         <div key={file.name} className="file-item-kh">
           <span className="file-name-kh">{file.name}</span>
-          <button onClick={() => handleOpen(file)}>Open</button>
-          <button onClick={() => handleDownload(file)}>Download</button>
-          <button onClick={() => handleDelete(file)}>Delete</button>
+          <button onClick={() => handleOpen(file)}>
+            <img src={ openicon } alt='Open icon' style={{ width: '20px', height: '20px'}} />
+          </button>
+          <button onClick={() => handleDownload(file)}>
+            <img src={ download } alt='Download icon' style={{ width: '20px', height: '20px'}} />
+          </button>
+          <button onClick={() => handleDelete(file)}>
+            <img src={ deleteicon } alt='Delete icon' style={{ width: '20px', height: '20px'}} />
+          </button>
+          <button onClick={() => handleShare(file)}>
+            <img src={ shareicon } alt='Share icon' style={{ width: '20px', height: '20px'}} />
+          </button>
         </div>
       ))}
     </div>
