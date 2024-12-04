@@ -5,6 +5,13 @@ import FileView from './FileView';
 import Breadcrumbs from './Breadcrumbs';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import { toast, ToastContainer } from 'react-toastify';
+import listview from './assets/list_view.png';
+import gridview from './assets/grid_view.png';
+import 'react-toastify/dist/ReactToastify.css';
+
+const notifyError = (message) => toast.error(message);
+const notifySuccess = (message) => toast.success(message);
 
 const Storage = () => {
   const [files, setFiles] = useState([]);
@@ -37,7 +44,7 @@ const Storage = () => {
       setFiles(response.data);
     } catch (error) {
       console.error('Failed to fetch files', error);
-      alert('Failed to fetch files');
+      notifyError('Failed to fetch files');
     }
   }, [getAccessTokenSilently]);
 
@@ -56,12 +63,11 @@ const Storage = () => {
           'Authorization': `Bearer ${accessToken}`,
         },
       });
-
-      alert('Files uploaded successfully');
       fetchFiles();
+      notifySuccess('File uploaded successfully');
     } catch (error) {
       console.error('Error during file upload:', error);
-      alert(`Upload failed: ${error.message}`);
+      notifyError(`Upload failed: ${error.message}`);
     }
   };
 
@@ -71,11 +77,16 @@ const Storage = () => {
 
   return (
     <div className="storage-kh">
+      <ToastContainer />
       <Breadcrumbs path={path} onNavigate={(index) => setPath(path.slice(0, index + 1))} />
       <DragAndDrop onDrop={handleUpload} />
       <div className="view-toggle-kh">
-        <button onClick={() => setView('grid')}>Grid View</button>
-        <button onClick={() => setView('list')}>List View</button>
+        <button onClick={() => setView('list')}>
+          <img src={ listview } alt='List_view icon' style={{ width: '20px', height: '20px'}} />
+        </button>
+        <button onClick={() => setView('grid')}>
+          <img src={ gridview } alt='Grid_view icon' style={{ width: '20px', height: '20px'}} />
+        </button>
       </div>
       <FileView
         files={files}
