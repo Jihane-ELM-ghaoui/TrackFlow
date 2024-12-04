@@ -1,0 +1,152 @@
+/* Global Styling for Dashboard */
+.dashboard-container-kh {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  max-width: 90%;
+  font-family: Arial, sans-serif; 
+}
+
+/* Header Styling */
+.dashboard-header-kh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header-kh h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+/* Button Section */
+.header-buttons-kh {
+  display: flex;
+}
+
+.create-new-project-btn-kh,
+.add-date-btn-kh {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #6a0dad;
+  color: white;
+  margin-left: 10px;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.create-new-project-btn-kh:hover,
+.add-date-btn-kh:hover {
+  background-color: #5b0a94; /* Darker shade on hover */
+}
+
+/* Main Content Styling */
+.main-content-kh {
+  display: flex;
+  gap: 20px;
+}
+
+/* Calendar and Task Section */
+.calendar-container-kh {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Event Form Styling */
+.event-form-container-kh {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  right: -400px;
+  transition: right 0.3s ease-in-out;
+}
+
+.event-form-container-kh form {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-form-container-kh input,
+.event-form-container-kh textarea {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.submit-event-btn-kh {
+  background-color: #6a0dad;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-event-btn-kh:hover {
+  background-color: #5b0a94;
+}
+
+.highlighted-date {
+  background-color: #6a0dad;
+  color: white;
+  border-radius: 50%;
+}
+
+/* Popup for event details */
+.event-popup {
+  position: absolute;
+  top: 0; /* Aligns with the top of the calendar */
+  left: calc(100% + 10px); /* Places it right next to the calendar with a gap */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  max-width: 300px;
+}
+
+/* Ensure the calendar container has position relative for correct positioning */
+.calendar-container-kh {
+  position: relative;
+}
+
+.event-popup h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.event-popup p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Task Section */
+.task-section-kh {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/* Chart Section */
+.charts-section-kh {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  gap: 20px;
+}
