@@ -1,0 +1,19 @@
+/* Empty state styling */
+.file-view-empty-kh {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 200px;
+  background-color: #f6f8fa;
+  border: 2px dashed #bdc3c7;
+  border-radius: 8px;
+  padding: 20px;
+  color: #7f8c8d;
+}
+
+.empty-message-kh p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #34495e;
+}
