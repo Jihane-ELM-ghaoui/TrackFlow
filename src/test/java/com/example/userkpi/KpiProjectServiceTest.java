@@ -1,8 +1,8 @@
-package com.example.userKPI;
+package com.example.userkpi;
 
-import com.example.userKPI.DTO.KpiProjectResponse;
-import com.example.userKPI.repo.TaskRepo;
-import com.example.userKPI.service.KpiProjectService;
+import com.example.userkpi.DTO.KpiProjectResponse;
+import com.example.userkpi.repo.TaskRepo;
+import com.example.userkpi.service.KpiProjectService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

@@ -1,4 +1,4 @@
-package com.example.userKPI.model;
+package com.example.userkpi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

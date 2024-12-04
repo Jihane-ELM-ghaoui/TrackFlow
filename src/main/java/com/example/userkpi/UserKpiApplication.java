@@ -1,4 +1,4 @@
-package com.example.userKPI;
+package com.example.userkpi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

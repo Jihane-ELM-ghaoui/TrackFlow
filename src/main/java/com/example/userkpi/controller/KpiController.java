@@ -1,9 +1,9 @@
-package com.example.userKPI.controller;
+package com.example.userkpi.controller;
 
-import com.example.userKPI.DTO.KpiProjectResponse;
-import com.example.userKPI.service.KpiProjectService;
-import com.example.userKPI.service.KpiService;
-import com.example.userKPI.DTO.KpiResponse;
+import com.example.userkpi.DTO.KpiProjectResponse;
+import com.example.userkpi.service.KpiProjectService;
+import com.example.userkpi.service.KpiService;
+import com.example.userkpi.DTO.KpiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package com.example.userKPI.service;
+package com.example.userkpi.service;
 
-import com.example.userKPI.repo.TaskRepo;
-import com.example.userKPI.model.Task;
+import com.example.userkpi.repo.TaskRepo;
+import com.example.userkpi.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.example.userKPI.repo;
+package com.example.userkpi.repo;
 
-import com.example.userKPI.model.Task;
+import com.example.userkpi.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

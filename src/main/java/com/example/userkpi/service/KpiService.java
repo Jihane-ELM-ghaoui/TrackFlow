@@ -1,7 +1,7 @@
-package com.example.userKPI.service;
+package com.example.userkpi.service;
 
-import com.example.userKPI.DTO.KpiResponse;
-import com.example.userKPI.repo.TaskRepo;
+import com.example.userkpi.DTO.KpiResponse;
+import com.example.userkpi.repo.TaskRepo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

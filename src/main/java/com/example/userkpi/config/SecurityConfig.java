@@ -1,4 +1,4 @@
-package com.example.userKPI.config;
+package com.example.userkpi.config;
 
 
 import org.springframework.context.annotation.Bean;

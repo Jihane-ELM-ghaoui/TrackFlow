@@ -1,7 +1,7 @@
-package com.example.userKPI.controller;
+package com.example.userkpi.controller;
 
-import com.example.userKPI.model.Task;
-import com.example.userKPI.service.TaskService;
+import com.example.userkpi.model.Task;
+import com.example.userkpi.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
