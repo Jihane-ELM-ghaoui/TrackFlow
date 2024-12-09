@@ -1,43 +1,32 @@
 package com.example.userkpi.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Map;
 @Data
 public class KpiResponse {
+    @JsonFormat
     private double taskCompletionRate;
+    @JsonFormat
     private double incompleteTaskRate;
-    private Map<String, Long> taskStatusCount;
-//
+    @JsonFormat
+    private Map<String, Integer> taskStatusCount;
+    //
     // Constructor
-    public KpiResponse(double taskCompletionRate, double incompleteTaskRate, Map<String, Long> taskStatusCount) {
+    public KpiResponse(double taskCompletionRate, double incompleteTaskRate, Map<String, Integer> taskStatusCount) {
         this.taskCompletionRate = taskCompletionRate;
         this.incompleteTaskRate = incompleteTaskRate;
         this.taskStatusCount = taskStatusCount;
     }
-//
-//    // Getters and Setters
-//    public double getTaskCompletionRate() {
-//        return taskCompletionRate;
-//    }
-//
-//    public void setTaskCompletionRate(double taskCompletionRate) {
-//        this.taskCompletionRate = taskCompletionRate;
-//    }
-//
-//    public double getIncompleteTaskRate() {
-//        return incompleteTaskRate;
-//    }
-//
-//    public void setIncompleteTaskRate(double incompleteTaskRate) {
-//        this.incompleteTaskRate = incompleteTaskRate;
-//    }
-//
-//    public Map<String, Long> getTaskStatusCount() {
-//        return taskStatusCount;
-//    }
-//
-//    public void setTaskStatusCount(Map<String, Long> taskStatusCount) {
-//        this.taskStatusCount = taskStatusCount;
-//    }
+
+    @Override
+    public String toString() {
+        return "KpiResponse{" +
+                "taskCompletionRate=" + taskCompletionRate +
+                ", incompleteTaskRate=" + incompleteTaskRate +
+                ", taskStatusCount=" + taskStatusCount +
+                '}';
+    }
+
 }
