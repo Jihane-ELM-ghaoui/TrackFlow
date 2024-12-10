@@ -23,10 +23,8 @@ const Sidebar = ({ isOpen }) => {
       setActiveItem('Storage');
     } else if (location.pathname.includes('/user/todo')) {
       setActiveItem('Todo List');
-    } else if (location.pathname.includes('/user/community/articles')) {
-      setActiveItem('Community');
-    } else if (location.pathname.includes('/user/dashboard/:id') || location.pathname.includes('/user/dashboard') || location.pathname.includes('/user/dashboard/:id/edit') ) {
-      setActiveItem('UserDashboard');
+    } else if (location.pathname.includes('/chat') || location.pathname.includes('/chat/:receiver')) {
+      setActiveItem('Chat');
     } else {
       setActiveItem('');
     }
@@ -75,8 +73,8 @@ const Sidebar = ({ isOpen }) => {
             <span className="textSB">Todo List</span>
           </NavLink>
         </li>
-        <li className={activeItem === 'Community' ? 'active' : ''}>
-          <NavLink to="/user/community/articles" onClick={() => handleItemClick('Community')}>
+        <li className={activeItem === 'Chat' ? 'active' : ''}>
+          <NavLink to="/chat" onClick={() => handleItemClick('Chat')}>
             <i className='bx bxs-message-dots'></i>
             <span className="textSB">Community</span>
           </NavLink>

@@ -25,6 +25,8 @@ import Storage from './services/Storage/Storage'
 
 import AddProject from './services/Project/AddProject'
 
+import Chat from './services/Chat/Chat'
+
 function App() {
 
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +51,11 @@ function App() {
 
               <Route exact path="/" element={<Main />} />
 
+
+              <Route
+                path="/chat"
+                element={<ProtectedRoute component={Chat}/>}
+              />
 
               <Route
                 path="/profile"

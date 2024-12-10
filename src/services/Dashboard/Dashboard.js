@@ -113,7 +113,7 @@ const Dashboard = () => {
           const idToken = idTokenClaims.__raw; 
           setIdToken(idToken);
   
-          const response = await axios.get('http://localhost:8010/api/kpi/user', {
+          const response = await axios.get('http://localhost:8015/api/kpi/user', {
             headers: {
               Authorization: `Bearer ${idToken}`,
             },

@@ -1,0 +1,347 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .SBChat-container {
+    position: relative;
+    display: flex;
+    height: 80vh;
+  }
+
+
+  .SBChat-dropdown {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: fixed;  /* Fixed position to ensure it's positioned in the center */
+    top: 50%;  /* Vertical center */
+    left: 50%;  /* Horizontal center */
+    transform: translate(-50%, -50%);  /* Offset by 50% of its own width and height to center it */
+    width: 35%;  /* Adjust width as needed */
+    height: 50%;
+    border: 1px solid #ccc;
+  }
+  
+  .SBChat-dropdown input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .SBChat-dropdown-button {
+    width: 250px;
+    padding: 8px;
+    background-color: #9970cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 75px;
+    margin-bottom: 20px;
+  }
+  
+  .SBChat-dropdown-button:hover {
+    background-color: #330066;
+  }
+  
+  .SBChat-left {
+    width: 30%;
+    background-color: white;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    margin-left: 60px;
+  }
+  
+
+
+
+  
+  .SBChat-content-area {
+    display: none;
+  }
+  
+  .SBChat-content-area.active {
+    display: block;
+  }
+  
+  .SBChat-header {
+    background: #f7f9fc;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .SBChat-search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+
+  .SBChat-close-btn{
+    background: none;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    margin-left: 95%;
+    margin-bottom: 10px;
+  }
+  
+  .SBChat-search-input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .SBChat-search-input:focus {
+    border-color: transparent;
+  }
+  
+  .SBChat-search-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #9970cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .SBChat-search-button:hover {
+    background-color: #330066;
+  }
+  
+  .SBChat-list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+  
+  .SBChat-list-item:hover {
+    background: #f7f7f7;
+  }
+  
+  .SBChat-list-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .SBChat-content {
+    flex-grow: 1;
+    margin-left: 10px;
+  }
+  
+  .SBChat-content .SBChat-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .SBChat-content .SBChat-message {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .SBChat-date {
+    font-size: 12px;
+    color: #999;
+  }
+  
+
+
+  .sentSB {
+    background-color: #daf8cb; /* Light green for sent messages */
+    text-align: right; /* Align messages to the right */
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  
+  .receivedSB {
+    background-color: #f1f0f0; /* Light gray for received messages */
+    text-align: left; /* Align messages to the left */
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  
+  
+
+
+  .SBChat-right {
+    width: 70%;
+    padding: 20px;
+    overflow-y: auto;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .SBChat-right h3 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+    font-size: 23px;
+  }
+
+
+  
+  
+  .SBChat-messages {
+    height: 340px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .SBChat-message-time{
+    font-size: 15px;
+  }
+
+
+
+  .message {
+    margin-bottom: 10px;
+    padding: 10px 15px; 
+    border-radius: 8px;
+    width: 100%; /* Ensures that each message takes up full width */
+    word-wrap: break-word; 
+    clear: both; /* Ensures the messages clear any floated elements */
+    display: block; /* Makes sure each message appears on a new line */
+  }
+  
+  
+  .sentSB {
+    background: #d7bcf9;
+    color:#333;
+    text-align: right;
+    float: right;
+  }
+  
+  .receivedSB {
+    background: #e9e9e9;
+    color: #333;
+    text-align: left; 
+    float: left;
+  }
+
+
+
+
+
+
+
+
+/* Ensure the timestamp is a block element */
+.message-timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px; /* Add some spacing between the message and timestamp */
+  display: block;  /* Ensure it appears below the message */
+  clear: both;  /* Prevent timestamp from floating beside the message */
+  width: 100%;  /* Ensure it takes up the full width of its container */
+  background-color: transparent;
+  padding: 0;
+  padding-top: 5px;
+}
+
+/* Sent message timestamp - Align to the right */
+.sentSB .message-timestamp {
+  text-align: right;  /* Right-align timestamp for sent messages */
+}
+
+/* Received message timestamp - Align to the left */
+.receivedSB .message-timestamp {
+  text-align: left;   /* Left-align timestamp for received messages */
+}
+
+
+
+
+
+
+
+
+  
+  .SBChat-messages p {
+    margin: 0;
+  }
+  
+  .SBChat-messages strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .SBChat-right input[type="text"] {
+    width: calc(100% - 90px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .SBChat-right button {
+    padding: 10px 15px;
+    border: none;
+    background: #9970cc;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .SBChat-right button:hover {
+    background: #330066;
+  }
+  
+  /* Scrollbar for messages */
+  .SBChat-messages::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .SBChat-messages::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  
+  .SBChat-messages::-webkit-scrollbar-thumb:hover {
+    background-color: #bbb;
+  }
+  
+
+
+  .SBerror-message {
+    background-color: #edd4d4;
+    color: #571515;
+    padding: 10px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
