@@ -20,24 +20,73 @@ const Dashboard = () => {
     incompleteTaskRate: 0,
     taskStatusCount: { completed: 0, inProgress: 0, notStarted: 0 },
   });
+  
 
-  // Fetch user metadata and token
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isAuthenticated) {
+        try {
+          const idTokenClaims = await getIdTokenClaims(); 
+          const idToken = idTokenClaims.__raw; 
+          setIdToken(idToken); 
+
+          const response = await axios.get('http://localhost:8080/api/protected', {
+            headers: {
+              Authorization: `Bearer ${idToken}`, 
+            },
+          });
+
+          setData(response.data);
+          setErrorMessage('');
+        
+        } catch (error) {
+          if (error.response && error.response.status === 403) {
+            setErrorMessage("You don't have permission.");
+          } else {
+            console.error('Error fetching data:', error);
+            setErrorMessage('An error occurred while fetching data.'); 
+          }
+        } finally {
+          setLoading(false); 
+        }
+      } else {
+        setLoading(false); 
+      }
+    };
+
+    fetchData();
+  }, [getIdTokenClaims, isAuthenticated]);
+
+
+
+
+
   useEffect(() => {
     if (!isAuthenticated) {
-      setLoading(false);
       return;
     }
 
     const getUserMetadataAndToken = async () => {
       try {
+        // Fetch the ID token claims
         const idTokenClaims = await getIdTokenClaims();
-        const metadata = idTokenClaims?.['https://demo.app.com/user_metadata'];
-        setUserMetadata(metadata);
+        console.log('ID token claims:', idTokenClaims);
 
+        if (idTokenClaims) {
+          const metadata = idTokenClaims['https://demo.app.com/user_metadata'];
+          console.log('User metadata:', metadata);
+          setUserMetadata(metadata);
+        } else {
+          console.error('No ID token claims available');
+        }
+
+        // Fetch the access token silently
         const accessToken = await getAccessTokenSilently();
-        setToken(accessToken);
+        console.log('Access Token:', accessToken);
+        setToken(accessToken);  // Set token in state
+
       } catch (error) {
-        console.error('Error fetching user metadata or token:', error);
+        console.error('Error getting token or metadata:', error);
         setError('Error fetching user metadata or token');
       } finally {
         setLoading(false);
@@ -47,31 +96,9 @@ const Dashboard = () => {
     getUserMetadataAndToken();
   }, [getIdTokenClaims, getAccessTokenSilently, isAuthenticated]);
 
+
   // Fetch KPI data
   useEffect(() => {
-<<<<<<< HEAD
-    const fetchKpi = async () => {
-      if (isAuthenticated) {
-        try {
-          const idTokenClaims = await getIdTokenClaims();
-          const idToken = idTokenClaims.__raw; 
-          setIdToken(idToken);
-  
-          const response = await axios.get('http://localhost:8015/api/kpi/user', {
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-            },
-          });
-  
-          setKpiData({
-            taskCompletionRate: response.data.taskCompletionRate,
-            incompleteTaskRate: response.data.incompleteTaskRate,
-            taskStatusCount: response.data.taskStatusCount,
-          });
-        } catch (error) {
-          console.error('Error fetching KPI data:', error);
-        }
-=======
     const fetchKpiData = async () => {
       if (!isAuthenticated) return;
 
@@ -90,7 +117,6 @@ const Dashboard = () => {
         });
       } catch (error) {
         console.error('Error fetching KPI data:', error);
->>>>>>> 089c1962207831fa3dfc3820ea4ac4dfb3891544
       }
     };
 
