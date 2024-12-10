@@ -35,6 +35,7 @@ public class MessageService {
 
 
 
+
     // Method to retrieve all messages
     public List<ChatMessage> getPrivateMessages(String receiver) {
 
@@ -60,9 +61,95 @@ public class MessageService {
 
 
 
+//    public List<Map<String, String>> getUsersByConversation() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String userId = auth.getName();
+//
+//        // Retrieve senders and receivers related to the user
+//        List<String> senders = messageRepository.findDistinctSendersByReceiver(userId);
+//        List<String> receivers = messageRepository.findDistinctReceiversBySender(userId);
+//
+//        List<String> sendersId = messageRepository.findDistinctSendersidByReceiverid(userId);
+//        List<String> receiversId = messageRepository.findDistinctReceiversidBySenderid(userId);
+//
+//        // Combine both usernames and IDs into a list of maps
+//        List<Map<String, String>> allUsers = new ArrayList<>();
+//
+//        // Process senders and their IDs safely
+//        for (int i = 0; i < Math.min(senders.size(), sendersId.size()); i++) {
+//            Map<String, String> user = new HashMap<>();
+//            user.put("username", senders.get(i));
+//            user.put("id", sendersId.get(i));
+//            allUsers.add(user);
+//        }
+//
+//        // Process receivers and their IDs safely
+//        for (int i = 0; i < Math.min(receivers.size(), receiversId.size()); i++) {
+//            Map<String, String> user = new HashMap<>();
+//            user.put("username", receivers.get(i));
+//            user.put("id", receiversId.get(i));
+//            allUsers.add(user);
+//        }
+//
+//        // Remove duplicates by using a Set
+//        Set<Map<String, String>> uniqueUsers = new HashSet<>(allUsers);
+//
+//        // Debugging logs (optional)
+//        System.out.println("All Users: " + allUsers);
+//
+//        // Convert back to a list and return
+//        return new ArrayList<>(uniqueUsers);
+//    }
+
+
+//    public List<Map<String, String>> getUsersByConversation() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String userId = auth.getName();
+//
+//        // Retrieve senders and receivers related to the user
+//        List<String> senders = messageRepository.findDistinctSendersByReceiver(userId);
+//        List<String> receivers = messageRepository.findDistinctReceiversBySender(userId);
+//
+//        List<String> sendersId = messageRepository.findDistinctSendersidByReceiverid(userId);
+//        List<String> receiversId = messageRepository.findDistinctReceiversidBySenderid(userId);
+//
+//        List<Map<String, String>> allUsers = new ArrayList<>();
+//
+//        // Process senders and their IDs safely
+//        for (int i = 0; i < Math.min(senders.size(), sendersId.size()); i++) {
+//            String senderId = sendersId.get(i);
+//            String lastMessage = messageRepository.findLastMessageBetweenUsers(userId, senderId); // Add query for last message
+//            Map<String, String> user = new HashMap<>();
+//            user.put("username", senders.get(i));
+//            user.put("id", senderId);
+//            user.put("lastMessage", lastMessage != null ? lastMessage : "No messages yet");
+//            allUsers.add(user);
+//        }
+//
+//        // Process receivers and their IDs safely
+//        for (int i = 0; i < Math.min(receivers.size(), receiversId.size()); i++) {
+//            String receiverId = receiversId.get(i);
+//            String lastMessage = messageRepository.findLastMessageBetweenUsers(userId, receiverId); // Add query for last message
+//            Map<String, String> user = new HashMap<>();
+//            user.put("username", receivers.get(i));
+//            user.put("id", receiverId);
+//            user.put("lastMessage", lastMessage != null ? lastMessage : "No messages yet");
+//            allUsers.add(user);
+//        }
+//
+//        // Remove duplicates by using a Set
+//        Set<Map<String, String>> uniqueUsers = new HashSet<>(allUsers);
+//
+//        // Debugging logs (optional)
+//        System.out.println("All Users with Last Message: " + allUsers);
+//
+//        // Convert back to a list and return
+//        return new ArrayList<>(uniqueUsers);
+//    }
+
+
 
     public List<Map<String, String>> getUsersByConversation() {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
 
@@ -73,35 +160,52 @@ public class MessageService {
         List<String> sendersId = messageRepository.findDistinctSendersidByReceiverid(userId);
         List<String> receiversId = messageRepository.findDistinctReceiversidBySenderid(userId);
 
-        // Combine both usernames and IDs into a list of maps
         List<Map<String, String>> allUsers = new ArrayList<>();
 
-        // Process senders and their IDs
-        for (int i = 0; i < senders.size(); i++) {
+        // Process senders and their IDs safely
+        for (int i = 0; i < Math.min(senders.size(), sendersId.size()); i++) {
+            String senderId = sendersId.get(i);
+            String lastMessage = messageRepository.findLastMessageBetweenUsers(userId, senderId); // Add query for last message
+            LocalDateTime lastMessageTime = messageRepository.findLastMessageTimeBetweenUsers(userId, senderId); // Add query for last message time
             Map<String, String> user = new HashMap<>();
             user.put("username", senders.get(i));
-            user.put("id", sendersId.get(i));
+            user.put("id", senderId);
+            user.put("lastMessage", lastMessage != null ? lastMessage : "No messages yet");
+
+            System.out.println(lastMessageTime);
+
+            user.put("lastMessageTime", lastMessageTime != null ? String.valueOf(lastMessageTime) : "No time available");
             allUsers.add(user);
         }
 
-        // Process receivers and their IDs
-        for (int i = 0; i < receivers.size(); i++) {
+        // Process receivers and their IDs safely
+        for (int i = 0; i < Math.min(receivers.size(), receiversId.size()); i++) {
+            String receiverId = receiversId.get(i);
+            String lastMessage = messageRepository.findLastMessageBetweenUsers(userId, receiverId); // Add query for last message
+            LocalDateTime lastMessageTime = messageRepository.findLastMessageTimeBetweenUsers(userId, receiverId); // Add query for last message time
+
+            System.out.println(lastMessageTime);
+
             Map<String, String> user = new HashMap<>();
             user.put("username", receivers.get(i));
-            user.put("id", receiversId.get(i));
+            user.put("id", receiverId);
+            user.put("lastMessage", lastMessage != null ? lastMessage : "No messages yet");
+            user.put("lastMessageTime", lastMessageTime != null ? String.valueOf(lastMessageTime) : "No time available");
+
             allUsers.add(user);
+
         }
+
 
         // Remove duplicates by using a Set
         Set<Map<String, String>> uniqueUsers = new HashSet<>(allUsers);
 
-        System.out.println(allUsers);
+        // Debugging logs (optional)
+        System.out.println("All Users with Last Message and Time: " + allUsers);
 
-        // Convert back to a list
+        // Convert back to a list and return
         return new ArrayList<>(uniqueUsers);
     }
-
-
 
 
 

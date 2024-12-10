@@ -16,24 +16,6 @@ public class KafkaProducer {
     private KafkaTemplate<String, Object> kafkaTemplate;
 
 
-//    public void sendChatMessage(String sendername, String receiver) {
-//        try {
-//            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send("Chat-topic", sendername, receiver);
-//            future.whenComplete((result, ex) -> {
-//                if (ex == null) {
-//                    System.out.println("Sent message=[" + sendername  + receiver +
-//                            "] with offset=[" + result.getRecordMetadata().offset() + "]");
-//                } else {
-//                    System.out.println("Unable to send message=[" +
-//                            sendername  + receiver+ "] due to : " + ex.getMessage());
-//                }
-//            });
-//
-//        } catch (Exception ex) {
-//            System.out.println("ERROR : "+ ex.getMessage());
-//        }
-//    }
-
 
     public void sendChatMessage(String sendername, String receiver) {
         try {
