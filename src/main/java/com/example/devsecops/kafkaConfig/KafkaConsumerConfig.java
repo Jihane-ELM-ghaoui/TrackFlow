@@ -26,7 +26,7 @@ public class KafkaConsumerConfig {
                 StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 JsonDeserializer.class);
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.devsecops.model");
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.devsecops.model,ma.ensa.StorageManager.entity");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "Notification-consumer-group");
         return props;
     }
