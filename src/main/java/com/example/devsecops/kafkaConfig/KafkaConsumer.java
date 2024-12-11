@@ -42,6 +42,45 @@ public class KafkaConsumer {
     }
 
 
+     @KafkaListener(topics = "FileUpload-topic")
+    public void handleFileUploadMessage(String userId) {
+        String message = "File uploaded successfully !";
+        System.out.println("Received Kafka message : file upload");
+
+        Notification notification = new Notification();
+        notification.setMessage(message);
+        notification.setUserId(userId);
+        notification.setTimestamp(LocalDateTime.now());
+
+        eventPublisher.publishEvent(new NotificationEvent(this, notification));
+    }
+
+    @KafkaListener(topics = "FileDownload-topic")
+    public void handleFileDownloadMessage(String userId) {
+        String message = "File downloaded successfully !";
+        System.out.println("Received Kafka message : file download");
+
+        Notification notification = new Notification();
+        notification.setMessage(message);
+        notification.setUserId(userId);
+        notification.setTimestamp(LocalDateTime.now());
+
+        eventPublisher.publishEvent(new NotificationEvent(this, notification));
+    }
+
+    @KafkaListener(topics = "FileDelete-topic")
+    public void handleFileDeleteMessage(String userId) {
+        String message = "File removed successfully !";
+        System.out.println("Received Kafka message : file delete");
+
+        Notification notification = new Notification();
+        notification.setMessage(message);
+        notification.setUserId(userId);
+        notification.setTimestamp(LocalDateTime.now());
+
+        eventPublisher.publishEvent(new NotificationEvent(this, notification));
+    }
+
 
     @KafkaListener(topics = "Chat-topic")
     public void handleChatMessage(String message) {
