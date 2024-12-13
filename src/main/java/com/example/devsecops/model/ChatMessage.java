@@ -27,5 +27,7 @@ public class ChatMessage {
     private String content;
     private LocalDateTime timestamp;
 
+    public ChatMessage(String sender, String s, String s1, LocalDateTime now) {
+    }
 }
 
