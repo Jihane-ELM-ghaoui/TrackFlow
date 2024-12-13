@@ -11,6 +11,8 @@ import './Dashboard.css';
 const Dashboard = () => {
   const { isAuthenticated, getIdTokenClaims, getAccessTokenSilently } = useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
+  const [data, setData] = useState('');
+  const [idToken, setIdToken] = useState(''); 
   const [token, setToken] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ const Dashboard = () => {
     incompleteTaskRate: 0,
     taskStatusCount: { completed: 0, inProgress: 0, notStarted: 0 },
   });
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +32,7 @@ const Dashboard = () => {
           const idToken = idTokenClaims.__raw; 
           setIdToken(idToken); 
 
-          const response = await axios.get('http://localhost:8080/api/protected', {
+          const response = await axios.get('http://gateway-service/user-service/api/protected', {
             headers: {
               Authorization: `Bearer ${idToken}`, 
             },

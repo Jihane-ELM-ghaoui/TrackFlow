@@ -329,7 +329,7 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
   // Fetch unseen notification count
   const fetchUnseenCount = async () => {
     try {
-      const response = await fetch('http://localhost:8000/notification/unseen-count');
+      const response = await fetch('http://localhost:8888/notification-service/notification/unseen-count');
       if (response.ok) {
         const count = await response.json();
         setUnseenCount(count);
@@ -379,7 +379,7 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
         const idTokenClaims = await getIdTokenClaims();
         const idToken = idTokenClaims.__raw;
 
-        const response = await axios.get('http://localhost:8000/notification', {
+        const response = await axios.get('http://localhost:8888/notification-service/notification', {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
@@ -413,7 +413,7 @@ const Navbar = ({ handleSidebarToggle, isOpen }) => {
         const idTokenClaims = await getIdTokenClaims();
         const idToken = idTokenClaims.__raw;
 
-        await axios.get('http://localhost:8000/notification/markAllAsRead', {
+        await axios.get('http://localhost:8888/notification-service/notification/markAllAsRead', {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
