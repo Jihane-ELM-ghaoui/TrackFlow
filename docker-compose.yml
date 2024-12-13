@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-user
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: User
+      MYSQL_USER: sijin
+      MYSQL_PASSWORD: sijin
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - devsecops-network
+
+  user-service:
+    build: .
+    container_name: user-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-user:3306/User
+      SPRING_DATASOURCE_USERNAME: sijin
+      SPRING_DATASOURCE_PASSWORD: sijin
+      spring_kafka_bootstrap-servers: kafka:9092
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - devsecops-network
+
+volumes:
+  mysql-data:
+
+networks:
+  devsecops-network:

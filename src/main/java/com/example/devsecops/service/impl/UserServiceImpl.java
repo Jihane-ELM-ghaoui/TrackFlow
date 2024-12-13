@@ -6,7 +6,6 @@ import com.example.devsecops.kafkaConfig.KafkaProducer;
 import com.example.devsecops.model.User;
 import com.example.devsecops.repository.UserRepo;
 import com.example.devsecops.service.UserService;
-import com.nimbusds.jwt.JWTClaimsSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,9 +85,10 @@ public class UserServiceImpl implements UserService {
 
             emailVerification();
 
-            // Create an S3 bucket with the userId
+           // Create an S3 bucket with the userId
             createS3Bucket(userId);
             kafkaProducer.sendBucketCreateMessage(userId);
+
         }
     }
 
