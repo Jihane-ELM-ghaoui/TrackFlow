@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  eureka:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eureka
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
