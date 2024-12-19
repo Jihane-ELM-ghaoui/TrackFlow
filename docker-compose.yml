@@ -10,8 +10,8 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - shared-network
+      - devsecops-network
 
 networks:
-  shared-network:
+  devsecops-network:
     external: true
