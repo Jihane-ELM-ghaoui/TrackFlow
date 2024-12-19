@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gateway
+    container_name: gateway
+    ports:
+      - "8009:8009"
+    environment:
+      - SERVER_PORT=8009
+      - SPRING_APPLICATION_NAME=gateway
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
+    networks:
+      - shared-network # Attach the container to the shared network
+
+networks:
+  shared-network:
+    external: true
