@@ -15,8 +15,8 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
     networks:
-      - shared-network
+      - devsecops-network
 
 networks:
-  shared-network:
+  devsecops-network:
     external: true
