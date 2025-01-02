@@ -22,6 +22,8 @@ import AdminDashboard from './services/AdminDashboard';
 import Dashboard from './services/Dashboard/Dashboard';
 import Storage from './services/Storage/Storage'
 
+import Project from './services/project/project';
+
 
 import Chat from './services/Chat/Chat'
 
@@ -82,6 +84,10 @@ function App() {
                 path="/admin-dashboard"
                 element={<ProtectedRoute component={AdminDashboard} roles={['Admin']} />}
               />
+                  
+              <Route 
+                path="/Project/:projectId" 
+                element={<ProtectedRoute component={Project}/>} />
 
 
               <Route path="*" element={<NotFound />} />
