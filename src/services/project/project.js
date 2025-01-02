@@ -24,7 +24,7 @@ const Project = () => {
         const idTokenClaims = await getIdTokenClaims();
         const idToken = idTokenClaims.__raw;
 
-        const response = await axios.get(`http://localhost:8010/api/kpi/project/${projectId}`, {
+        const response = await axios.get(`http://localhost:8009/KPI-SERVICE/api/kpi/project/${projectId}`, {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
