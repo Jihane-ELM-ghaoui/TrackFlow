@@ -46,7 +46,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
     try {
       const accessToken = await getAccessTokenSilently();
       const response = await axios.get(
-        `http://localhost:8090/api/files/download/${file.name}`,
+        `http://localhost:8888/storage-service/api/files/download/${file.name}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -73,7 +73,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
     try {
       const accessToken = await getAccessTokenSilently();
       const response = await axios.get(
-        `http://localhost:8090/api/files/open/${file.name}`, 
+        `http://localhost:8888/storage-service/api/files/open/${file.name}`, 
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -93,7 +93,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
   const handleDelete = async (file) => {
     try {
       const accessToken = await getAccessTokenSilently();
-      await axios.delete(`http://localhost:8090/api/files/delete/${file.name}`, {
+      await axios.delete(`http://localhost:8888/storage-service/api/files/delete/${file.name}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -112,7 +112,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
       const accessToken = await getAccessTokenSilently();
 
       const response = await axios.post(
-        `http://localhost:8090/api/files/share/${file.name}`,
+        `http://localhost:8888/storage-service/api/files/share/${file.name}`,
         null, // No request body
         {
           headers: {
