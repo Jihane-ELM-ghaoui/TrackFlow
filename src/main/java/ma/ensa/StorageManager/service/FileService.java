@@ -21,7 +21,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class FileService {
@@ -137,7 +136,7 @@ public class FileService {
 
         sharedFileMetadataRepository.save(metadata);
 
-        return "http://localhost:8090/api/files/shared/" + linkId;
+        return "http://localhost:8888/storage-service/api/files/shared/" + linkId;
     }
 
     public byte[] getSharedFile(String linkId) {
