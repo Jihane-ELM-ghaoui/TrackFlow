@@ -32,7 +32,7 @@ const Dashboard = () => {
           const idToken = idTokenClaims.__raw; 
           setIdToken(idToken); 
 
-          const response = await axios.get('http://gateway-service/user-service/api/protected', {
+          const response = await axios.get('http://localhost:8888/user-service/api/protected', {
             headers: {
               Authorization: `Bearer ${idToken}`, 
             },

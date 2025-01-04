@@ -38,7 +38,7 @@ body {
   .SBChat-dropdown-button {
     width: 250px;
     padding: 8px;
-    background-color: #9970cc;
+    background-color: #185a9d;
     color: white;
     border: none;
     border-radius: 4px;
@@ -48,7 +48,7 @@ body {
   }
   
   .SBChat-dropdown-button:hover {
-    background-color: #330066;
+    background-color: #185a9d;
   }
   
   .SBChat-left {
@@ -113,7 +113,7 @@ body {
   .SBChat-search-button {
     padding: 5px 10px;
     font-size: 14px;
-    background-color: #9970cc;
+    background-color: #185a9d;
     color: white;
     border: none;
     border-radius: 4px;
@@ -121,7 +121,7 @@ body {
   }
   
   .SBChat-search-button:hover {
-    background-color: #330066;
+    background-color: #185a9d;
   }
   
   .SBChat-list-item {

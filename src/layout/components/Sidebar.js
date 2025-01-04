@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen }) => {
         <li className={activeItem === 'Services' ? 'active' : ''}>
           <NavLink to="/projects" onClick={() => handleItemClick('Services')}>
             <i className='bx bxs-dashboard'></i>
-            <span className="textSB">Services</span>
+            <span className="textSB">Projects</span>
           </NavLink>
         </li>
         <li className={activeItem === 'Storage' ? 'active' : ''}>
@@ -67,16 +67,10 @@ const Sidebar = ({ isOpen }) => {
             <span className="textSB">Storage</span>
           </NavLink>
         </li>
-        <li className={activeItem === 'Todo List' ? 'active' : ''}>
-          <NavLink to="/user/todo" onClick={() => handleItemClick('Todo List')}>
-            <i className='bx bx-list-check'></i>
-            <span className="textSB">Todo List</span>
-          </NavLink>
-        </li>
         <li className={activeItem === 'Chat' ? 'active' : ''}>
           <NavLink to="/chat" onClick={() => handleItemClick('Chat')}>
             <i className='bx bxs-message-dots'></i>
-            <span className="textSB">Community</span>
+            <span className="textSB">Chat Room</span>
           </NavLink>
         </li>
       </ul>

@@ -30,13 +30,21 @@
   width: 60px;
 }
 
+.brandSB .textSB{
+  color: #185a9d;
+}
+
+.brandSB .bx {
+  color: #185a9d;
+}
+
 #sidebarSB .brandSB {
   font-size: 24px;
   font-weight: 700;
   height: 56px;
   display: flex;
   align-items: center;
-  background-color: linear-gradient(to right, #9970cc, #330066);
+  background-color: linear-gradient(to right, #39b18b, #185a9d);
   position: sticky;
   top: 0;
   left: 0;
@@ -54,7 +62,7 @@
 
 
 .brandSB:active {
-  color:#570987;
+  color:#185a9d;
 }
 
 #sidebarSB .side-menuSB {
@@ -115,7 +123,7 @@
 }
 
 #sidebarSB .side-menuSB.top li.active a {
-  color:#570987;
+  color:#185a9d;
 }
 
 #sidebarSB.hide .side-menuSB li a {
@@ -124,11 +132,11 @@
 }
 
 #sidebarSB .side-menuSB li a.logout {
-  color: #570987;
+  color: #185a9d;
 }
 
 #sidebarSB .side-menuSB.top li a:hover {
-  color: #570987;
+  color: #185a9d;
 }
 
 #sidebarSB .side-menuSB li a .bx {
