@@ -178,7 +178,7 @@ class FileServiceTest {
         // Arrange
         String userId = "auth0|670a49f45fb7f3ba271f916a";
         String fileName = "test.txt";
-        String expectedBaseUrl = "http://localhost:8090/api/files/shared/";
+        String expectedBaseUrl = "http://localhost:8888/storage-service/api/files/shared/";
 
         // Act
         String shareLink = fileService.shareFile(userId, fileName);
