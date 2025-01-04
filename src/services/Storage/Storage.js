@@ -10,6 +10,7 @@ import listview from './assets/list_view.png';
 import gridview from './assets/grid_view.png';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const notifyError = (message) => toast.error(message);
 const notifySuccess = (message) => toast.success(message);
 
@@ -37,7 +38,7 @@ const Storage = () => {
   const fetchFiles = useCallback(async () => {
     try {
       const accessToken = await getAccessTokenSilently();
-      const response = await axios.get('http://localhost:8090/api/files', {
+      const response = await axios.get('http://localhost:8888/storage-service/api/files', {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       });
       console.log("Fetched files:", response.data); // Debug log to ensure data is fetched
@@ -57,7 +58,7 @@ const Storage = () => {
 
       const accessToken = await getAccessTokenSilently();
 
-      await axios.post('http://localhost:8090/api/files/upload', formData, {
+      await axios.post('http://localhost:8888/storage-service/api/files/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${accessToken}`,

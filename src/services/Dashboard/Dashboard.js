@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
-import Calendar from './Calendar';
+import CustomCalendar from './Calendar';
 import TaskCard from './TaskCard';
 import CircularProgressBar from './CircularProgressBar';
 import TaskStatusChart from './TaskStatusChart';
@@ -125,6 +125,68 @@ const Dashboard = () => {
     fetchKpiData();
   }, [getIdTokenClaims, isAuthenticated]);
 
+    // Load events from localStorage when component mounts
+    const [events, setEvents] = useState([]);
+    useEffect(() => {
+      const savedEvents = JSON.parse(localStorage.getItem('events')) || [];
+      // Ensure date is a Date object
+      const formattedEvents = savedEvents.map(event => ({
+        ...event,
+        date: new Date(event.date), // Convert date to Date object
+      }));
+      setEvents(formattedEvents);
+    }, []);
+  
+    // Save events to localStorage whenever events array changes
+    useEffect(() => {
+      if (events.length > 0) {
+        localStorage.setItem('events', JSON.stringify(events));
+      }
+    }, [events]);
+  
+    const [showEventForm, setShowEventForm] = useState(false);
+    const [newEvent, setNewEvent] = useState({
+      date: new Date(),
+      time: '',
+      name: '',
+    });
+    const formRef = useRef();
+  
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (formRef.current && !formRef.current.contains(event.target)) {
+          setShowEventForm(false);
+        }
+      }
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+  
+    const handleAddEvent = () => {
+      const updatedEvents = [
+        ...events,
+        {
+          date: new Date(newEvent.date),
+          time: newEvent.time,
+          description: newEvent.name,
+        },
+      ];
+      setEvents(updatedEvents);
+      setNewEvent({ date: new Date(), time: '', name: '' });
+      setShowEventForm(false);
+      alert('Event added!');
+    };
+  
+  
+    const handleFormChange = (field, value) => {
+      setNewEvent({
+        ...newEvent,
+        [field]: field === 'date' ? new Date(value) : value,
+      });
+    };
+
   return (
     <div className="dashboard-container-kh">
       {/* Header */}
@@ -140,8 +202,46 @@ const Dashboard = () => {
       <div className="main-content-kh">
         {/* Calendar Section */}
         <div className="calendar-container-kh">
-          <Calendar />
-          <button className="create-task-btn-kh">+ Add date to Calendar</button>
+          <CustomCalendar events={events} />
+          <button
+            className="create-task-btn-kh"
+            onClick={() => setShowEventForm(!showEventForm)}
+          >
+            + Add date to Calendar
+          </button>
+          {showEventForm && (
+            <div className="event-form" ref={formRef}>
+              <h4>Add New Event</h4>
+              <label>
+                Date:
+                <input
+                  type="date"
+                  value={newEvent.date.toISOString().split('T')[0]}
+                  onChange={(e) => handleFormChange('date', e.target.value)}
+                />
+              </label>
+              <label>
+                Time:
+                <input
+                  type="time"
+                  value={newEvent.time}
+                  onChange={(e) => handleFormChange('time', e.target.value)}
+                />
+              </label>
+              <label>
+                Event Name:
+                <input
+                  type="text"
+                  value={newEvent.name}
+                  onChange={(e) => handleFormChange('name', e.target.value)}
+                />
+              </label>
+              <div className="form-buttons">
+                <button onClick={handleAddEvent}>Submit</button>
+                <button onClick={() => setShowEventForm(false)}>Cancel</button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Task Section */}
