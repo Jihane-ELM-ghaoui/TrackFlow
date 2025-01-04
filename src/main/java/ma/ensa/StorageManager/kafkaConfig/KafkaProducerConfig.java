@@ -18,17 +18,17 @@ public class KafkaProducerConfig {
 
     @Bean
     public NewTopic createUploadTopic(){
-        return new NewTopic("FileUpload-topic", 3, (short) 1);
+        return new NewTopic("FileUpload-topic", 1, (short) 1);
     }
 
     @Bean
     public NewTopic DownloadTopic(){
-        return new NewTopic("FileDownload-topic", 3, (short) 1);
+        return new NewTopic("FileDownload-topic", 1, (short) 1);
     }
 
     @Bean
     public NewTopic DeleteTopic(){
-        return new NewTopic("FileDelete-topic", 3, (short) 1);
+        return new NewTopic("FileDelete-topic", 1, (short) 1);
     }
 
 
