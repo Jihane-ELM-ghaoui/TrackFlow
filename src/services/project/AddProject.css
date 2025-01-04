@@ -1,0 +1,427 @@
+bodyNB {
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container for the project list and modal */
+.containerNB {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+    height: auto; /* Allow the container to expand beyond the viewport height */
+    overflow-y: auto;
+}
+
+/* Style for the project list container */
+.project-list-containerNB {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    text-align: center;
+}
+
+/* List header styling */
+.list-headerNB {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Create new project button */
+.create-new-btnNB {
+    padding: 12px 25px;
+    background-color: #59a8b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.create-new-btnNB:hover {
+    background-color: #2eb7ca;
+}
+
+/* Buttons row (Invite Member, Create Role, Create Task) */
+.button-rowNB {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+/* Individual buttons for Invite Member, Create Role, Create Task */
+.project-action-btnNB {
+    padding: 12px 25px;
+    background-color: #59a8b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 30%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.project-action-btnNB:hover {
+    background-color: #2eb7ca;
+}
+
+/* Grid for project items */
+.projectsNB {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+/* Individual project item styling */
+.project-itemNB {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    transition: background-color 0.3s, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.project-itemNB:hover {
+    background-color: #f3f3f3;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.project-itemNB .created-atNB {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 5px;
+    font-style: italic; /* Make the "Created at:" text italic */
+    margin-left: 20px;
+}
+
+/* Project Description Styling */
+.project-descriptionNB {
+    font-size: 0.9em; /* Smaller text */
+    color: #555; /* Slightly darker color */
+    margin-top: 15px; /* Add some space between description and the next element */
+    margin-bottom: 15px; /* Add space at the bottom */
+    line-height: 1.4; /* Improve readability */
+    margin-left: 20px;
+}
+
+/* Dots Menu icon */
+.dots-menuNB {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+/* Gradient Header with Project Name and Dots Menu */
+.project-itemNB h4 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+/* Header of each project item */
+.project-itemNB .project-headerNB {
+    display: flex;
+    justify-content: space-between;
+    align-items: left; /* Center header content */
+    background: linear-gradient(45deg, #39b18b, #185a9d);
+    padding: 10px 20px;
+    margin-left: 20px;
+    border-radius: 8px;
+    color: #fff;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Menu Dropdown (Initially hidden) */
+.menu-dropdownNB {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 10px;
+    width: 150px;
+}
+
+.project-itemNB.active .menu-dropdownNB {
+    display: block;
+}
+
+.menu-dropdownNB ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-dropdownNB li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.menu-dropdownNB li:hover {
+    background-color: #f3f3f3;
+}
+
+/* Modal Styles */
+.modalNB {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    animation: fadeInNB 0.3s ease;
+}
+
+/* Modal content box */
+.modal-contentNB {
+    background-color: white;
+    padding: 40px;
+    max-width: 800px;
+    width: 80%;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh; /* Allow scrolling if content overflows */
+    position: relative;
+}
+
+/* Modal header styles */
+.modal-headerNB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.7em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-close-btnNB {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.modal-close-btnNB:hover {
+    background-color: #c0392b;
+}
+
+/* Modal Body */
+.modal-bodyNB {
+    margin-top: 20px;
+}
+
+.add-memberNB, .create-roleNB {
+    margin-top: 30px;
+}
+
+/* Labels for form fields */
+.modal-bodyNB label {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+/* Form inputs */
+input[type="email"]:NB, input[type="text"]:NB, input[type="date"]:NB, input[type="number"]:NB, textarea:NB {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1em;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="email"]:focusNB, input[type="text"]:focusNB, input[type="date"]:focusNB, input[type="number"]:focusNB, textarea:focusNB {
+    border-color: #59a8b6;
+    outline: none;
+}
+
+/* Styled buttons in modal */
+buttonNB {
+    padding: 12px 18px;
+    background: linear-gradient(45deg, #39b18b, #185a9d);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+buttonNB:hover {
+    background-color: #2eb7ca;
+}
+
+buttonNB:disabled {
+    background-color: #bbb;
+    cursor: not-allowed;
+}
+
+/* Styled Close Button for modal */
+
+.close-btnNB:hover {
+    background-color: #59a8b6;
+}
+
+/* Hover effect on buttons */
+buttonNB:hover, .close-btnNB:hover {
+    background-color: #2eb7ca;
+    transition: background-color 0.3s ease;
+}
+
+/* Create New Project Header */
+.modal-contentNB h3 {
+    color: #185a9d;
+    font-size: 2em; /* Bigger text */
+    text-align: center; /* Center the text */
+    margin-bottom: 30px; /* More space between title and form */
+}
+
+/* Fade-in effect for the modal */
+@keyframes fadeInNB {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Style for the form */
+.project-formNB label {
+    display: block;
+    margin: 8px 0 4px;
+    font-weight: bold;
+}
+
+
+.project-formNB input,
+.project-formNB textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+.project-formNB button {
+    width: 45%; /* Make buttons the same width */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 10px; /* Add space between buttons */
+}
+
+.project-formNB button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* Specific button colors */
+.project-formNB .create-btnNB {
+    background-color: #185a9d;
+    color: white;
+}
+
+.project-formNB .close-btnNB {
+    background-color: #185a9d;
+    color: white;
+}
+
+/* Center the buttons horizontally and add space between them */
+.project-formNB .button-containerNB {
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+    gap: 20px; /* Add space between the buttons */
+    width: 100%; /* Take up full width of the parent */
+    margin-top: auto; /* Pushes the button container to the bottom */
+}
+
+/* Individual button styles */
+.project-formNB .button-containerNB button {
+    width: 45%; /* Buttons will be sized based on their content */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Specific button colors */
+.project-formNB .create-btnNB {
+    background-color: #185a9d;
+    color: white;
+}
+
+.project-formNB .close-btnNB {
+    background-color: #185a9d;
+    color: white;
+}
+
+
+.error-messageNB {
+    color: red;
+    font-size: 14px;
+}
+
+/* Modal close button */
+.close-btnNB {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
