@@ -16,11 +16,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/files")
-@CrossOrigin("http://localhost:3000")
 public class StorageController {
 
     @Autowired
     private FileService fileService;
+
+    @GetMapping("/files")
+    public ResponseEntity<String> getFiles() {
+        return ResponseEntity.ok("List of files goes here.");
+    }
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) {
