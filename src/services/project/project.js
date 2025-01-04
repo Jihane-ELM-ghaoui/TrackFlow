@@ -417,6 +417,7 @@ return (
                                             ...taskDetails,
                                             taskStartDate: e.target.value
                                         })}
+                                        
                                     />
                                 </label>
 
@@ -477,11 +478,11 @@ return (
 
                                     <div className="task-datesNB">
                                         <p><strong>Start
-                                            Date:</strong> {new Date(task.startDate).toLocaleDateString()}</p>
-                                        <p><strong>Due Date:</strong> {new Date(task.dueDate).toLocaleDateString()}
+                                            Date:</strong> {new Date(task.taskStartDate).toLocaleDateString()}</p>
+                                        <p><strong>Due Date:</strong> {new Date(task.taskEndDate).toLocaleDateString()}
                                         </p>
                                         <p><strong>Estimated Date
-                                            Time:</strong> {new Date(task.estimatedDate).toLocaleDateString()}</p>
+                                            Time:</strong> {new Date(task.taskEstimatedEndDate).toLocaleDateString()}</p>
                                     </div>
 
                                     <div className={`task-priority priority-${task.taskPriority}`}>
