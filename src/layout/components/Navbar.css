@@ -68,8 +68,8 @@ nav form .form-inputSB button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #39b18b; 
-  /* background: linear-gradient(to right, #39b18b, #185a9d); */
+  background-color: #2A8993; 
+  /* background: linear-gradient(to right, #39b18b, #247A96); */
   color: var(--light);
   font-size: 18px;
   border: none;
@@ -100,7 +100,7 @@ nav .notification-iconSB {
   background: var(--light);
   margin-left: 50px;
   font-size: 24px;
-  color: #185a9d;
+  color: #247A96;
 }
 
 
@@ -117,7 +117,7 @@ nav .notification-iconSB {
 }
 
 .logout-buttonSB {
-  background-color: #185a9d;
+  background-color: #247A96;
   color: white !important; /* Set text color to white */
   padding: 12px 20px;
   border: none;
@@ -194,8 +194,8 @@ ul {
 }
 
 .login-buttonSB {
-  background-color: #185a9d;
-  /* background: linear-gradient(to right,#39b18b, #185a9d); */
+  background-color: #247A96;
+  /* background: linear-gradient(to right,#39b18b, #247A96); */
   color: white !important; /* Set text color to white */
   padding: 12px 20px;
   border: none;
@@ -248,13 +248,13 @@ ul {
   text-decoration: none;
   padding: 8px 12px;
   transition: background-color 0.5s;
-  color: #185a9d;
+  color: #247A96;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .nav-linkSB:hover, .nav-linkSB.active {
   font-size: 1.05em;
-  color: #185a9d;
+  color: #247A96;
 }
 
 
@@ -265,7 +265,7 @@ ul {
   height: 55px;
   display: flex;
   align-items: center;
-  background-color: #185a9d ;
+  background-color: #247A96 ;
   position: sticky;
   top: 0;
   left: 0;
