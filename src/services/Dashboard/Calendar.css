@@ -1,8 +1,36 @@
-.calendar-container-kh {
-    flex-basis: 25%;
-    background-color: #ffffff;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-  
+
+/* Event Form Styling */
+.highlighted-date {
+  background-color: #6a0dad;
+  color: white;
+  border-radius: 50%;
+}
+
+/* Popup for event details */
+.event-popup {
+  position: absolute;
+  top: 0; /* Aligns with the top of the calendar */
+  left: calc(100% + 10px); /* Places it right next to the calendar with a gap */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  max-width: 300px;
+}
+
+/* Ensure the calendar container has position relative for correct positioning */
+
+.event-popup h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.event-popup p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
