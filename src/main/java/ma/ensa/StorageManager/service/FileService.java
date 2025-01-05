@@ -104,6 +104,24 @@ public class FileService {
         }
     }
 
+    public byte[] openFile(String userId, String fileName) {
+        String bucketName = userId.split("\\|")[1];
+
+        try {
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build();
+
+            ResponseBytes<GetObjectResponse> objectBytes = s3Client.getObjectAsBytes(getObjectRequest);
+
+            return objectBytes.asByteArray();
+
+        } catch (S3Exception e) {
+            throw new RuntimeException("Failed to open file from S3 bucket", e);
+        }
+    }
+    
     public void deleteFile(String userId, String fileName) {
         String bucketName = userId.split("\\|")[1];
 
