@@ -52,7 +52,7 @@ bodyNB {
 }
 
 .create-new-btnNB:hover {
-    background-color: #2eb7ca;
+    background-color: #2A8993;
 }
 
 /* Buttons row (Invite Member, Create Role, Create Task) */
@@ -78,7 +78,7 @@ bodyNB {
 }
 
 .project-action-btnNB:hover {
-    background-color: #2eb7ca;
+    background-color: #2A8993;
 }
 
 /* Grid for project items */
@@ -150,7 +150,7 @@ bodyNB {
     display: flex;
     justify-content: space-between;
     align-items: left; /* Center header content */
-    background: linear-gradient(45deg, #39b18b, #185a9d);
+    background: linear-gradient(45deg, #39b18b, #217298);
     padding: 10px 20px;
     margin-left: 20px;
     border-radius: 8px;
@@ -284,7 +284,7 @@ input[type="email"]:focusNB, input[type="text"]:focusNB, input[type="date"]:focu
 /* Styled buttons in modal */
 buttonNB {
     padding: 12px 18px;
-    background: linear-gradient(45deg, #39b18b, #185a9d);
+    background: linear-gradient(45deg, #39b18b, #217298);
     color: white;
     border: none;
     border-radius: 8px;
@@ -295,7 +295,7 @@ buttonNB {
 }
 
 buttonNB:hover {
-    background-color: #2eb7ca;
+    background-color: #2A8993;
 }
 
 buttonNB:disabled {
@@ -311,13 +311,13 @@ buttonNB:disabled {
 
 /* Hover effect on buttons */
 buttonNB:hover, .close-btnNB:hover {
-    background-color: #2eb7ca;
+    background-color: #2A8993;
     transition: background-color 0.3s ease;
 }
 
 /* Create New Project Header */
 .modal-contentNB h3 {
-    color: #185a9d;
+    color: #217298;
     font-size: 2em; /* Bigger text */
     text-align: center; /* Center the text */
     margin-bottom: 30px; /* More space between title and form */
@@ -369,12 +369,12 @@ buttonNB:hover, .close-btnNB:hover {
 
 /* Specific button colors */
 .project-formNB .create-btnNB {
-    background-color: #185a9d;
+    background-color: #217298;
     color: white;
 }
 
 .project-formNB .close-btnNB {
-    background-color: #185a9d;
+    background-color: #217298;
     color: white;
 }
 
@@ -399,12 +399,12 @@ buttonNB:hover, .close-btnNB:hover {
 
 /* Specific button colors */
 .project-formNB .create-btnNB {
-    background-color: #185a9d;
+    background-color: #217298;
     color: white;
 }
 
 .project-formNB .close-btnNB {
-    background-color: #185a9d;
+    background-color: #217298;
     color: white;
 }
 
