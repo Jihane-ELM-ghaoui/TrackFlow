@@ -6,8 +6,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 40px auto;
   max-width: 90%;
-  font-family: Arial, sans-serif; 
-  margin-right: 35px;
+  font-family: Arial, sans-serif;
 }
 
 /* Header Styling */
@@ -24,27 +23,55 @@
   margin: 0;
 }
 
-/* Button Section */
-.header-buttons-kh {
+/* Button Styling */
+.header-buttons-kh,
+.form-buttons {
   display: flex;
 }
 
 .create-new-project-btn-kh,
-.add-date-btn-kh {
+.add-date-btn-kh,
+.create-task-btn-kh,
+.submit-event-btn-kh,
+.form-buttons button {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #6a0dad;
   color: white;
-  margin-left: 10px;
-  transition: background-color 0.3s ease; /* Smooth transition on hover */
+  transition: background-color 0.3s ease;
+}
+
+.create-new-project-btn-kh,
+.add-date-btn-kh,
+.create-task-btn-kh,
+.submit-event-btn-kh {
+  background-color: #6a0dad;
+  margin-top: 10px;
 }
 
 .create-new-project-btn-kh:hover,
-.add-date-btn-kh:hover {
-  background-color: #5b0a94; /* Darker shade on hover */
+.add-date-btn-kh:hover,
+.create-task-btn-kh:hover,
+.submit-event-btn-kh:hover {
+  background-color: #5b0a94;
+}
+
+.form-buttons button:first-child {
+  background-color: #0a680d;
+}
+
+.form-buttons button:first-child:hover {
+  background-color: #317134;
+}
+
+.form-buttons button:last-child {
+  background-color: #c71e12;
+}
+
+.form-buttons button:last-child:hover {
+  background-color: #7e0f0f;
 }
 
 /* Main Content Styling */
@@ -53,11 +80,10 @@
   gap: 20px;
 }
 
-/* Calendar and Task Section */
 .calendar-container-kh {
   display: flex;
   flex-direction: column;
-  position: relative; /* Ensure positioning for the form */
+  position: relative;
 }
 
 .task-section-kh {
@@ -66,24 +92,39 @@
   gap: 20px;
 }
 
-/* Create Task Button */
-.create-task-btn-kh {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
+/* Event Form Styling */
+.event-form-container-kh,
+.event-form {
+  position: absolute;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  z-index: 10;
+}
+
+.event-form-container-kh {
+  top: 0;
+  right: -400px;
+  transition: right 0.3s ease-in-out;
+}
+
+.event-form {
+  top: 0;
+  left: calc(100% + 15px);
+}
+
+.event-form input,
+.event-form textarea {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
 }
 
-.create-task-btn-kh:hover {
-  background-color: #0056b3;
-}
-
-/* Chart Section */
+/* Chart Styling */
 .charts-section-kh {
   display: flex;
   justify-content: space-around;
@@ -91,15 +132,17 @@
   gap: 20px;
 }
 
-/* Chart Item */
 .chart-item-kh {
   flex: 1;
   max-width: 300px;
   margin: 0 10px;
   text-align: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Task Status Chart */
 .task-status-chart-container {
   display: flex;
   justify-content: center;
@@ -107,161 +150,33 @@
   margin: 20px auto;
   width: 300px;
   height: 300px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Circular Progress */
-.circular-progress-container {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 20px auto;
-}
-
-.circular-progress-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-}
-
-/* Form for Adding Events */
-.event-form {
-  position: absolute;
-  top: 0;
-  left: calc(100% + 15px); /* Position next to the calendar */
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  width: 250px;
-}
-
-.event-form h4 {
-  margin: 0 0 10px;
-  font-size: 18px;
-  color: #333;
-}
-
-.event-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #555;
-}
-
-.event-form input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.form-buttons button {
-  padding: 8px 12px;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.form-buttons button:first-child {
-  background-color: #4caf50; /* Submit Button */
-  color: white;
-}
-
-.form-buttons button:first-child:hover {
-  background-color: #45a049;
-}
-
-.form-buttons button:last-child {
-  background-color: #f44336; /* Cancel Button */
-  color: white;
-}
-
-.form-buttons button:last-child:hover {
-  background-color: #d32f2f;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-container-kh {
-      max-width: 100%;
-      padding: 15px;
+    max-width: 100%;
+    padding: 15px;
   }
 
   .main-content-kh {
-      flex-direction: column;
-      gap: 15px;
+    flex-direction: column;
+    gap: 15px;
   }
 
-  /* Adjusts the charts section to display them horizontally with equal spacing */
-.charts-section-kh {
-  display: flex;
-  justify-content: space-evenly; /* Distribute the charts evenly */
-  gap: 20px; /* Add some space between the charts */
-  margin-top: 30px;
-}
+  .charts-section-kh {
+    justify-content: space-evenly;
+  }
 
-/* Makes each chart item have equal size */
-.chart-item-kh {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1; /* Ensure all charts take equal space */
-  max-width: 200px; /* Set a max-width to keep charts from getting too large */
-  height: 200px; /* Set the height of each chart */
-  margin: 0 10px;
-  text-align: center;
-  color: white;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
+  .chart-item-kh {
+    max-width: 200px;
+    height: 200px;
+  }
 
-/* Optional: You can style the chart label to be centered and have consistent styling */
-.chart-label-kh {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px; /* Space between label and chart */
-  text-align: center;
-}
- 
-/* Specific styles for TaskStatusChart to ensure it matches size */
-.task-status-chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100% !important; /* Force width to 100% */
-  height: 100% !important; /* Force height to 100% */
-  max-width: 200px; /* Ensure the max width is consistent */
-  max-height: 200px; /* Ensure the max height is consistent */
-  margin: 0 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-  
+  .event-form {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    margin-top: 10px;
+  }
 }
