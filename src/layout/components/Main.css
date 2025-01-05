@@ -1,10 +1,10 @@
 :root {
     --light: #F9F9F9;
-    --blue: #2470f3;
+    --blue: #2A8993;
     --grey: #eee;
     --dark: #342E37;
     --dark-grey: #AAAAAA;
-    --header-blue: #052a50; /* Color for headers */
+    --header-blue: #217298; /* Color for headers */
     --text-color: #0d0c0c; /* Color for text */
   }
   
@@ -75,7 +75,7 @@
     
     .SB-btn {
       padding: 10px 20px;
-      background: #185a9d;;
+      background: #2A8993;;
       color: #fff;
       text-decoration: none;
       font-weight: bold;
@@ -85,7 +85,7 @@
     }
     
     .SB-btn:hover {
-      background: #0056b3;
+      background: #2A8993;
     }
     
     .SB-scroll-indicator {
@@ -103,32 +103,6 @@
       }
     }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
@@ -370,7 +344,7 @@
   
   .contact-form input:focus,
   .contact-form textarea:focus {
-    border-color: #007BFF;
+    border-color: #2A8993;
     outline: none;
   }
   
@@ -380,7 +354,7 @@
   }
   
   .submit-btn {
-    background-color: #007BFF;
+    background-color: #2A8993;
     color: white;
     border: none;
     padding: 12px 20px;
@@ -391,7 +365,7 @@
   }
   
   .submit-btn:hover {
-    background-color: #0056b3;
+    background-color: #2A8993;
   }
 
 
@@ -474,10 +448,10 @@
 }
 
 .pricing-box button:hover {
-  background-color: #1c5bbf;
+  background-color: #217298;
 }
 
-.modal, .error-popup {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -489,21 +463,116 @@
   align-items: center;
 }
 
-.modal-content, .error-content {
+.modal-content {
   background: #fff;
   padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  border-radius: 12px;
   width: 90%;
-  max-width: 400px;
+  max-width: 450px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+  color: #2d3748;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  color: #4a5568;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.form-group input::placeholder {
+  color: #a0aec0;
+}
+
+.Btn-JE {
+  width: 100%;
+  background: #217298;
+  color: white;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.Btn-JE:hover {
+  background: #3182ce;
 }
 
 .close-btn {
-  margin-top: 10px;
-  background-color: #f44336;
-  color: white;
+  width: 100%;
+  background: #edf2f7;
+  color: #4a5568;
+  padding: 0.875rem;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e2e8f0;
+}
+
+/* Error Popup Styles */
+.error-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.error-content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.error-content p {
+  color: #e53e3e;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
 }
