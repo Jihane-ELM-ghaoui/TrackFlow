@@ -23,6 +23,8 @@ import Dashboard from './services/Dashboard/Dashboard';
 import Storage from './services/Storage/Storage'
 
 import Project from './services/project/project';
+import AddProject from './services/project/AddProject';
+import JoinProject from './services/project/JoinProject';
 
 
 import Chat from './services/Chat/Chat'
@@ -78,16 +80,23 @@ function App() {
                 element={<ProtectedRoute component={Storage}/>}
               />
 
-            
+              <Route
+                  path="/user/add-project"
+                  element={<ProtectedRoute component={AddProject} />}
+              />
+
 
               <Route
                 path="/admin-dashboard"
                 element={<ProtectedRoute component={AdminDashboard} roles={['Admin']} />}
               />
                   
-              <Route 
-                path="/Project/:projectId" 
-                element={<ProtectedRoute component={Project}/>} />
+              <Route
+                path="/Project/:projectId"
+                element={<ProtectedRoute component={Project} />}
+              />
+
+              <Route path="/projects/join" element={<JoinProject />} />
 
 
               <Route path="*" element={<NotFound />} />
