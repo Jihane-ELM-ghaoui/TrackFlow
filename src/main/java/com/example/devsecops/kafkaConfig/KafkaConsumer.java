@@ -30,8 +30,8 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "BucketCreate-topic")
     public void handleBucketCreateMessage(String userId) {
-        String message = "bucket create";
-        System.out.println("Received Kafka message : bucket create");
+        String message = "Your AWS S3 bucket has been created successfully and is ready for use.";
+        System.out.println("Received Kafka message : Bucket created");
 
         Notification notification = new Notification();
         notification.setMessage(message);
@@ -45,7 +45,7 @@ public class KafkaConsumer {
      @KafkaListener(topics = "FileUpload-topic")
     public void handleFileUploadMessage(String userId) {
         String message = "File uploaded successfully !";
-        System.out.println("Received Kafka message : file upload");
+        System.out.println("Received Kafka message : File uploaded");
 
         Notification notification = new Notification();
         notification.setMessage(message);
@@ -58,7 +58,7 @@ public class KafkaConsumer {
     @KafkaListener(topics = "FileDownload-topic")
     public void handleFileDownloadMessage(String userId) {
         String message = "File downloaded successfully !";
-        System.out.println("Received Kafka message : file download");
+        System.out.println("Received Kafka message : File downloaded");
 
         Notification notification = new Notification();
         notification.setMessage(message);
@@ -71,7 +71,7 @@ public class KafkaConsumer {
     @KafkaListener(topics = "FileDelete-topic")
     public void handleFileDeleteMessage(String userId) {
         String message = "File removed successfully !";
-        System.out.println("Received Kafka message : file delete");
+        System.out.println("Received Kafka message : File deleted");
 
         Notification notification = new Notification();
         notification.setMessage(message);
