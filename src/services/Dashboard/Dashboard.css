@@ -34,28 +34,35 @@
 .create-task-btn-kh,
 .submit-event-btn-kh,
 .form-buttons button {
-  padding: 10px 20px;
+  padding: 12px 20px; /* Increased padding */
   font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Slightly increased border radius */
   cursor: pointer;
   color: white;
   transition: background-color 0.3s ease;
+  display: inline-flex; /* Changed to inline-flex */
+  align-items: center;
+  gap: 8px; /* Space between icon and text if needed */
+  margin-right: 10px; /* Space between buttons */
+  background-color: #277298;
 }
 
+/* Hover effect */
+.create-new-project-btn-kh:hover,
+.add-date-btn-kh:hover,
+.create-task-btn-kh:hover,
+.submit-event-btn-kh:hover,
+.form-buttons button:hover {
+  background-color: #277298; /* Slightly darker on hover */
+}
+
+/* Remove margin-top since buttons are side by side */
 .create-new-project-btn-kh,
 .add-date-btn-kh,
 .create-task-btn-kh,
 .submit-event-btn-kh {
-  background-color: #6a0dad;
-  margin-top: 10px;
-}
-
-.create-new-project-btn-kh:hover,
-.add-date-btn-kh:hover,
-.create-task-btn-kh:hover,
-.submit-event-btn-kh:hover {
-  background-color: #5b0a94;
+  margin-top: 0;
 }
 
 .form-buttons button:first-child {
