@@ -18,13 +18,13 @@
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    background-color: #3498db;
+    background-color: #2A8993;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
   }
   
   .view-toggle-kh button:hover {
-    background-color: #2980b9;
+    background-color: #206a72;
   }
   
