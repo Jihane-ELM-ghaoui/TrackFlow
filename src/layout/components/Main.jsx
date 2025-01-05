@@ -177,7 +177,7 @@ const Main = () => {
                 <label>CVV</label>
                 <input type="text" name="cvv" placeholder="123" required />
               </div>
-              <button type="submit">Pay ${selectedPlan.amount}</button>
+              <button className="Btn-JE" type="submit">Pay ${selectedPlan.amount}</button>
             </form>
             <button onClick={handleClosePaymentForm} className="close-btn">Close</button>
           </div>
