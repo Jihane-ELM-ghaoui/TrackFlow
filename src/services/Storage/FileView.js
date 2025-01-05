@@ -1,171 +1,200 @@
-import React from 'react';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import emptyfolder from './assets/empty-folder.png';
-import download from './assets/download.png';
-import deleteicon from './assets/delete.png';
-import shareicon from './assets/share.png';
-import openicon from './assets/open-icon.png';
-import './FileView.css';
+/* Container for the file view */
+.file-view-kh {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+}
 
-const notifyError = (message) => toast.error(message);
-const notifySuccess = (message) => toast.success(message);
-const notifySuccessWithCopy = (message, url) => {
-  toast.success(
-    <div style={{ fontFamily: 'Arial, sans-serif', color: '#333' }}>
-      <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{message}</span>
-      <br />
-      <span 
-        style={{ 
-          cursor: 'pointer', 
-          color: '#007BFF', 
-          textDecoration: 'underline', 
-          marginTop: '0.5rem', 
-          display: 'inline-block', 
-          transition: 'color 0.2s ease' 
-        }}
-        onClick={() => navigator.clipboard.writeText(url)}
-        onMouseOver={(e) => e.target.style.color = '#0056b3'} // Darker blue on hover
-        onMouseOut={(e) => e.target.style.color = '#007BFF'}  // Reset to original color
-      >
-        Copy Link
-      </span>
-    </div>,
-    { 
-      autoClose: false, 
-      closeOnClick: true 
-    }
-  );
-};
+/* Styling for each file item */
+.file-item-kh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
+/* Change background and shadow on hover */
+.file-item-kh:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-  //Download file
-  const handleDownload = async (file) => {
-    try {
-      const accessToken = await getAccessTokenSilently();
-      const response = await axios.get(
-        `http://localhost:8888/storage-service/api/files/download/${file.name}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          responseType: "blob",
-        }
-      );
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", file.name);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      notifySuccess('File downloaded successfully');
-    } catch (error) {
-      console.error("Error downloading file:", error);
-      notifyError('Failed to download file');
-    }
-  };  
+/* Styling for the file name */
+.file-item-kh .file-name-kh {
+  font-weight: bold;
+  color: #333;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  //Open file
-  const handleOpen = async (file) => {
-    try {
-      const accessToken = await getAccessTokenSilently();
-      const response = await axios.get(
-        `http://localhost:8888/storage-service/api/files/open/${file.name}`, 
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          responseType: "blob", // This ensures the response is a Blob object
-        }
-      );
-      const url = window.URL.createObjectURL(response.data);
-      window.open(url, "_blank"); // Opens the file in a new tab
-    } catch (error) {
-      console.error("Error opening file:", error);
-      notifyError('Failed to open file');
-    }
-  };
-  
-  //Delete file
-  const handleDelete = async (file) => {
-    try {
-      const accessToken = await getAccessTokenSilently();
-      await axios.delete(`http://localhost:8888/storage-service/api/files/delete/${file.name}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      fetchFiles(); // Refresh the file list after deletion
-      notifySuccess('File removed successfully');
-    } catch (error) {
-      console.error("Error deleting file:", error);
-      notifyError('Failed to delete file');
-    }
-  };
+/* Styling for buttons */
+.file-item-kh button {
+  /* background-color: #007bff; */
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-  //Share file
-  const handleShare = async (file) => {
-    try {
-      const accessToken = await getAccessTokenSilently();
+/* Button hover effects */
+.file-item-kh button:hover {
+  /* background-color: #0056b3; */
+  transform: scale(1.05);
+}
 
-      const response = await axios.post(
-        `http://localhost:8888/storage-service/api/files/share/${file.name}`,
-        null, // No request body
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+/* Button focus effects for accessibility */
+.file-item-kh button:focus {
+  outline: 2px solid #277298;
+  outline-offset: 2px;
+}
 
-      const shareableLink = response.data.split("Shareable link: ")[1];
-      navigator.clipboard.writeText(shareableLink); // Copy link to clipboard
-      notifySuccessWithCopy("Shareable link copied to clipboard: " + shareableLink);
-    } catch (error) {
-      console.error("Error sharing file:", error);
-      notifyError("Failed to share file");
-    }
-  };
+/* Styling for empty file view message */
+.file-view-empty-kh {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+}
 
-  
-  if (!files || files.length === 0) {
-    return (
-      <div className="file-view-empty-kh">
-        <div className="empty-message-kh">
-        <img src={emptyfolder} alt="Empty folder" />
-          <p>No files uploaded yet.</p>
-        </div>
-      </div>
-    );
+/* Toggle view buttons */
+.view-toggle-kh {
+  margin: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Styling for toggle buttons */
+.view-toggle-kh button {
+  /* background-color: #007bff; */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Toggle button hover effects */
+.view-toggle-kh button:hover {
+  /* background-color: #0056b3; */
+  transform: scale(1.05);
+}
+
+/* Toggle button focus effects */
+.view-toggle-kh button:focus {
+  outline: 2px solid #277298;
+  outline-offset: 2px;
+}
+
+/* Drag and drop area styling */
+.drag-drop-area {
+  border: 2px dashed #ddd;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover effect for drag and drop area */
+.drag-drop-area:hover {
+  background-color: #f1f1f1;
+  border-color: #bbb;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+  .file-item-kh {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
+  .file-item-kh button {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
 
+/* List View */
+.file-view-kh.list {
+  flex-direction: column;
+}
 
-  return (
-    <div className={`file-view-kh ${view}`}>
-      <ToastContainer />
-      {files.map((file) => (
-        <div key={file.name} className="file-item-kh">
-          <span className="file-name-kh">{file.name}</span>
-          <button onClick={() => handleOpen(file)}>
-            <img src={ openicon } alt='Open icon' style={{ width: '20px', height: '20px'}} />
-          </button>
-          <button onClick={() => handleDownload(file)}>
-            <img src={ download } alt='Download icon' style={{ width: '20px', height: '20px'}} />
-          </button>
-          <button onClick={() => handleDelete(file)}>
-            <img src={ deleteicon } alt='Delete icon' style={{ width: '20px', height: '20px'}} />
-          </button>
-          <button onClick={() => handleShare(file)}>
-            <img src={ shareicon } alt='Share icon' style={{ width: '20px', height: '20px'}} />
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-};
+.file-view-kh.list .file-item-kh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
 
-export default FileView;
+/* Grid View Specific Styling */
+.file-view-kh.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  justify-content: start;
+}
+
+.file-view-kh.grid .file-item-kh {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* File name styling specific to grid view */
+.file-view-kh.grid .file-item-kh .file-name-kh {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* Button layout in grid view */
+.file-view-kh.grid .file-item-kh button {
+  width: 100%;
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+/* Grid View Hover Effect */
+.file-view-kh.grid .file-item-kh:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments for small screens in grid view */
+@media (max-width: 600px) {
+  .file-view-kh.grid .file-item-kh {
+    grid-template-columns: 1fr;
+  }
+}
