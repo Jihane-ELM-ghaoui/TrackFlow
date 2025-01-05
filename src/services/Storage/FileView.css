@@ -58,7 +58,7 @@
 
 /* Button focus effects for accessibility */
 .file-item-kh button:focus {
-  outline: 2px solid #0056b3;
+  outline: 2px solid #277298;
   outline-offset: 2px;
 }
 
@@ -97,7 +97,7 @@
 
 /* Toggle button focus effects */
 .view-toggle-kh button:focus {
-  outline: 2px solid #0056b3;
+  outline: 2px solid #277298;
   outline-offset: 2px;
 }
 
