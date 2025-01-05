@@ -59,7 +59,6 @@ public class StorageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
 
-        // Fetch the file data (you need to implement this in your service)
         byte[] fileData = fileService.downloadFile(userId, fileName);
 
         // Determine the file's MIME type based on the file name
