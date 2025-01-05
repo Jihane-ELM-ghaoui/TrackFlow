@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen }) => {
     // Set active item based on current pathname
     if (location.pathname === '/dashboard') {
       setActiveItem('Dashboard');
-    } else if (location.pathname.includes('/user/cours') || location.pathname.includes('/user/cours/modules/:year/:semester') || location.pathname.includes('/user/cours/modules/list/:year/:semester/:module') ) {
+    } else if (location.pathname.includes('/user/add-project')) {
       setActiveItem('Services');
     } else if (location.pathname.includes('/storage')) {
       setActiveItem('Storage');
@@ -56,7 +56,7 @@ const Sidebar = ({ isOpen }) => {
           </NavLink>
         </li>
         <li className={activeItem === 'Services' ? 'active' : ''}>
-          <NavLink to="/projects" onClick={() => handleItemClick('Services')}>
+          <NavLink to="/user/add-project" onClick={() => handleItemClick('Services')}>
             <i className='bx bxs-dashboard'></i>
             <span className="textSB">Projects</span>
           </NavLink>
