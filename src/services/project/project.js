@@ -158,9 +158,9 @@ const Project = () => {
                   taskName,
                   taskDescription,
                   taskPriority,
-                  taskStartDate,
-                  taskEndDate,
-                  taskEstimatedEndDate,
+                  taskStartDate: taskStartDate || null,
+                  taskEndDate: taskEndDate || null,     
+                  taskEstimatedEndDate: taskEstimatedEndDate || null,
                   createdBy: idTokenClaims.email,
                   status: status || 'NOT_STARTED',
                   assignedUsers: assignedUsers || [],
@@ -477,12 +477,11 @@ return (
                                     <p className="task-descriptionNB">{task.taskDescription}</p>
 
                                     <div className="task-datesNB">
-                                        <p><strong>Start
-                                            Date:</strong> {new Date(task.taskStartDate).toLocaleDateString()}</p>
-                                        <p><strong>Due Date:</strong> {new Date(task.taskEndDate).toLocaleDateString()}
+                                        <p><strong>Start Date:</strong> {task.taskStartDate ? new Date(task.taskStartDate).toLocaleDateString() : 'Not Set'}</p>
+                                        <p><strong>Due Date:</strong> {task.taskEndDate ? new Date(task.taskEndDate).toLocaleDateString() : 'Not Set'}
                                         </p>
                                         <p><strong>Estimated Date
-                                            Time:</strong> {new Date(task.taskEstimatedEndDate).toLocaleDateString()}</p>
+                                            Time:</strong> {task.taskEstimatedEndDate ? new Date(task.taskEstimatedEndDate).toLocaleDateString() : 'Not Set'}</p>
                                     </div>
 
                                     <div className={`task-priority priority-${task.taskPriority}`}>
