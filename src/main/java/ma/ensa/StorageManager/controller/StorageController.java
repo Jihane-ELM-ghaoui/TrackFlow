@@ -59,7 +59,7 @@ public class StorageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
 
-        byte[] fileData = fileService.downloadFile(userId, fileName);
+        byte[] fileData = fileService.openFile(userId, fileName);
 
         // Determine the file's MIME type based on the file name
         String contentType;
