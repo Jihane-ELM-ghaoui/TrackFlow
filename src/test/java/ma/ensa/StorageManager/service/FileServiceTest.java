@@ -78,17 +78,14 @@ class FileServiceTest {
 
     @Test
     void testUploadFile() throws Exception {
-        // Arrange
         String bucketName = "670a49f45fb7f3ba271f916a";
         String fileName = "test.txt";
 
         when(mockFile.getOriginalFilename()).thenReturn(fileName);
         when(mockFile.getBytes()).thenReturn("test content".getBytes());
-
-        // Act
+        
         ResponseEntity<String> response = fileService.uploadFile(mockFile);
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.getBody().contains(bucketName));
 
@@ -97,13 +94,11 @@ class FileServiceTest {
         assertEquals(bucketName, capturedRequest.bucket());
         assertEquals(fileName, capturedRequest.key());
 
-        // Verify Kafka message
         verify(kafkaProducer).sendFileUploadMessage(userId);
     }
 
     @Test
     void testListFiles() {
-        // Arrange
         String bucketName = "670a49f45fb7f3ba271f916a";
 
         ListObjectsV2Response mockResponse = ListObjectsV2Response.builder()
@@ -111,10 +106,8 @@ class FileServiceTest {
                 .build();
         when(s3Client.listObjectsV2(any(ListObjectsV2Request.class))).thenReturn(mockResponse);
 
-        // Act
         List<FileMetadata> files = fileService.listFiles(userId);
 
-        // Assert
         assertNotNull(files);
         assertEquals(1, files.size());
         assertEquals("file.txt", files.get(0).getName());
@@ -127,7 +120,6 @@ class FileServiceTest {
 
     @Test
     void testDownloadFile() {
-        // Arrange
         String bucketName = "670a49f45fb7f3ba271f916a";
         String fileName = "file.txt";
         byte[] fileContent = "test content".getBytes();
@@ -135,10 +127,8 @@ class FileServiceTest {
         ResponseBytes<GetObjectResponse> mockResponseBytes = ResponseBytes.fromByteArray(GetObjectResponse.builder().build(), fileContent);
         when(s3Client.getObjectAsBytes(any(GetObjectRequest.class))).thenReturn(mockResponseBytes);
 
-        // Act
         byte[] downloadedFile = fileService.downloadFile(userId, fileName);
 
-        // Assert
         assertNotNull(downloadedFile);
         assertArrayEquals(fileContent, downloadedFile);
 
@@ -147,43 +137,32 @@ class FileServiceTest {
         assertEquals(bucketName, capturedRequest.bucket());
         assertEquals(fileName, capturedRequest.key());
 
-        // Verify Kafka message
         verify(kafkaProducer).sendFileDownloadMessage(userId);
     }
 
     @Test
     void testDeleteFile() {
-        // Arrange
         String bucketName = "670a49f45fb7f3ba271f916a";
         String fileName = "file.txt";
 
-        // Act
         fileService.deleteFile(userId, fileName);
 
-        // Assert
         verify(s3Client).deleteObject(deleteObjectRequestCaptor.capture());
         DeleteObjectRequest capturedRequest = deleteObjectRequestCaptor.getValue();
         assertEquals(bucketName, capturedRequest.bucket());
         assertEquals(fileName, capturedRequest.key());
 
-        // Verify Kafka message
         verify(kafkaProducer).sendFileDeleteMessage(userId);
     }
 
-    /////////////////////////////////////////////////
-
-
     @Test
     void testShareFile() {
-        // Arrange
         String userId = "auth0|670a49f45fb7f3ba271f916a";
         String fileName = "test.txt";
         String expectedBaseUrl = "http://localhost:8888/storage-service/api/files/shared/";
 
-        // Act
         String shareLink = fileService.shareFile(userId, fileName);
 
-        // Assert
         assertNotNull(shareLink);
         assertTrue(shareLink.startsWith(expectedBaseUrl));
 
@@ -198,7 +177,6 @@ class FileServiceTest {
 
     @Test
     void testGetSharedFile_ValidLink() {
-        // Arrange
         String linkId = UUID.randomUUID().toString();
         String userId = "auth0|670a49f45fb7f3ba271f916a";
         String fileName = "test.txt";
@@ -206,18 +184,16 @@ class FileServiceTest {
         SharedFileMetadata mockMetadata = new SharedFileMetadata(
                 userId,
                 fileName,
-                Instant.now().plusSeconds(24 * 60 * 60), // Valid expiry
+                Instant.now().plusSeconds(24 * 60 * 60),
                 linkId
         );
         when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.of(mockMetadata));
 
         byte[] mockFileContent = "file content".getBytes();
-        doReturn(mockFileContent).when(fileService).downloadFile(userId, fileName); // Spy allows mocking this call
+        doReturn(mockFileContent).when(fileService).downloadFile(userId, fileName); 
 
-        // Act
         byte[] result = fileService.getSharedFile(linkId);
 
-        // Assert
         assertNotNull(result);
         assertArrayEquals(mockFileContent, result);
 
@@ -226,7 +202,6 @@ class FileServiceTest {
 
     @Test
     void testGetSharedFile_ExpiredLink() {
-        // Arrange
         String linkId = UUID.randomUUID().toString();
         String userId = "auth0|670a49f45fb7f3ba271f916a";
         String fileName = "test.txt";
@@ -234,12 +209,11 @@ class FileServiceTest {
         SharedFileMetadata expiredMetadata = new SharedFileMetadata(
                 userId,
                 fileName,
-                Instant.now().minusSeconds(60), // Already expired
+                Instant.now().minusSeconds(60),
                 linkId
         );
         when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.of(expiredMetadata));
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> fileService.getSharedFile(linkId));
         assertEquals("Link has expired", exception.getMessage());
 
@@ -248,11 +222,9 @@ class FileServiceTest {
 
     @Test
     void testGetSharedFile_InvalidLink() {
-        // Arrange
         String linkId = UUID.randomUUID().toString();
         when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> fileService.getSharedFile(linkId));
         assertEquals("Invalid or expired link", exception.getMessage());
 
@@ -261,7 +233,6 @@ class FileServiceTest {
 
     @Test
     void testGetFileNameFromLink_ValidLink() {
-        // Arrange
         String linkId = UUID.randomUUID().toString();
         String fileName = "test.txt";
 
@@ -273,21 +244,17 @@ class FileServiceTest {
         );
         when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.of(mockMetadata));
 
-        // Act
         String result = fileService.getFileNameFromLink(linkId);
 
-        // Assert
         assertNotNull(result);
         assertEquals(fileName, result);
     }
 
     @Test
     void testGetFileNameFromLink_InvalidLink() {
-        // Arrange
         String linkId = UUID.randomUUID().toString();
         when(sharedFileMetadataRepository.findByLinkId(linkId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> fileService.getFileNameFromLink(linkId));
         assertEquals("Invalid link ID", exception.getMessage());
     }
