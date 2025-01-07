@@ -26,14 +26,13 @@ const Project = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const {isAuthenticated, getIdTokenClaims} = useAuth0();
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState('');
-    const [showAssigneesForm, setShowAssigneesForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);    const [showTaskForm, setShowTaskForm] = useState(false);
-    const [showRoleForm, setShowRoleForm] = useState(false);
     const [showMemberInput, setShowMemberInput] = useState(false);
     const [tasks, setTasks] = useState([]);
     const [isKpiVisible, setIsKpiVisible] = useState(false); // State for KPI dropdown visibility
     const [showUpdateTaskForm, setShowUpdateTaskForm] = useState(false);
+    const [commentText, setCommentText] = useState({});
+
     const [taskDetails, setTaskDetails] = useState({
         id: null,
         taskName: '',
@@ -44,16 +43,12 @@ const Project = () => {
         taskEstimatedEndDate: '',
         status: 'NOT_STARTED',
         assignedUsers: [],
+        comments: [],
     });
-
     const [updatedProject, setUpdatedProject] = useState({ ...project });
-
     const [members, setMembers] = useState([]);
-    const [roles, setRoles] = useState([]);
-    const [roleName, setRoleName] = useState('');
     const [kpiData, setKpiData] = useState(null);
-    const [projectName, setProjectName] = useState('');
-    const [projectDescription, setProjectDescription] = useState('');
+    const [showAssignUserForm, setShowAssignUserForm] = useState(false);
 
     const fetchProject = async (idToken) => {
         try {
@@ -94,7 +89,7 @@ const Project = () => {
                 headers: {Authorization: `Bearer ${idToken}`},
             });
             setTasks(tasksResponse.data);
-            console.log("taskresponsess:", tasksResponse.data);
+            console.log("task responses:", tasksResponse.data);
         } catch (error) {
             setErrorMessage('An error occurred while fetching tasks.');
         }
@@ -159,6 +154,23 @@ const Project = () => {
         }
     };
 
+    const fetchTasksByProject = async (projectId) => {
+        try {
+            const idTokenClaims = await getIdTokenClaims();
+            const idToken = idTokenClaims.__raw;
+
+            const response = await axios.get(
+                `http://localhost:8095/api/tasks/project/${projectId}`,
+                { headers: { Authorization: `Bearer ${idToken}` } }
+            );
+
+            setTasks(response.data); // Store tasks in state
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    };
+
+
     const handleDeleteProject = async () => {
         if (window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
             if (isAuthenticated) {
@@ -182,50 +194,6 @@ const Project = () => {
         }
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUpdatedProject((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    const handleCreateRole = async () => {
-        if (!roleName || !selectedProject) {
-            alert('Please provide both a valid role name and a project');
-            return;
-        }
-
-        try {
-            const response = await axios.post('http://localhost:8091/api/roles', {
-                roleName: roleName,
-                projectId: selectedProject.id,
-            });
-
-            if (response.status === 200 || response.status === 201) {
-                alert(`Role "${roleName}" created successfully`);
-                setRoleName('');
-                setSelectedProject(null);
-            } else {
-                console.error('Failed to create role:', response);
-                alert(`Failed to create role. Status: ${response.status}, Message: ${response.data?.message || 'Unknown error'}`);
-            }
-        } catch (error) {
-            console.error('Error creating role:', error);
-            alert(`Failed to create role. Error: ${error.response?.data?.message || error.message}`);
-        }
-    };
-
-
-    const fetchRoles = async () => {
-        try {
-            const projectId = selectedProject.id;
-            const response = await axios.get('http://localhost:8091/api/roles/project/${projectId}');
-            setRoles(response.data);
-        } catch (error) {
-            console.error('Error fetching roles:', error);
-        }
-    };
 
     const handleCreateTask = async () => {
         const { taskName, taskDescription, taskPriority, taskStartDate, taskEndDate, taskEstimatedEndDate, status, assignedUsers } = taskDetails;
@@ -358,7 +326,6 @@ const Project = () => {
             projectId: task.projectId, // Include projectId
         });
 
-        // Show the update task form modal
         setShowUpdateTaskForm(true);
     };
 
@@ -415,6 +382,73 @@ const Project = () => {
         }
     };
 
+    const handlePostComment = async (taskId) => {
+        if (isAuthenticated) {
+            try {
+                setLoading(true);
+                const idTokenClaims = await getIdTokenClaims();
+                const idToken = idTokenClaims.__raw;
+
+                const response = await axios.post(
+                    `http://localhost:8095/api/tasks/${taskId}/comments`,
+                    { commentText: commentText[taskId], userName: "LoggedUserName" }, // Replace 'LoggedUserName' appropriately
+                    { headers: { Authorization: `Bearer ${idToken}` } }
+                );
+
+                if (response.status === 200) {
+                    const updatedComment = response.data;
+                    setTasks((prevTasks) =>
+                        prevTasks.map((task) =>
+                            task.id === taskId
+                                ? { ...task, comments: [...task.comments, updatedComment] }
+                                : task
+                        )
+                    );
+                    setLoading(false);
+                    alert('Comment posted successfully');
+                    setCommentText((prev) => ({ ...prev, [taskId]: '' }));
+                }
+            } catch (error) {
+                setLoading(false);
+                console.error('Error posting comment:', error);
+                alert('Failed to post comment');
+            }
+        }
+    };
+
+    const handleResolveComment = async (taskId, commentId) => {
+        if (isAuthenticated) {
+            try {
+                setLoading(true);
+                const idTokenClaims = await getIdTokenClaims();
+                const idToken = idTokenClaims.__raw;
+
+                await axios.put(
+                    `http://localhost:8095/api/tasks/${taskId}/comments/${commentId}/resolve`,
+                    { userName: 'LoggedUserName' }, // Replace 'LoggedUserName' with the actual logged-in username if available
+                    { headers: { Authorization: `Bearer ${idToken}` } }
+                );
+
+                setTasks((prevTasks) =>
+                    prevTasks.map((task) =>
+                        task.id === taskId
+                            ? {
+                                ...task,
+                                comments: task.comments.filter((comment) => comment.id !== commentId),
+                            }
+                            : task
+                    )
+                );
+                setLoading(false);
+                alert('Comment resolved successfully');
+            } catch (error) {
+                setLoading(false);
+                console.error('Error resolving comment:', error);
+                alert('Failed to resolve comment');
+            }
+        }
+    };
+
     const handleDeleteMember = async (email) => {
         if (!selectedProject) {
             alert('No project selected');
@@ -462,8 +496,54 @@ const Project = () => {
             alert('Failed to send invitation. Please try again.');
         }
     };
+;
 
+    const handleAssignUserToTask = async (taskId, email) => {
+        try {
+            const idTokenClaims = await getIdTokenClaims();
+            const idToken = idTokenClaims.__raw;
 
+            const response = await axios.post(
+                `http://localhost:8095/api/tasks/${taskId}/assign`,
+                null,
+                {
+                    params: { email },
+                    headers: { Authorization: `Bearer ${idToken}` },
+                }
+            );
+
+            if (response.status === 200) {
+                alert(`User ${email} assigned successfully.`);
+                fetchTasksByProject(projectId); // Refresh tasks for the project
+            }
+        } catch (error) {
+            console.error("Error assigning user:", error);
+            alert("Failed to assign user. Please try again.");
+        }
+    };
+    const handleRemoveUserFromTask = async (taskId, email) => {
+        try {
+            const idTokenClaims = await getIdTokenClaims();
+            const idToken = idTokenClaims.__raw;
+
+            const response = await axios.post(
+                `http://localhost:8095/api/tasks/${taskId}/remove`,
+                null,
+                {
+                    params: { email },
+                    headers: { Authorization: `Bearer ${idToken}` },
+                }
+            );
+
+            if (response.status === 200) {
+                alert(`User ${email} removed successfully.`);
+                fetchTasksByProject(projectId); // Refresh tasks for the project
+            }
+        } catch (error) {
+            console.error("Error removing user:", error);
+            alert("Failed to remove user. Please try again.");
+        }
+    };
 
     useEffect(() => {
         const fetchKpiData = async () => {
@@ -554,6 +634,8 @@ const Project = () => {
     const toggleKpiVisibility = () => {
         setIsKpiVisible(!isKpiVisible);
     };
+
+
     if (loading) return <div>Loading...</div>;
     if (errorMessage) return <div>{errorMessage}</div>;
 
@@ -573,15 +655,12 @@ const Project = () => {
 
                         <div className="button-rowNB">
                             <button onClick={() => setShowTaskForm(true)}>New Task</button>
-                            <button onClick={() => setShowAssigneesForm(true)}>Assignees</button>
                             <button onClick={() => setShowUpdateForm(true)}>Modify</button>
                         </div>
                     </div>
 
                     <div className="members-info-containerNB">
-                        <h1>Projects Assignees</h1>
                         <div className="members-sectionNB">
-                            <h4>Joined Members : </h4>
                             <div className="members-grid">
                                 {members.map(member => (
                                     <div key={member.email} className="member-card">
@@ -589,9 +668,11 @@ const Project = () => {
                                             <span>{member.email}</span>
                                             <span className="role">{member.role}</span>
                                         </div>
-                                        <button onClick={() => handleDeleteMember(member.email)}>
+                                        <button className="remove-button"
+                                                onClick={() => handleDeleteMember(member.email)}>
                                             Remove
                                         </button>
+
                                     </div>
                                 ))}
                             </div>
@@ -627,12 +708,15 @@ const Project = () => {
                                     {errorMessage && <div className="error-messageNB">{errorMessage}</div>}
                                     <div className="button-containerNB">
                                         <button onClick={handleAddMember} className="create-btnNB">Send Invitation</button>
-                                        <button className="close-btnNB" onClick={() => setShowMemberInput(false)}>Close</button>
+
+                                        <span className="closeNB" onClick={() => setShowMemberInput(false)}>&times;</span> {/* This represents the X symbol */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
+
+
 
                     {/* Task Modal */}
                     {showTaskForm && (
@@ -731,15 +815,15 @@ const Project = () => {
                     {showUpdateForm && (
                         <div id="modify-project-modal" className="modalNB">
                             <div className="modal-contentNB">
-                                <h3>Modify Project Info</h3>
-                                <div className="project-formNB">
+                                <h2>Modify Project Info</h2>
+                                <div>
                                     <label>Project Name:</label>
                                     <input
                                         type="text"
                                         placeholder="Enter Project Name"
                                         value={updatedProject.name || ""}
                                         onChange={(e) =>
-                                            setUpdatedProject((prevState) => ({...prevState, name: e.target.value}))
+                                            setUpdatedProject((prevState) => ({ ...prevState, name: e.target.value }))
                                         }
                                     />
                                     <label>Description:</label>
@@ -749,18 +833,22 @@ const Project = () => {
                                         onChange={(e) =>
                                             setUpdatedProject((prevState) => ({
                                                 ...prevState,
-                                                description: e.target.value
+                                                description: e.target.value,
                                             }))
                                         }
                                     />
+                                    <div className="button-container">
                                     <button onClick={handleUpdateProject} disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Project'}
                                     </button>
                                     <button onClick={handleDeleteProject} disabled={loading}>
                                         {loading ? 'Deleting...' : 'Delete Project'}
                                     </button>
-                                    <button className="close-btnNB" onClick={() => setShowUpdateForm(false)}>Close
-                                    </button>
+                                </div>
+                                    {/* Close X button */}
+                                    <span className="closeNB" onClick={() => setShowUpdateForm(false)}>
+                    &times; {/* This represents the X symbol */}
+                </span>
                                 </div>
                             </div>
                         </div>
@@ -797,28 +885,31 @@ const Project = () => {
                                         required
                                     />
 
-                                    <label>Priority:
-                                        <input
-                                            type="number"
-                                            value={taskDetails.taskPriority}
-                                            onChange={(e) => setTaskDetails({
-                                                ...taskDetails, taskPriority: parseInt(e.target.value)
-                                            })}
-                                            min="1"
-                                            max="5"
-                                        />
-                                    </label>
+                                    <label>Priority:</label>
+                                    <input
+                                        type="number"
+                                        value={taskDetails.taskPriority}
+                                        onChange={(e) =>
+                                            setTaskDetails({
+                                                ...taskDetails,
+                                                taskPriority: parseInt(e.target.value),
+                                            })
+                                        }
+                                        min="1"
+                                        max="5"
+                                    />
 
-                                    <label>Status:
-                                        <select
-                                            value={taskDetails.status}
-                                            onChange={(e) => setTaskDetails({...taskDetails, status: e.target.value})}
-                                        >
-                                            <option value="NOT_STARTED">Not Started</option>
-                                            <option value="IN_PROGRESS">In Progress</option>
-                                            <option value="COMPLETED">Completed</option>
-                                        </select>
-                                    </label>
+                                    <label>Status:</label>
+                                    <select
+                                        value={taskDetails.status}
+                                        onChange={(e) =>
+                                            setTaskDetails({...taskDetails, status: e.target.value})
+                                        }
+                                    >
+                                        <option value="NOT_STARTED">Not Started</option>
+                                        <option value="IN_PROGRESS">In Progress</option>
+                                        <option value="COMPLETED">Completed</option>
+                                    </select>
 
                                     <label>Start Date:</label>
                                     <input
@@ -849,27 +940,98 @@ const Project = () => {
                                         }
                                         required
                                     />
+                                    {/* Close X button */}
+                                    <span className="closeNB" onClick={() => setShowUpdateTaskForm(false)}>
+                    &times;
+                </span>
 
-                                    <button type="submit" disabled={loading}>Update Task Info</button>
-                                    <button
-                                        type="button"
-                                        className="close-btnNB"
-                                        onClick={() => setShowUpdateTaskForm(false)}
-                                    >
-                                        Close
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="delete-btnNB"
-                                        onClick={handleDeleteTask} // Call the delete function
-                                        disabled={loading} // Optionally disable while loading
-                                    >
-                                        Delete Task
-                                    </button>
+                                        {/*/!* Add a new comment *!/*/}
+                                        {/*<textarea*/}
+                                        {/*    placeholder="Add a comment..."*/}
+                                        {/*    value={commentText[taskDetails.id] || ''}*/}
+                                        {/*    onChange={(e) =>*/}
+                                        {/*        setCommentText({ ...commentText, [taskDetails.id]: e.target.value })*/}
+                                        {/*    }*/}
+                                        {/*    className="comment-input"*/}
+                                        {/*></textarea>*/}
+                                        {/*<button*/}
+                                        {/*    className="post-comment-button"*/}
+                                        {/*    onClick={() => handlePostComment(taskDetails.id)}*/}
+                                        {/*    disabled={loading}*/}
+                                        {/*>*/}
+                                        {/*    →*/}
+                                        {/*</button>*/}
+
+                                    {/* Close X button */}
+                                    <span className="closeNB" onClick={() => setShowUpdateTaskForm(false)}>
+                    &times; {/* This represents the X symbol */}
+                </span>
+                                    <div className="button-container">
+                                        <button type="submit" disabled={loading}>Update</button>
+
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowAssignUserForm(true)}
+                                        >
+                                            Users
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="delete-btnNB"
+                                            onClick={handleDeleteTask} // Call the delete function
+                                            disabled={loading} // Optionally disable while loading
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     )}
+                    {showAssignUserForm && (
+                        <div className="modalNB">
+                            <div className="modal-contentNB">
+                                <h3>Assign or Remove User from Task</h3>
+                                <div className="users-listNB">
+                                    {members.map((member) => {
+                                        const isAssigned = taskDetails.assignedUsers.includes(member.email);
+                                        return (
+                                            <div key={member.email} className="user-item">
+                                                <span>{member.email}</span>
+                                                {isAssigned ? (
+                                                    <button
+                                                        onClick={() => {
+                                                            if (window.confirm(`Are you sure you want to remove ${member.email} from this task?`)) {
+                                                                handleRemoveUserFromTask(taskDetails.id, member.email);
+                                                            }
+                                                        }}
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                ) : (
+                                                    <button onClick={() => handleAssignUserToTask(taskDetails.id, member.email)}>
+                                                        Assign
+                                                    </button>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                {/* Close X button */}
+                                <span className="closeNB" onClick={() => setShowAssignUserForm(false)}>
+                &times; {/* This represents the X symbol */}
+            </span>
+                            </div>
+                        </div>
+                    )}
+
+
+
+
+
+
+
 
                     {/* KPI Container */}
                     {kpiData ? (
@@ -938,6 +1100,12 @@ const Project = () => {
                                             <div className="task-infoNB">
                                                 <p><strong>Name:</strong> {task.taskName}</p>
                                                 <p><strong>Description:</strong> {task.taskDescription}</p>
+                                                <p>
+                                                    <strong>Assigned Users:</strong>{" "}
+                                                    {task.assignedUsers && task.assignedUsers.length > 0
+                                                        ? task.assignedUsers.join(", ")
+                                                        : "None"}
+                                                </p>
                                                 <p><strong>Start
                                                     Date:</strong> {task.taskStartDate ? new Date(task.taskStartDate).toLocaleDateString() : 'Not Set'}
                                                 </p>
@@ -950,7 +1118,28 @@ const Project = () => {
                                                 <p><strong>Priority:</strong> {task.taskPriority}</p>
                                                 <p><strong>Status:</strong> {formatStatus(task.status)}</p>
 
+                                                {/*<p><strong>Comments:</strong></p>*/}
+                                                {/*<div className="comments-list">*/}
+                                                {/*    {task.comments && task.comments.length > 0 ? (*/}
+                                                {/*        task.comments.map((comment) => (*/}
+                                                {/*            <div key={comment.commentId} className="comment-item">*/}
+                                                {/*                <p>{comment.toString()}</p>*/}
+                                                {/*                <button*/}
+                                                {/*                    className="resolve-comment-button"*/}
+                                                {/*                    onClick={() => handleResolveComment(task.id, comment.commentId)}*/}
+                                                {/*                    disabled={loading}*/}
+                                                {/*                >*/}
+                                                {/*                    ✕*/}
+                                                {/*                </button>*/}
+                                                {/*            </div>*/}
+                                                {/*        ))*/}
+                                                {/*    ) : (*/}
+                                                {/*        <p>No comments yet</p>*/}
+                                                {/*    )}*/}
+                                                {/*</div>*/}
+
                                             </div>
+
 
                                         </div>
                                     </div>
@@ -961,8 +1150,8 @@ const Project = () => {
 
                         </div>
                     </div>
-
                 </div>
+
             ) : (
                 <div>No project found</div>
             )}
