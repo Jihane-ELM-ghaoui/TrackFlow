@@ -26,8 +26,8 @@ const notifySuccessWithCopy = (message, url) => {
           transition: 'color 0.2s ease' 
         }}
         onClick={() => navigator.clipboard.writeText(url)}
-        onMouseOver={(e) => e.target.style.color = '#0056b3'} // Darker blue on hover
-        onMouseOut={(e) => e.target.style.color = '#007BFF'}  // Reset to original color
+        onMouseOver={(e) => e.target.style.color = '#0056b3'}
+        onMouseOut={(e) => e.target.style.color = '#007BFF'}  
       >
         Copy Link
       </span>
@@ -78,11 +78,11 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
-          responseType: "blob", // This ensures the response is a Blob object
+          responseType: "blob", 
         }
       );
       const url = window.URL.createObjectURL(response.data);
-      window.open(url, "_blank"); // Opens the file in a new tab
+      window.open(url, "_blank"); 
     } catch (error) {
       console.error("Error opening file:", error);
       notifyError('Failed to open file');
@@ -98,7 +98,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      fetchFiles(); // Refresh the file list after deletion
+      fetchFiles(); 
       notifySuccess('File removed successfully');
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -113,7 +113,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
 
       const response = await axios.post(
         `http://localhost:8888/storage-service/api/files/share/${file.name}`,
-        null, // No request body
+        null, 
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -122,7 +122,7 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
       );
 
       const shareableLink = response.data.split("Shareable link: ")[1];
-      navigator.clipboard.writeText(shareableLink); // Copy link to clipboard
+      navigator.clipboard.writeText(shareableLink); 
       notifySuccessWithCopy("Shareable link copied to clipboard: " + shareableLink);
     } catch (error) {
       console.error("Error sharing file:", error);
@@ -141,8 +141,6 @@ const FileView = ({ files, view, getAccessTokenSilently, fetchFiles }) => {
       </div>
     );
   }
-
-
 
   return (
     <div className={`file-view-kh ${view}`}>
