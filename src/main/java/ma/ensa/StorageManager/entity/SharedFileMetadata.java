@@ -27,7 +27,6 @@ public class SharedFileMetadata {
     private String linkId;
 
 
-    // Constructor without ID
     public SharedFileMetadata(String userId, String fileName, Instant expiryTime, String linkId) {
         this.userId = userId;
         this.fileName = fileName;
