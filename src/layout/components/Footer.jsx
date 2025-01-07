@@ -18,7 +18,7 @@ const Footer = () => {
           <i className="bx bxl-linkedin"></i>
         </a>
       </div>
-      <p>©2024 TrackFlow. All rights reserved.</p>
+      <p>© 2025 TrackFlow. All rights reserved</p>
     </footer>
   );
 };
