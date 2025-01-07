@@ -9,6 +9,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { useNavigate } from 'react-router-dom';
+import Loading from './../../Pages/Loading';
 
 
 
@@ -605,7 +606,7 @@ const Project = () => {
             }
         };
     }, [projectId, getIdTokenClaims]);
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loading />;
     if (!kpiData || !Array.isArray(kpiData.cycleTimes)) {
         return <div>No data available</div>;
     }
@@ -636,7 +637,7 @@ const Project = () => {
     };
 
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loading />;
     if (errorMessage) return <div>{errorMessage}</div>;
 
 
