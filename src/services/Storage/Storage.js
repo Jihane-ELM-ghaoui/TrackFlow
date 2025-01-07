@@ -41,7 +41,7 @@ const Storage = () => {
       const response = await axios.get('http://localhost:8888/storage-service/api/files', {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       });
-      console.log("Fetched files:", response.data); // Debug log to ensure data is fetched
+      console.log("Fetched files:", response.data); 
       setFiles(response.data);
     } catch (error) {
       console.error('Failed to fetch files', error);
