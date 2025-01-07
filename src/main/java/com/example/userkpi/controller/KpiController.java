@@ -40,7 +40,7 @@ public class KpiController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
 
-        String url = String.format("http://task-service:8011/api/tasks/users?userId=%s", userId);
+        String url = String.format("http://task-service:8095/api/tasks/users?userId=%s", userId);
 
         JwtAuthenticationToken jwtToken = (JwtAuthenticationToken) auth;
         String token = jwtToken.getToken().getTokenValue();
@@ -74,7 +74,7 @@ public class KpiController {
     public KpiProjectResponse getProjectKpi(@PathVariable Long projectId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        String url = String.format("http://task-service:8011/api/tasks/project?projectId=%s", projectId);
+        String url = String.format("http://task-service:8095/api/tasks/project?projectId=%s", projectId);
 
         JwtAuthenticationToken jwtToken = (JwtAuthenticationToken) auth;
         String token = jwtToken.getToken().getTokenValue();
