@@ -38,8 +38,6 @@ public class FileService {
 
             String bucketName = userId.split("\\|")[1];
             String fileName = file.getOriginalFilename();
-
-            // Explicitly create PutObjectRequest
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(fileName)
@@ -137,8 +135,6 @@ public class FileService {
         }
     }
 
-////////////////////////////////////////////////////////////////////
-
     @Autowired
     private SharedFileMetadataRepository sharedFileMetadataRepository;
 
@@ -148,7 +144,7 @@ public class FileService {
         SharedFileMetadata metadata = new SharedFileMetadata(
                 userId,
                 fileName,
-                Instant.now().plusSeconds(24 * 60 * 60), // 24 hours expiry
+                Instant.now().plusSeconds(24 * 60 * 60), 
                 linkId
         );
 
@@ -162,7 +158,7 @@ public class FileService {
                 .orElseThrow(() -> new RuntimeException("Invalid or expired link"));
 
         if (Instant.now().isAfter(metadata.getExpiryTime())) {
-            sharedFileMetadataRepository.deleteByLinkId(linkId); // Cleanup expired links
+            sharedFileMetadataRepository.deleteByLinkId(linkId);
             throw new RuntimeException("Link has expired");
         }
 
