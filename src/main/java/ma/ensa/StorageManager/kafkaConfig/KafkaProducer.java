@@ -29,7 +29,6 @@ public class KafkaProducer {
 
     private void sendMessage(String topic, String userId) {
         try {
-            // Get authentication dynamically
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String currentUser = auth != null ? auth.getName() : "Anonymous";
 
