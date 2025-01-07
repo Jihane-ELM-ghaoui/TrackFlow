@@ -22,13 +22,11 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Change background and shadow on hover */
 .file-item-kh:hover {
   background-color: #f1f1f1;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Styling for the file name */
 .file-item-kh .file-name-kh {
   font-weight: bold;
   color: #333;
@@ -40,7 +38,6 @@
 
 /* Styling for buttons */
 .file-item-kh button {
-  /* background-color: #007bff; */
   color: black;
   border: none;
   border-radius: 4px;
@@ -52,7 +49,6 @@
 
 /* Button hover effects */
 .file-item-kh button:hover {
-  /* background-color: #0056b3; */
   transform: scale(1.05);
 }
 
@@ -80,7 +76,6 @@
 
 /* Styling for toggle buttons */
 .view-toggle-kh button {
-  /* background-color: #007bff; */
   color: white;
   border: none;
   border-radius: 4px;
@@ -89,13 +84,10 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Toggle button hover effects */
 .view-toggle-kh button:hover {
-  /* background-color: #0056b3; */
   transform: scale(1.05);
 }
 
-/* Toggle button focus effects */
 .view-toggle-kh button:focus {
   outline: 2px solid #277298;
   outline-offset: 2px;
@@ -112,7 +104,6 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Hover effect for drag and drop area */
 .drag-drop-area:hover {
   background-color: #f1f1f1;
   border-color: #bbb;
@@ -167,7 +158,6 @@
   overflow: hidden;
 }
 
-/* File name styling specific to grid view */
 .file-view-kh.grid .file-item-kh .file-name-kh {
   font-weight: bold;
   font-size: 14px;
@@ -186,13 +176,11 @@
   font-size: 12px;
 }
 
-/* Grid View Hover Effect */
 .file-view-kh.grid .file-item-kh:hover {
   background-color: #f1f1f1;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive adjustments for small screens in grid view */
 @media (max-width: 600px) {
   .file-view-kh.grid .file-item-kh {
     grid-template-columns: 1fr;
