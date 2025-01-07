@@ -57,7 +57,7 @@ const JoinProject = () => {
         }
     }, [isAuthenticated, location.search, navigate]);
 
-    if (loading) return <div>Joining project...</div>;
+    if (loading) return <Loading />;
     if (error) return <div>Error: {error}</div>;
 
     return null;
