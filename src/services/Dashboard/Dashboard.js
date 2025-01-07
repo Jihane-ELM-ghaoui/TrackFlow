@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import CustomCalendar from './Calendar';
 import TaskCard from './TaskCard';
+import ProjectCard from './ProjectCard';
 import CircularProgressBar from './CircularProgressBar';
 import TaskStatusChart from './TaskStatusChart';
 import './Dashboard.css';
@@ -193,8 +194,12 @@ const Dashboard = () => {
       <div className="dashboard-header-kh">
         <h1>{userMetadata?.Full_Name || 'User'}'s Dashboard</h1>
         <div className="header-buttons-kh">
-          <button className="create-new-project-btn-kh">+ Create new task</button>
-          <button className="add-date-btn-kh">+ Create new project</button>
+        <button className="create-new-project-btn-kh">
+  <a href="/user/add-project" style={{ textDecoration: 'none', color: 'inherit' }}>
+    View Projects
+  </a>
+</button>
+
         </div>
       </div>
 
@@ -203,6 +208,7 @@ const Dashboard = () => {
         {/* Calendar Section */}
         <div className="calendar-container-kh">
           <CustomCalendar events={events} />
+          
           <button
             className="create-task-btn-kh"
             onClick={() => setShowEventForm(!showEventForm)}
@@ -246,8 +252,10 @@ const Dashboard = () => {
 
         {/* Task Section */}
         <div className="task-section-kh">
-          <TaskCard title="Management App" />
-          <TaskCard title="Core Task Management and User Access" />
+          <ProjectCard title="Projects"
+            fetchUrl="http://localhost:8091/api/projects/users/recent"/>
+          <TaskCard title="Tasks" 
+          fetchUrl="http://localhost:8095/api/tasks/users/recent"/>
         </div>
       </div>
 
