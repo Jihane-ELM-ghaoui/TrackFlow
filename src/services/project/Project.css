@@ -7,7 +7,6 @@
 }
 
 body {
-    font-family: 'Lato', sans-serif;
     background-color: #f4f4f9;  /* Set a light background for the page */
     color: #333;
 }
@@ -61,31 +60,30 @@ body {
     margin-bottom: 20px;
 }
 
+/* Button Row */
 .button-rowNB {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    width: 100%;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .button-rowNB button {
     padding: 12px 20px;
     font-size: 1.1rem;
     color: white;
-    background: linear-gradient(135deg, #39b18b, #217298);
+    background: linear-gradient(135deg, #39b18b, #185a9d);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    justify-content: stretch;
 }
 
 .button-rowNB button:hover {
-    background: #39b18b;
+    background-color: #39b18b;
 }
 
-.button-rowNB button:active {
-    background: linear-gradient(135deg, #39b18b, #217298);
-}
 
 /* KPI Container */
 .kpi-container {
@@ -94,7 +92,6 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-
 }
 
 .members-info-containerNB {
@@ -109,54 +106,39 @@ body {
 }
 .kpi-container h1 {
     text-align: center;
-}
-
-.members-info-containerNB h1 {
-    text-align: center;
+    margin: 10px;
 }
 
 /* Task List Container */
 .task-list-containerNB {
-    padding: 20px;
+    padding: 0px;
     border-radius: 8px;
     width: 100%;
 }
 
 /* Task item wrapper with gradient background */
 .task-item-wrapperNB {
-    background: linear-gradient(135deg, #39b18b, #217298); /* Gradient background for each item wrapper */
-    border-radius: 16px;
+    background: linear-gradient(135deg, #39b18b, #185a9d); /* Gradient background for each item wrapper */
+    border-radius: 15px;
     padding: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow around the item wrapper */
 }
 
-/* List header styling */
-.list-headerNB {
-    font-size: 2em;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #333;
-}
 
 /* Grid for task items */
 .tasksNB {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ensure responsive grid with dynamic number of columns */
-    gap: 20px;
-    justify-items: center;
+    grid-template-columns: repeat(2, 1fr); /* Ensure responsive grid with dynamic number of columns */
+    gap: 30px;
 }
 
 /* Task item styling */
 .task-itemNB {
     padding: 20px;
-    border: 1px solid #ddd;
     border-radius: 12px;
     transition: background-color 0.3s, box-shadow 0.3s ease;
     cursor: pointer;
     width: 100%;
-    max-width: 500px;
     text-align: left;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     flex-direction: column;
     justify-content: space-between; /* Adjust layout */
@@ -167,21 +149,13 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
-.task-itemNB .created-at {
-    font-size: 0.5em;
-    color: #777;
-    margin-top: 10px;
-}
-
-/* Ensure task dates are formatted properly */
+/* Ensure task info is formatted properly */
 .task-infoNB p {
     margin: 15px 0;
     line-height: 1.1;
     padding: 0 20px;
     font-size: 0.9rem;
 }
-
-
 
 
 /* Add responsiveness for smaller screens */
@@ -202,9 +176,9 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -213,14 +187,14 @@ body {
 .modal-contentNB {
     background-color: white;
     padding: 30px;
-    border-radius: 8px;
     width: 100%;
-    max-width: 600px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    position: relative;
 }
 
-.modal-contentNB h2 {
-    font-size: 2rem;
+.modal-contentNB h2, .modal-contentNB h3 {
     color: #39b18b;
     margin-bottom: 20px;
 }
@@ -231,13 +205,15 @@ body {
     gap: 10px;
 }
 
-.modal-contentNB label {
+
+.modal-contentNB form label {
     font-size: 1.1rem;
     color: #555;
+    margin-bottom: 10px;
 }
 
-.modal-contentNB input,
-.modal-contentNB textarea {
+
+.modal-contentNB input, .modal-contentNB textarea, .modal-contentNB select {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -247,8 +223,8 @@ body {
 }
 
 .modal-contentNB button {
-    padding: 12px;
-    background-color: #217298;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #39b18b, #185a9d);
     color: white;
     border: none;
     border-radius: 5px;
@@ -257,31 +233,33 @@ body {
 }
 
 .modal-contentNB button:hover {
-    background-color: #227ad5;
+    background: #39b18b;
 }
 
-.closeNB {
+.modal-contentNB .closeNB {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 2rem;
-    color: #217298;
+    top: 30px;
+    right: 35px;
+    font-size: 1.5rem;
+    color: #333;
     cursor: pointer;
 }
 
-.delete-btnNB {
+/* Special Buttons */
+.modal-contentNB .delete-btnNB {
     background-color: red;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin-top: 10px;
+}
+.modal-contentNB .delete-btnNB:hover {
+    background-color: #c0392b;
 }
 
-.delete-btnNB:disabled {
-    background-color: gray;
-    cursor: not-allowed;
+/* Error Message */
+.error-messageNB {
+    color: red;
+    font-size: 0.9em;
+    text-align: center;
 }
+
 
 /* Modal Styles */
 .modalNB {
@@ -341,42 +319,19 @@ body {
     outline: none;
 }
 
-/* Button Container */
+/* Form Buttons */
 .button-containerNB {
     display: flex;
-    justify-content: center; /* Center buttons horizontally */
-    gap: 20px; /* Add space between the buttons */
-    width: 100%; /* Take up full width of the parent */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px; /* Space between buttons */
+    width: 100%; /* Ensure the container spans full width */
 }
 
-/* Buttons */
-.create-btnNB, .close-btnNB {
-    width: 45%;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.create-btnNB {
-    background-color: #217298;
-    color: white;
-}
-
-.create-btnNB:hover {
-    background-color: #2A8993;
-}
-
-.close-btnNB {
-    background-color: #f44336;
-    color: white;
-}
-
-.close-btnNB:hover {
-    background-color: #c0392b;
+.button-container {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    justify-content: center;
 }
 
 /* Error Message */
@@ -386,3 +341,71 @@ body {
     text-align: center;
 }
 
+.members-grid {
+    background-color: rgba(57, 177, 139, 0.1); /* Light transparent green background */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for the entire list */
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between each member */
+    overflow-y: auto; /* Allow scrolling if the list grows */
+    max-height: 400px; /* Set a height limit for the list box */
+    margin-top: 20px; /* Add space above the list */
+    margin-bottom: 20px; /* Add space below the list */
+}
+
+/* Member Card */
+.member-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Light dividing line between members */
+    background-color: transparent; /* Transparent background to match the list */
+    transition: background-color 0.2s;
+}
+
+.member-card:last-child {
+    border-bottom: none;
+}
+
+/* Member Info */
+.member-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Remove Button */
+.member-card button {
+    background: #f84141;
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+/*.member-card button:hover {*/
+/*    background: #bd3131;*/
+/*    !*transform: scale(1.05); !* Small scale-up on hover *!*!*/
+/*}*/
+
+/* Loader and Error Message */
+.loading,
+.error-messageNB {
+    text-align: center;
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+
+/*.delete-btnNB:disabled {*/
+/*    background-color: gray;*/
+/*    cursor: not-allowed;*/
+/*}*/
