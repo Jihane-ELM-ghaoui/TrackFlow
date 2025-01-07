@@ -55,23 +55,18 @@ public class StorageController {
 
     @GetMapping("/open/{fileName}")
     public ResponseEntity<Resource> openFile(@PathVariable("fileName") String fileName) {
-        // Get the currently authenticated user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
 
         byte[] fileData = fileService.openFile(userId, fileName);
-
-        // Determine the file's MIME type based on the file name
         String contentType;
         if (fileName.endsWith(".pdf")) {
             contentType = "application/pdf";
         } else if (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-            contentType = "image/png"; // Adjust for your image type
+            contentType = "image/png"; 
         } else {
-            contentType = "application/octet-stream"; // Fallback for unknown types
+            contentType = "application/octet-stream"; 
         }
-
-        // Convert the byte array into a resource
         ByteArrayResource resource = new ByteArrayResource(fileData);
 
         return ResponseEntity.ok()
@@ -87,14 +82,12 @@ public class StorageController {
         String userId = auth.getName();
 
         try {
-            fileService.deleteFile(userId, fileName); // Ensure this service method is implemented
+            fileService.deleteFile(userId, fileName); 
             return ResponseEntity.ok("File deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete file");
         }
     }
-
-///////////////////////////////////////////////////////////////////////////////////
 
     @PostMapping("/share/{fileName}")
     public ResponseEntity<String> shareFile(@PathVariable("fileName") String fileName) {
@@ -125,14 +118,9 @@ public class StorageController {
 
     @GetMapping("/shared/download/{linkId}")
     public ResponseEntity<byte[]> downloadSharedFile(@PathVariable("linkId") String linkId) {
-        // Use the FileService method to retrieve the file name
         String fileName = fileService.getFileNameFromLink(linkId);
-
-        // Get the currently authenticated user (optional)
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
-
-        // Download the file
         byte[] fileData = fileService.downloadFile(userId, fileName);
 
         return ResponseEntity.ok()
