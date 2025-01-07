@@ -1,23 +1,9 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-storage
-    environment:
-      MYSQL_DATABASE: defaultdb
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" # Allow empty root password (consider setting it securely instead)
-    ports:
-      - "3307:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - devsecops-network
-
-  storage-service:
+    storage-service:
     build: .
+    image: jihaneelm/storage-service
     container_name: storage-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://storage-manager-trackflow-007.b.aivencloud.com:14370/defaultdb
@@ -33,13 +19,8 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     ports:
       - "8090:8090"
-    depends_on:
-      - mysql
     networks:
       - devsecops-network
-
-volumes:
-  mysql-data:
-
+      
 networks:
   devsecops-network:
