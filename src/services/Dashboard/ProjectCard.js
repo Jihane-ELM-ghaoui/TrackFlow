@@ -1,34 +1,5 @@
-// import React from 'react';
-// import './TaskCard.css'; // Import the specific CSS for TaskCard
-
-// function TaskCard({ title }) {
-//   return (
-//     <div className="task-card-kh">
-//       <div className="task-card-header-kh">
-//         <h3>{title}</h3>
-//       </div>
-//       <div className="task-card-content-kh">
-//         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-//         <div className="tasks-kh">
-//           <div className="project-kh">
-//             <p>Set up project repository & CI/CD pipeline</p>
-//             <small>Assigned to Jihane, User78, Othmane</small>
-//           </div>
-//           <div className="project-kh">
-//             <p>Project structure with Spring Boot and React</p>
-//             <small>Assigned to ...</small>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default TaskCard;
-
-
 import React, { useState, useEffect } from 'react';
-import './TaskCard.css'; // Import the specific CSS for TaskCard
+import './TaskCard.css'; 
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
@@ -80,12 +51,10 @@ function TaskCard({ title, fetchUrl }) {
 
 
   useEffect(() => {
-    // Fetch data from the backend
     const fetchData = async () => {
       
       try {
-        // Assuming authentication details are managed with Auth0
-        const idTokenClaims = await getIdTokenClaims(); // Replace with actual method to get token
+        const idTokenClaims = await getIdTokenClaims(); 
         const idToken = idTokenClaims.__raw;
 
         const response = await axios.get(fetchUrl, {
