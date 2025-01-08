@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Chart, ArcElement, Tooltip, Legend, PieController } from 'chart.js';
 
-// Register necessary components
 Chart.register(PieController, ArcElement, Tooltip, Legend);
 
 function TaskStatusChart({ statusData }) {
