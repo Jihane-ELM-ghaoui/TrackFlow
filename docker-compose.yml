@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-task
+    environment:
+      MYSQL_DATABASE: task-service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: V5m784uk
+    ports:
+      - "3321:3306"
+    volumes:
+      - mysql-data-task:/var/lib/mysql
+    networks:
+      - devsecops-network
+
+  chat-service:
+    build: .
+    image: nabilab/task-service
+    container_name: task-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-task:3306/task-service
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: V5m784uk
+      spring_kafka_bootstrap-servers: kafka:9092
+      eureka_client_service-url_defaultZone: http://eureka:8761/eureka
+    ports:
+      - "8095:8095"
+    depends_on:
+      - mysql
+    networks:
+      - devsecops-network
+
+volumes:
+  mysql-data-task:
+
+networks:
+  devsecops-network:

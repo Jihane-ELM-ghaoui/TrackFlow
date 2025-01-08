@@ -15,19 +15,13 @@ public class CustomJwtAuthoritiesConverter implements Converter<Jwt, Collection<
 
     @Override
     public Collection<GrantedAuthority> convert(Jwt jwt) {
-        // Start with the default authorities
         Collection<GrantedAuthority> authorities = List.of();
-
-        // Extract roles from the JWT claims
         List<String> roles = (List<String>) jwt.getClaims().get("https://demo.app.com/roles");
-
-        // Convert roles to GrantedAuthority and return
         if (roles != null) {
             authorities = roles.stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                     .collect(Collectors.toList());
         }
-
         return authorities;
     }
 }
