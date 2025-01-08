@@ -13,7 +13,7 @@ bodyNB {
     padding: 20px;
     flex-direction: column;
     gap: 20px;
-    height: auto; /* Allow the container to expand beyond the viewport height */
+    height: auto; 
     overflow-y: auto;
 }
 
@@ -117,17 +117,17 @@ bodyNB {
     font-size: 0.9em;
     color: #777;
     margin-top: 5px;
-    font-style: italic; /* Make the "Created at:" text italic */
+    font-style: italic;
     margin-left: 20px;
 }
 
 /* Project Description Styling */
 .project-descriptionNB {
-    font-size: 0.9em; /* Smaller text */
-    color: #555; /* Slightly darker color */
-    margin-top: 15px; /* Add some space between description and the next element */
-    margin-bottom: 15px; /* Add space at the bottom */
-    line-height: 1.4; /* Improve readability */
+    font-size: 0.9em; 
+    color: #555; 
+    margin-top: 15px; 
+    margin-bottom: 15px; 
+    line-height: 1.4; 
     margin-left: 20px;
 }
 
@@ -149,7 +149,7 @@ bodyNB {
 .project-itemNB .project-headerNB {
     display: flex;
     justify-content: space-between;
-    align-items: left; /* Center header content */
+    align-items: left; 
     background: linear-gradient(45deg, #39b18b, #217298);
     padding: 10px 20px;
     margin-left: 20px;
@@ -217,7 +217,7 @@ bodyNB {
     border-radius: 12px;
     box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    max-height: 80vh; /* Allow scrolling if content overflows */
+    max-height: 80vh; 
     position: relative;
 }
 
@@ -318,9 +318,9 @@ buttonNB:hover, .close-btnNB:hover {
 /* Create New Project Header */
 .modal-contentNB h3 {
     color: #217298;
-    font-size: 2em; /* Bigger text */
-    text-align: center; /* Center the text */
-    margin-bottom: 30px; /* More space between title and form */
+    font-size: 2em; 
+    text-align: center; 
+    margin-bottom: 30px; 
 }
 
 /* Fade-in effect for the modal */
@@ -352,13 +352,13 @@ buttonNB:hover, .close-btnNB:hover {
 
 /* Button Styles */
 .project-formNB button {
-    width: 45%; /* Make buttons the same width */
+    width: 45%; 
     padding: 12px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    margin: 0 10px; /* Add space between buttons */
+    margin: 0 10px; 
 }
 
 .project-formNB button:disabled {
@@ -381,15 +381,15 @@ buttonNB:hover, .close-btnNB:hover {
 /* Center the buttons horizontally and add space between them */
 .project-formNB .button-containerNB {
     display: flex;
-    justify-content: center; /* Center buttons horizontally */
-    gap: 20px; /* Add space between the buttons */
-    width: 100%; /* Take up full width of the parent */
-    margin-top: auto; /* Pushes the button container to the bottom */
+    justify-content: center; 
+    gap: 20px; 
+    width: 100%; 
+    margin-top: auto; 
 }
 
 /* Individual button styles */
 .project-formNB .button-containerNB button {
-    width: 45%; /* Buttons will be sized based on their content */
+    width: 45%; 
     padding: 12px 20px;
     border: none;
     border-radius: 5px;
