@@ -5,18 +5,16 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Makes the card responsive inside flex container */
-    max-width: 450px; /* Limits the max width so they fit next to each other */
+    width: 100%; 
+    max-width: 450px; 
   }
   
-  /* Header section for the Task Card */
   .task-card-header-kh {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
-  /* Task list styling */
   .tasks-kh {
     margin-top: 10px;
   }
