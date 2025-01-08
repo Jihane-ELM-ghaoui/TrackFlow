@@ -1,5 +1,4 @@
-# Use an OpenJDK base image
-FROM openjdk:17-jdk-slim as build
+FROM cgr.dev/chainguard/jdk as runtime
 
 # Set the working directory inside the container
 WORKDIR /app
