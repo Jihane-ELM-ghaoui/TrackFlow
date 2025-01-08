@@ -1,16 +1,15 @@
 
-/* Event Form Styling */
 .highlighted-date {
   background-color: #5ba1b0;
   color: white;
   border-radius: 50%;
 }
 
-/* Popup for event details */
+/* Popup pour les details de l'event */
 .event-popup {
   position: absolute;
-  top: 0; /* Aligns with the top of the calendar */
-  left: calc(100% + 10px); /* Places it right next to the calendar with a gap */
+  top: 0; 
+  left: calc(100% + 10px); 
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -20,7 +19,6 @@
   max-width: 300px;
 }
 
-/* Ensure the calendar container has position relative for correct positioning */
 
 .event-popup h4 {
   margin: 0;
