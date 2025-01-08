@@ -34,17 +34,17 @@
 .create-task-btn-kh,
 .submit-event-btn-kh,
 .form-buttons button {
-  padding: 12px 20px; /* Increased padding */
+  padding: 12px 20px; 
   font-size: 16px;
   border: none;
-  border-radius: 8px; /* Slightly increased border radius */
+  border-radius: 8px; 
   cursor: pointer;
   color: white;
   transition: background-color 0.3s ease;
-  display: inline-flex; /* Changed to inline-flex */
+  display: inline-flex; 
   align-items: center;
-  gap: 8px; /* Space between icon and text if needed */
-  margin-right: 10px; /* Space between buttons */
+  gap: 8px; 
+  margin-right: 10px; 
   background-color: #277298;
 }
 
@@ -54,7 +54,7 @@
 .create-task-btn-kh:hover,
 .submit-event-btn-kh:hover,
 .form-buttons button:hover {
-  background-color: #277298; /* Slightly darker on hover */
+  background-color: #277298;
 }
 
 /* Remove margin-top since buttons are side by side */
