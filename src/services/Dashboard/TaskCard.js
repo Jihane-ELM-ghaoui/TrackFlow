@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './TaskCard.css'; // Import the specific CSS for TaskCard
+import './TaskCard.css'; 
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
@@ -33,7 +33,7 @@ function TaskCard({ title, fetchUrl }) {
           console.error('No ID token claims available');
         }
 
-        // Fetch the access token silently
+        // Fetch the access token 
         const accessToken = await getAccessTokenSilently();
         console.log('Access Token:', accessToken);
         setToken(accessToken);  // Set token in state
@@ -55,8 +55,7 @@ function TaskCard({ title, fetchUrl }) {
     const fetchData = async () => {
       
       try {
-        // Assuming authentication details are managed with Auth0
-        const idTokenClaims = await getIdTokenClaims(); // Replace with actual method to get token
+        const idTokenClaims = await getIdTokenClaims(); 
         const idToken = idTokenClaims.__raw;
 
         const response = await axios.get(fetchUrl, {
