@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react'; // Importing necessary hooks from React
-import axios from 'axios'; // Importing Axios for making HTTP requests
-import { useAuth0 } from '@auth0/auth0-react'; // Importing Auth0 for user authentication
+import React, { useState, useEffect, useCallback } from 'react'; 
+import axios from 'axios'; 
+import { useAuth0 } from '@auth0/auth0-react'; 
 import { useNavigate } from 'react-router-dom';
-import './AddProject.css'; // Importing the CSS file for styling
+import './AddProject.css'; 
 import dotsImage from './dots.png';
 
 const AddProject = () => {
@@ -109,7 +109,7 @@ const AddProject = () => {
                                     src={dotsImage}
                                     alt="Menu"
                                     className="dots-menuNB"
-                                    onClick={() => handleMenuClick(project.id)} // Add functionality for menu click
+                                    onClick={() => handleMenuClick(project.id)} 
                                 />
                             </div>
 
