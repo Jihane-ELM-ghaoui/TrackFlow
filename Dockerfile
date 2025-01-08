@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM cgr.dev/chainguard/jdk as runtime
 
 LABEL authors="Zineb Mabchour"
 
