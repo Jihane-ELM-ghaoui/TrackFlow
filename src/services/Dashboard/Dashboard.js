@@ -83,7 +83,7 @@ const Dashboard = () => {
           console.error('No ID token claims available');
         }
 
-        // Fetch the access token silently
+        // Fetch the access token 
         const accessToken = await getAccessTokenSilently();
         console.log('Access Token:', accessToken);
         setToken(accessToken);  // Set token in state
@@ -203,9 +203,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="main-content-kh">
-        {/* Calendar Section */}
         <div className="calendar-container-kh">
           <CustomCalendar events={events} />
           
@@ -250,7 +248,6 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* Task Section */}
         <div className="task-section-kh">
           <ProjectCard title="Projects"
             fetchUrl="http://localhost:8091/api/projects/users/recent"/>
@@ -259,7 +256,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Charts Section */}
       <div className="charts-section-kh">
         <div className="chart-item-kh">
           <div className="chart-label-kh">Task Completion Rate</div>
