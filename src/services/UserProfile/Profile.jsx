@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import './Profile.css'; // Import your custom CSS file
+import './Profile.css'; 
 
 const Profile = () => {
   const { user, getIdTokenClaims, getAccessTokenSilently, isAuthenticated } = useAuth0();
