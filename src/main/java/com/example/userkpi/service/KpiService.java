@@ -11,15 +11,12 @@ import java.util.Map;
 @Service
 public class KpiService {
     public KpiResponse calculateKpisForUser(int totalTasks, int completedTasks, int incompleteTasks, Map<String, Integer> tasksByStatus) {
-        // Retrieve the current authentication object
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // Extract the userId from the authentication object
         String userId = auth.getName();
         System.out.println("Authenticated User: " + userId);
 
         Map<String, Integer> statusCount = new HashMap<>();
         tasksByStatus.forEach((status, count) -> {
-            // Map the status values to match frontend expectations
             if (status.equals("NOT_STARTED")) {
                 statusCount.put("notStarted", count);
             } else if (status.equals("IN_PROGRESS")) {
