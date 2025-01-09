@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-notification
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Notification
+      MYSQL_USER: sijin
+      MYSQL_PASSWORD: sijin
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data-notification:/var/lib/mysql
+    networks:
+      - devsecops-network
+
+  notification-service:
+    build: .
+    image: sijin02/notification-service
+    container_name: notification-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-notification:3306/Notification
+      SPRING_DATASOURCE_USERNAME: sijin
+      SPRING_DATASOURCE_PASSWORD: sijin
+      spring_kafka_consumer_bootstrap-servers: kafka:9092
+      spring_kafka_consumer_group-id: Notification-consumer-group
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    networks:
+      - devsecops-network
+
+volumes:
+  mysql-data-notification:
+
+networks:
+  devsecops-network:
