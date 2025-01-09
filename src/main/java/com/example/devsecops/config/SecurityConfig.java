@@ -33,11 +33,15 @@ public class SecurityConfig {
                         })
                 );
 
+<<<<<<< HEAD
         http.cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()));
+=======
+>>>>>>> 36bcf8ab47d7362bce97b23b4024c1d6399321d9
         return http.build();
     }
 
 
+<<<<<<< HEAD
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -52,4 +56,6 @@ public class SecurityConfig {
     }
 
 
+=======
+>>>>>>> 36bcf8ab47d7362bce97b23b4024c1d6399321d9
 }
