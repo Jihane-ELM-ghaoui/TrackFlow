@@ -31,7 +31,6 @@ public class SecurityConfig {
                         })
                 );
 
-//        // Apply CORS configuration
 //        http.cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()));
 
         return http.build();

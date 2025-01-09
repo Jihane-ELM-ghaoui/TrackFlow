@@ -9,7 +9,7 @@ public class UserServiceApplication {
 
 	public static void main(String[] args) {
 
-		Dotenv dotenv = Dotenv.load(); // Automatically loads `.env`
+		Dotenv dotenv = Dotenv.load();
 		System.setProperty("AWS_ACCESS_KEY_ID", dotenv.get("AWS_ACCESS_KEY_ID"));
 		System.setProperty("AWS_SECRET_ACCESS_KEY", dotenv.get("AWS_SECRET_ACCESS_KEY"));
 
