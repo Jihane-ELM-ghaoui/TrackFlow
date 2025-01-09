@@ -19,7 +19,7 @@ public class KafkaProducer {
 
     public void sendChatMessage(String sendername, String receiver) {
         try {
-            String message = sendername + "-" + receiver; // Use '|' as a delimiter
+            String message = sendername + "-" + receiver;
             CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send("Chat-topic", message);
             future.whenComplete((result, ex) -> {
                 if (ex == null) {

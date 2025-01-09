@@ -5,6 +5,7 @@ import com.example.devsecops.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class ChatController {
 
 
     @GetMapping
+    @PreAuthorize("")
     public List<ChatMessage> getMessages(@RequestParam String receiver) {
         return messageService.getPrivateMessages(receiver);
     }
@@ -29,6 +31,7 @@ public class ChatController {
 
     @MessageMapping("/sendMessage")
     @SendTo({"/topic/messages"})
+    @PreAuthorize("")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
 
         messageService.saveMessage(chatMessage);
@@ -39,6 +42,7 @@ public class ChatController {
 
 
     @GetMapping("/receivers")
+    @PreAuthorize("")
     public List<Map<String, String>> getUsersByConversation() {
         return messageService.getUsersByConversation();
     }

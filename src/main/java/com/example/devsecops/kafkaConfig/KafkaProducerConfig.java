@@ -19,7 +19,7 @@ public class KafkaProducerConfig {
  
     @Bean
     public NewTopic createChatTopic(){
-        return new NewTopic("Chat-topic", 3, (short) 1);
+        return new NewTopic("Chat-topic", 1, (short) 1);
     }
 
 
@@ -27,7 +27,7 @@ public class KafkaProducerConfig {
     public Map<String,Object> producerConfig(){
         Map<String,Object> props=new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "localhost:9092");
+                "kafka:9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,

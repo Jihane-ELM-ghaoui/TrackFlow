@@ -13,15 +13,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Register the WebSocket endpoint
         registry.addEndpoint("/chat")
-//                .setAllowedOrigins("http://localhost:3000") // Allow React frontend to connect
+                .setAllowedOrigins("http://localhost:3000")
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // Enable simple message broker for client-server communication
         registry.enableSimpleBroker("/topic");
         registry.setApplicationDestinationPrefixes("/app");
     }

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-chat
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Chat
+      MYSQL_USER: sijin
+      MYSQL_PASSWORD: sijin
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql-data-chat:/var/lib/mysql
+    networks:
+      - devsecops-network
+
+  chat-service:
+    build: .
+    image: sijin02/chat-service
+    container_name: chat-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-chat:3306/Chat
+      SPRING_DATASOURCE_USERNAME: sijin
+      SPRING_DATASOURCE_PASSWORD: sijin
+      spring_kafka_bootstrap-servers: kafka:9092
+      eureka_client_service-url_defaultZone: http://eureka:8761/eureka
+    ports:
+      - "8001:8001"
+    depends_on:
+      - mysql
+    networks:
+      - devsecops-network
+
+volumes:
+  mysql-data-chat:
+
+networks:
+  devsecops-network:
